@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-
+import axios from "axios"
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 const OtpCheckPage = () => {
-    const [otp, setOtp] = useState(new Array(6).fill(""));
-    //input value get
+    const navigate = useNavigate()
+    const [otp, setOtp] = useState(new Array(4).fill(""));
+    const phone = localStorage.getItem("mobile")
+    // console.log('phone', phone)
     const handleChange = (el, index) => {
         if (isNaN(el.value)) return false
 
@@ -14,8 +18,25 @@ const OtpCheckPage = () => {
         }
     }
     //onClick event
-    const submintOtp = () => {
-        otp.join("") === "111111" ? alert('verified') : alert('wrong otp')
+    const submintOtp = async () => {
+        // console.log('otp.join("") ', otp.join(""))
+        try {
+            const newOtp = otp.join("");
+            const { data } = await axios.post("http://localhost:8080/user/login/verify", { otp: newOtp, phone: phone })
+            if (data.success) {
+                localStorage.setItem("token", data?.accessToken)
+                localStorage.setItem("info", JSON.stringify(data?.info))
+                localStorage.removeItem("mobile")
+                toast.success(data?.message)
+                navigate("/")
+            }
+            else {
+                toast.error(data?.message)
+
+            }
+        } catch (error) {
+            console.log('error', error)
+        }
     }
 
 
@@ -31,7 +52,7 @@ const OtpCheckPage = () => {
                             <input
                                 type="text"
                                 name="otp"
-                                className="border-2  border-blue-600 w-8 h-8 md:w-12 md:h-12 text-2xl rounded-xl m-auto text-center"
+                                className="border-2 text-black border-blue-600 w-12 h-8 md:w-12 md:h-12 text-2xl rounded-xl m-auto text-center"
                                 maxLength={1}
                                 key={i}
                                 value={data}

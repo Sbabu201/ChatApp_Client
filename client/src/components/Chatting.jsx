@@ -2,17 +2,23 @@ import React, { useEffect, useState, useRef } from 'react'
 import SideBar from './SideBar'
 import { IoSendOutline } from "react-icons/io5";
 import { FcApproval } from "react-icons/fc";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Loader from "../utils/Loader"
-import notificationsound from "../assets/itune.mp3"
+import notificationsound from "../assets/usetune.mp3"
 import { io } from "socket.io-client"
 import { v4 as uuidv4 } from "uuid"
 import { IoIosNotifications } from "react-icons/io";
+import chatImage from "../assets/451.png"
+import { FcAbout } from "react-icons/fc";
+import { useSocket } from '../Pages/SocketProvider';
+import { deleveArrivalMessage, getAllArrivalMessage } from '../store/reducers/socketReducer';
 const Chatting = () => {
-    const notification = new Audio(notificationsound);
+    const arrival = useSelector(state => state.socketReducer.arrivalMessage)
+    const singleArrival = useSelector(state => state.socketReducer.singleMessage)
+    const dispatch = useDispatch()
     const [selectedItemIndex, setSelectedItemIndex] = useState(null);
-    const socket = useRef()
+    const socket = useSocket();
     const scrollRef = useRef()
     const allUsers = useSelector(state => state.userReducer.users);
     const allUsersStatus = useSelector(state => state.userReducer.status);
@@ -22,6 +28,7 @@ const Chatting = () => {
     const [togle, setTogle] = useState(false);
     const [loading, setLoading] = useState(false);
     const [allMessages, setAllMessages] = useState([]);
+    console.log('allMessages', allMessages)
     const [message, setMessage] = useState("");
 
     const loggedUser = JSON.parse(localStorage.getItem("info"));
@@ -35,7 +42,6 @@ const Chatting = () => {
             from: loggedUser?._id,
             to: currentChatUser?._id
         });
-        // console.log('data', data)
         setAllMessages(data?.projectMessages);
         setLoading(false)
     }
@@ -62,34 +68,26 @@ const Chatting = () => {
     }
     useEffect(() => {
         getAllMessagesData()
-        setAllArrivalMssage((prev) => {
-            return prev?.filter((item) => {
-                return item?.from !== currentChatUser?._id;
-            })
-        })
+        // setAllArrivalMssage((prev) => {
+        //     return prev?.filter((item) => {
+        //         return item?.from !== currentChatUser?._id;
+        //     })
+        // })
+        dispatch(deleveArrivalMessage(currentChatUser?._id))
+
     }, [currentChatUser])
 
     useEffect(() => {
-        if (loggedUser) {
-            // console.log('loggedUser', loggedUser)
-            socket.current = io("http://localhost:8080/");
-            socket.current.emit("add-user", loggedUser?._id);
-
-        }
-    }, [loggedUser])
-    useEffect(() => {
         if (socket.current) {
             socket.current.on("catch", (data) => {
-                // console.log('catch', data)
                 setArrivalMssage({ from: data.from, message: { fromSelf: false, message: data.message } })
             })
         }
     }, [socket.current])
     useEffect(() => {
-        arrivalMssage && setAllMessages((prev) => [...prev, arrivalMssage.message]);
-        arrivalMssage && setAllArrivalMssage((get) => [...get, arrivalMssage]);
-        arrivalMssage && notification?.play();
-    }, [arrivalMssage])
+        singleArrival && setAllMessages((prev) => [...prev, singleArrival]);
+
+    }, [singleArrival])
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behaviour: "smooth" })
     }, [allMessages])
@@ -138,9 +136,10 @@ const Chatting = () => {
                                 </form>
 
                             </div>
-                            : <div className='w-[70%] h-screen'>
+                            : <div className='w-[70%] h-screen flex flex-col items-center justify-center '>
+                                <p className='text-3xl w-60 flex text-end items-end justify-end glow text-sky-200 '>Hello</p>
+                                <img src={chatImage} className='w-[59%] h-[60%] animate-pulse ease-in-out duration-500 object-cover' alt="" />
 
-                                <p>hello</p>
                             </div>}
 
                         <div className='overflow-y-auto w-[30%] border-l-2 p-10 border-gray-700 min-h-screen flex flex-col scrollbar-hide overflow-hidden gap-2 scroll-smooth'>
@@ -152,7 +151,7 @@ const Chatting = () => {
                                         setTogle(true);
                                         setSelectedItemIndex(index); // Update the selected item index
                                     }}
-                                    className={`flex w-full gap-8 h-1/12 duration-300 items-center cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
+                                    className={`flex w-full gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
                                         }`}
                                 >
                                     <div className='w-full flex h-[60px] items-center gap-2 '>
@@ -162,12 +161,12 @@ const Chatting = () => {
 
                                         </span>
                                     </div>
-                                    {AllArrivalMssage?.filter((item) => {
-                                        return item?.from === following._id;
+                                    {arrival?.filter((item) => {
+                                        return item?.sender === following._id;
                                     }).length > 0 ?
                                         <span className='flex w-full justify-end  '><span className='text-red-800'><IoIosNotifications size={22} /></span><sub className='font-bold text-yellow-500 '>{
-                                            AllArrivalMssage?.filter((item) => {
-                                                return item?.from === following._id;
+                                            arrival?.filter((item) => {
+                                                return item?.sender === following._id;
                                             }).length}</sub></span>
                                         : ""
                                     }

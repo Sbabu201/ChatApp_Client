@@ -67,7 +67,7 @@ export default function CreatePost({ open, handleOpen }) {
             image: images,
             user: user?._id,
         }
-        console.log('formData', formData)
+        // console.log('formData', formData)
         dispatch(createPost(formData))
     }
     return (

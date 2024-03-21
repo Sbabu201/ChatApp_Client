@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllUsers } from '../store/reducers/userReducer';
 import { useNavigate } from 'react-router-dom';
 import { setUser } from '../store/reducers/profileReducer';
+import { getAllPosts } from '../store/reducers/postReducer';
 
 
 export default function SearchCard({ searchOpen, handleSearchOpen }) {
@@ -25,7 +26,7 @@ export default function SearchCard({ searchOpen, handleSearchOpen }) {
             return
         return lowerCaseName?.includes(search?.toLowerCase());
     });
-    console.log('filteredUsers', filteredUsers)
+    // console.log('filteredUsers', filteredUsers)
     const handle = () => {
         handleSearchOpen();
     }
@@ -34,6 +35,7 @@ export default function SearchCard({ searchOpen, handleSearchOpen }) {
     // }
     React.useEffect(() => {
         dispatch(getAllUsers())
+        // dispatch(getAllPosts())
     }, [])
     React.useEffect(() => {
         filteredUsers = users.filter(user => {

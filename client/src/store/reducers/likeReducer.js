@@ -34,9 +34,9 @@ export const deleteLike = createAsyncThunk(
     'delete/deleteLike',
     async (bagItemId, { rejectWithValue }) => {
         try {
-            console.log('bagItemId', bagItemId)
+            // console.log('bagItemId', bagItemId)
             const deleted = await axios.delete(`/post/deleteLike`, { data: { bagItemId } });
-            console.log('deleted', deleted)
+            // console.log('deleted', deleted)
             return deleted.data;
         } catch (error) {
             return rejectWithValue(error.response.data);

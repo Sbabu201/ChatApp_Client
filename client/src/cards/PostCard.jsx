@@ -15,6 +15,7 @@ import { createComments, getAllComments } from '../store/reducers/commentReducer
 import HomePageLoader from '../utils/HomePageLoader';
 import HomeImageSlide from '../slides/HomeImageSlide';
 import PostImageSlide from '../slides/PostImageSlide';
+import { setUser } from '../store/reducers/profileReducer';
 const PostCard = ({ item }) => {
     const [open, setOpen] = useState(false)
     const [comment, setComment] = useState("")
@@ -23,13 +24,11 @@ const PostCard = ({ item }) => {
     const dispatch = useDispatch()
     const likes = useSelector(state => state.likeReducer.likes);
     const comments = useSelector(state => state.commentReducer.comments);
-    console.log('comments', comments)
     const status = useSelector(state => state.likeReducer.status);
-    console.log('item', item)
-    const likesForPost = likes?.filter(like => like.post === item?._id);
-    const commentsForPost = comments?.filter(like => like.post === item?._id);
-    const likedByuser = likes?.filter(like => like.user._id === user?._id && like.post === item?._id);
-    console.log('commentsForPost', commentsForPost)
+    const likesForPost = likes?.filter(like => like.post._id === item?._id);
+    const commentsForPost = comments?.filter(like => like.post._id === item?._id);
+    const likedByuser = likes?.filter(like => like.user._id === user?._id && like.post._id === item?._id);
+
 
     const handleDislike = () => {
         const formData = {
@@ -64,7 +63,7 @@ const PostCard = ({ item }) => {
             post: item?._id,
             user: user?._id
         }
-        console.log('formData', formData)
+        // console.log('formData', formData)
         dispatch(createLikes(formData))
 
     }
@@ -126,7 +125,11 @@ const PostCard = ({ item }) => {
             {
                 (status === "loading") ? <HomePageLoader />
                     : <div className='md:w-3/6  w-full p-4 flex-col  h-2/5 text-white flex border justify-start scrollbar-hide  scroll-smooth'>
-                        <div className='flex gap-4 h-[10%] items-center mx-8'>
+                        <div onClick={() => {
+                            localStorage.setItem("userId", item?.user?._id)
+                            dispatch(setUser(item?.user?._id))
+                            navigate("/userprofile")
+                        }} className='flex gap-4 h-[10%] cursor-pointer items-center mx-8'>
                             <img src={item?.user?.profilePic} className='object-cover rounded-full h-[60px] min-w-[60px] ' />
                             <span className='flex items-center gap-1 text-center'>{item?.user?.name} <FcApproval size={22} /></span>
 

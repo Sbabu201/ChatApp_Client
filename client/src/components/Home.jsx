@@ -8,11 +8,8 @@ import allPostsCard from '../cards/allPostsCard'
 import PostCard from '../cards/PostCard'
 import Loader from '../utils/Loader'
 const Home = () => {
-    const dispatch = useDispatch()
+
     const posts = useSelector(state => state.postReducer);
-    useEffect(() => {
-        dispatch(getAllPosts())
-    }, [dispatch])
     if (posts?.status === "loading") return <Loader />
     return (
         <>

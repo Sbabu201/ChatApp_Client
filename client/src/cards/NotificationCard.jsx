@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/joy/Avatar';
 import Box from '@mui/joy/Box';
 import Button from '@mui/joy/Button';
@@ -14,8 +13,17 @@ import { Login } from '@mui/icons-material';
 import { FcPrevious } from "react-icons/fc";
 import { FcCancel } from "react-icons/fc";
 import login from "../assets/msg.png"
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllComments } from '../store/reducers/commentReducer';
+import { getAllLikes } from '../store/reducers/likeReducer';
+import { useEffect } from 'react';
+import { getAllPosts } from '../store/reducers/postReducer';
+import { useNavigate } from 'react-router-dom';
 const NotificationCard = ({ notify, handleChange }) => {
-    const arr = [1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,]
+    const user = JSON.parse(localStorage.getItem("info"))
+    const posts = useSelector(state => state.postReducer.posts);
+    const navigate = useNavigate()
+
     const handle = () => {
         handleChange()
     }
@@ -29,25 +37,30 @@ const NotificationCard = ({ notify, handleChange }) => {
                         <FcCancel size={32} />
                     </div>
                     <span className='text-white font-bold text-center text-2xl pb-8'>Notifications </span>
-                    <div className='hide-scrollbar'>
+                    <div className='hide-scrollbar flex flex-col gap-2 items-center'>
                         {
-                            arr?.map((item, i) => (
-                                <div className='flex text-white w-full gap-2 px-2 hover:bg-gray-900 duration-300 ' onClick={() => alert("hello")}>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-                                    <img src={login} className='w-10 h-10 object-cover' alt="" />
-                                </div>
+                            posts?.map((item, i) => (
+                                <>
+                                    {item?.likes?.length > 0 && <div className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
+                                        localStorage.setItem("postId", item?._id);
+                                        navigate("/postSearch")
+                                    }}>
+                                        <p className='flex gap-2'> {item?.likes[0]?.user?.name}  {item?.likes?.length - 1 >= 1 ? <p>and {item?.likes?.length - 1} others Liked your photo.</p> : <p>Liked your photo</p>}  </p>
+
+                                        <img src={item?.image[0]} className='w-8 h-8 object-cover' alt="" />
+                                    </div>}
+                                    {item?.comments?.length > 0 && <div className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
+                                        localStorage.setItem("postId", item?._id);
+                                        navigate("/postSearch")
+                                    }}>
+                                        <p className='flex gap-2'> {item?.comments[0]?.user?.name}  {item?.comments?.length - 1 >= 1 ? <p>and {item?.comments?.length - 1} others commented on your photo.</p> : <p>commented on your photo</p>}  </p>
+
+                                        <img src={item?.image[0]} className='w-8 h-8 object-cover' alt="" />
+                                    </div>}
+                                </>
                             ))
                         }
                     </div>
-                    {/* <List>
-                        {[...new Array(100)].map((_, index) => (
-                            <ListItem key={index}>
-                                <ListItemButton onClick={() => handle}>
-                                    Item {index}
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List> */}
                 </DialogContent>
                 <Box
                     sx={{
@@ -62,10 +75,10 @@ const NotificationCard = ({ notify, handleChange }) => {
 
                     }}
                 >
-                    <Avatar size="lg" />
-                    <div className='text-white'>
-                        <p>hello</p>
-                        <p>hello</p>
+                    <Avatar size="lg" src={user?.profilePic} />
+                    <div className='text-white '>
+                        <p>{user?.name}</p>
+                        {/* <p>hello</p> */}
                     </div>
                 </Box>
             </Drawer>

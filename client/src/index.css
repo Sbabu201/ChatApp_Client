@@ -7,8 +7,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar-thumb:vertical {
-  transform: translateY(100%);
+.gradient-text {
+  background: linear-gradient(to right, #ff7e5f, #feb47b, #ffdb98, #dcf6b1, #aaffc3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow {
+  text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 55px #ff0000, 0 0 75px #ff0000;
 }
 
 code {

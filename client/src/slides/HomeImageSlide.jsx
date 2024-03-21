@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FcRight } from "react-icons/fc";
 import { FcLeft } from "react-icons/fc";
 const HomeImageSlide = ({ slides }) => {
-    console.log('slides', slides)
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const nextSlide = () => {

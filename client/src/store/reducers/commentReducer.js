@@ -21,7 +21,7 @@ export const createComments = createAsyncThunk(
     'post/createComments',
     async (bagItemData, { rejectWithValue }) => {
         try {
-            console.log('bagItemData', bagItemData)
+            // console.log('bagItemData', bagItemData)
             const response = await axios.post(`/post/addComment`, bagItemData);
             return response.data;
         } catch (error) {
@@ -71,7 +71,7 @@ const commentSlice = createSlice({
             })
             .addCase(createComments.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('action.payload', action.payload)
+                // console.log('action.payload', action.payload)
                 if (action.payload.success) {
                     state.comments.push(action.payload.newComment);
                     toast.success(action.payload.message)
@@ -88,7 +88,7 @@ const commentSlice = createSlice({
             })
             .addCase(deleteComment.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('action.payload', action.payload)
+                // console.log('action.payload', action.payload)
                 state.comments = state.comments.filter(item => item._id !== action.payload.deleteComment._id);
                 toast.success(action.payload.message)
             })

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { IoIosNotifications } from "react-icons/io";
 
 import { FcHome } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
@@ -11,8 +12,24 @@ import SearchCard from '../cards/SearchCard';
 import { useNavigate } from 'react-router-dom';
 import CreatePost from '../Pages/CreatePost';
 import { getAllUsers } from '../store/reducers/userReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { io } from "socket.io-client";
+import { getAllArrivalMessage, setSocket } from '../store/reducers/socketReducer';
+import notificationsound from "../assets/itune.mp3"
+import toast from 'react-hot-toast';
+import { useSocket } from '../Pages/SocketProvider';
+import { getAllPosts } from '../store/reducers/postReducer';
 
 const SideBar = () => {
+    const messages = useSelector(state => state.socketReducer.arrivalMessage);
+    // console.log('arr', arr)
+    // const [arrivalMssage, setArrivalMssage] = useState(null);
+    // const [AllArrivalMssage, setAllArrivalMssage] = useState([]);
+    // const [messages, setMessages] = useState([]);
+    const dispatch = useDispatch();
+    const loggedUser = JSON.parse(localStorage.getItem("info"));
+    const socket = useSocket();
+
     const navigate = useNavigate()
     const [notify, setNotify] = useState(false)
     const [searchOpen, setSearchOpen] = useState(false)
@@ -23,14 +40,22 @@ const SideBar = () => {
     const handleOpen = () => {
         setOpen(state => !state)
     }
-
+    // useEffect(() => {
+    //     if (socket.current) {
+    //         socket.current.on("catch", (data) => {
+    //             // console.log('catch', data)
+    //             setArrivalMssage({ from: data.from, message: { fromSelf: false, message: data.message } })
+    //         })
+    //     }
+    // }, [socket.current])
     const handleSearchOpen = () => {
         // alert("hello")
         setSearchOpen(state => !state)
     }
+
     useEffect(() => {
-        getAllUsers()
-    })
+        dispatch(getAllArrivalMessage({ to: loggedUser?._id }))
+    }, [])
     return (
         <>
             {open && <CreatePost open={open} handleOpen={handleOpen} />
@@ -64,9 +89,14 @@ const SideBar = () => {
                             <p>Create</p>
                         </div>
                         <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <FcSms size={32} />
+                            <div className='flex'>
+                                <FcSms size={32} />{messages?.length > 0 && <p className='bg-red-500 w-4 h-4 text-xs rounded-full items-center justify-center flex'>{messages?.length}</p>}
+
+                            </div>
                             <p>Chat</p>
+
                         </div>
+
 
                         <div onClick={() => navigate("/profile")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
                             <FcBusinessman size={32} />

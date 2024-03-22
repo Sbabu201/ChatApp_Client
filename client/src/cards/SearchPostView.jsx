@@ -16,7 +16,7 @@ import PostCard from '../cards/PostCard'
 import Loader from '../utils/Loader'
 import axios from 'axios'
 import { createLikes, deleteLike, getAllLikes } from '../store/reducers/likeReducer'
-import { getAllComments } from '../store/reducers/commentReducer'
+import { createComments, getAllComments } from '../store/reducers/commentReducer'
 import PostImageSlide from '../slides/PostImageSlide'
 const SearchPostView = () => {
     const [open, setOpen] = useState(false)
@@ -24,7 +24,7 @@ const SearchPostView = () => {
     const dispatch = useDispatch()
     const [comment, setComment] = useState("")
     const user = JSON.parse(localStorage.getItem("info"));
-    const postId = localStorage.getItem("postId");
+    const postId = useSelector(state => state.profileReducer.postId) || localStorage.getItem("postId");
     const [post, setPost] = useState({})
     const likes = useSelector(state => state.likeReducer.likes);
     const comments = useSelector(state => state.commentReducer.comments);
@@ -53,6 +53,8 @@ const SearchPostView = () => {
             post: post?._id,
             comment: comment
         }
+        dispatch(createComments(form));
+        setComment("")
     }
     const handlelike = () => {
         const formData = {
@@ -85,7 +87,7 @@ const SearchPostView = () => {
         dispatch(getAllLikes())
         dispatch(getAllComments())
         getPostDetails()
-    }, [dispatch])
+    }, [dispatch, postId])
 
     if (posts?.status === "loading") return <Loader />
     return (

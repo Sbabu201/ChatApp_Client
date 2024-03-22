@@ -4,7 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const user = JSON.parse(localStorage.getItem("info"));
 const initialState = {
     userId: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    postId: null
 };
 
 const profileSlice = createSlice({
@@ -14,12 +15,15 @@ const profileSlice = createSlice({
         setUser(state, action) {
             state.userId = action.payload;
         },
+        setPost(state, action) {
+            state.postId = action.payload;
+        },
         setAuthenticated(state, action) {
             state.isAuthenticated = action.payload;
         },
     },
 });
 
-export const { setUser, setAuthenticated } = profileSlice.actions;
+export const { setUser, setAuthenticated, setPost } = profileSlice.actions;
 
 export default profileSlice.reducer;

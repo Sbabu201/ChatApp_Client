@@ -19,7 +19,9 @@ import { getAllLikes } from '../store/reducers/likeReducer';
 import { useEffect } from 'react';
 import { getAllPosts } from '../store/reducers/postReducer';
 import { useNavigate } from 'react-router-dom';
+import { setPost } from '../store/reducers/profileReducer';
 const NotificationCard = ({ notify, handleChange }) => {
+    const dispatch = useDispatch()
     const user = JSON.parse(localStorage.getItem("info"))
     const posts = useSelector(state => state.postReducer.posts);
     let userPosts = posts?.filter((item) => {
@@ -53,6 +55,7 @@ const NotificationCard = ({ notify, handleChange }) => {
                                 <>
                                     {item?.likes?.length > 0 && <div className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
                                         localStorage.setItem("postId", item?._id);
+                                        dispatch(setPost(item?._id))
                                         navigate("/postSearch")
                                     }}>
                                         <p className='flex gap-2'> {item?.likes[0]?.user?.name}  {item?.likes?.length - 1 >= 1 ? <p>and {item?.likes?.length - 1} others Liked your photo.</p> : <p>Liked your photo</p>}  </p>
@@ -61,6 +64,7 @@ const NotificationCard = ({ notify, handleChange }) => {
                                     </div>}
                                     {item?.comments?.length > 0 && <div className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
                                         localStorage.setItem("postId", item?._id);
+                                        dispatch(setPost(item?._id))
                                         navigate("/postSearch")
                                     }}>
                                         <p className='flex gap-2'> {item?.comments[0]?.user?.name}  {item?.comments?.length - 1 >= 1 ? <p>and {item?.comments?.length - 1} others commented on your photo.</p> : <p>commented on your photo</p>}  </p>

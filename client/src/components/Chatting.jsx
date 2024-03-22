@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react'
 import SideBar from './SideBar'
+import ButtomBar from "./ButtomBar"
 import { IoSendOutline } from "react-icons/io5";
 import { FcApproval } from "react-icons/fc";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Loader from "../utils/Loader"
-import notificationsound from "../assets/usetune.mp3"
-import { io } from "socket.io-client"
 import { v4 as uuidv4 } from "uuid"
 import { IoIosNotifications } from "react-icons/io";
 import chatImage from "../assets/451.png"
@@ -104,19 +103,52 @@ const Chatting = () => {
             <div className=''>
 
                 <div className='min-h-screen flex h-full w-full scrollbar-hide overflow-hidden  scroll-smooth'>
-                    <div className='md:w-[20%]  w-0 h-full md:visible invisible  text-white '>
+                    <div className='md:w-[20%]  w-0 h-full md:flex hidden  text-white '>
                         <SideBar />
 
                     </div>
-                    <div className='md:w-[80%] w-full bg-black flex text-white border-white h-screen'>
-                        {togle ?
-                            <div className='w-[70%]   h-screen '>
 
-                                <div className='flex w-full gap-8 h-[10%] border-b-2 border-gray-800 overflow-hidden items-center cursor-pointer ' >
+
+                    <div className='md:w-[80%] w-full bg-black flex md:flex-row  flex-col-reverse text-white border-white h-screen'>
+
+                        {/* <div className='overflow-x-auto border-b-2  w-full border-l-2 p-10 border-gray-700  flex md:hidden h-[7%] scrollbar-hide overflow-hidden gap-4 scroll-smooth'>
+                            {loggeduserDetails[0]?.following?.map((following, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => {
+                                        setCurrentChatUser(following);
+                                        setTogle(true);
+                                        setSelectedItemIndex(index); // Update the selected item index
+                                    }}
+                                    className={`flex  gap-8  duration-300 items-center bg-red-500 rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
+                                        }`}
+                                >
+                                    <div className='w-full flex   flex-col items-center gap-2 '>
+                                        <img src={following?.profilePic} className='object-cover rounded-full h-[30px] w-[30px]' />
+                                        <span className='flex items-center gap-1 text-sm text-center'>
+                                            {following?.name}
+
+                                        </span>
+                                    </div>
+                                    {arrival?.filter((item) => {
+                                        return item?.sender === following._id;
+                                    }).length > 0 ?
+                                        <span className='flex w-full justify-end  '><span className='text-red-800'><IoIosNotifications size={22} /></span><sub className='font-bold text-yellow-500 '>{
+                                            arrival?.filter((item) => {
+                                                return item?.sender === following._id;
+                                            }).length}</sub></span>
+                                        : ""
+                                    }
+                                </div>
+                            ))}
+                        </div> */}
+                        {togle ?
+                            <div className='md:w-[70%] w-full h-[90%]  md:h-screen '>
+                                <div className='flex w-full gap-8 h-[9%] border-b-2 border-gray-800 overflow-hidden items-center cursor-pointer ' >
                                     <img src={currentChatUser?.profilePic} className='object-cover rounded-full h-[40px] w-[40px] ml-8 ' />
                                     <span className='flex items-center gap-1 text-center'>{currentChatUser?.name} <FcApproval size={22} /></span>
                                 </div>
-                                <div className='overflow-y-auto scrollbar-thumb-rounded-full scrollbar-thumb-y-0 flex flex-col gap-2 h-[83%] scrollbar-hide overflow-hidden  scroll-smooth p-4 '>
+                                <div className='overflow-y-auto scrollbar-thumb-rounded-full   scrollbar-thumb-y-0 flex flex-col gap-2 md:h-[84%] h-[74%] scrollbar-hide overflow-hidden  scroll-smooth p-4 '>
                                     {allMessages?.map((msg, index) => (
                                         <div key={index} className=''>
                                             <span className={`flex  items-start ${msg?.fromSelf ? "justify-end " : "justify-start"} `}>
@@ -136,13 +168,13 @@ const Chatting = () => {
                                 </form>
 
                             </div>
-                            : <div className='w-[70%] h-screen flex flex-col items-center justify-center '>
+                            : <div className='w-[70%] md:h-screen h-[90%] flex flex-col items-center justify-center '>
                                 <p className='text-3xl w-60 flex text-end items-end justify-end glow text-sky-200 '>Hello</p>
                                 <img src={chatImage} className='w-[59%] h-[60%] animate-pulse ease-in-out duration-500 object-cover' alt="" />
 
                             </div>}
 
-                        <div className='overflow-y-auto w-[30%] border-l-2 p-10 border-gray-700 min-h-screen flex flex-col scrollbar-hide overflow-hidden gap-2 scroll-smooth'>
+                        <div className='md:overflow-y-auto overflow-x-auto w-full  md:w-[30%] border-l-2 p-10 border-gray-700 md:min-h-screen h-[10%] flex flex-row   md:flex-col scrollbar-hide overflow-hidden md:gap-2 gap-4 scroll-smooth'>
                             {loggeduserDetails[0]?.following?.map((following, index) => (
                                 <div
                                     key={index}
@@ -151,13 +183,14 @@ const Chatting = () => {
                                         setTogle(true);
                                         setSelectedItemIndex(index); // Update the selected item index
                                     }}
-                                    className={`flex w-full gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
+                                    className={`flex md:w-full w-1/6 gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
                                         }`}
                                 >
-                                    <div className='w-full flex h-[60px] items-center gap-2 '>
-                                        <img src={following?.profilePic} className='object-cover rounded-full h-[40px] w-[40px]' />
-                                        <span className='flex items-center gap-1 text-center'>
-                                            {following?.name} <FcApproval size={22} />
+                                    <div className='w-full flex md:flex-row flex-col h-[60px] items-center gap-2 '>
+                                        <img src={following?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[30px] w-[30px]' />
+                                        <span className='flex items-center   gap-1 text-center'>
+                                            {following?.name}
+                                            <p className='md:block hidden'> <FcApproval size={22} /></p>
 
                                         </span>
                                     </div>
@@ -177,9 +210,11 @@ const Chatting = () => {
 
 
                 </div>
-                {/* <div className='visible md:invisible '>
+
+
+                <div className='flex md:hidden '>
                     <ButtomBar />
-                </div> */}
+                </div>
             </div>
 
         </>

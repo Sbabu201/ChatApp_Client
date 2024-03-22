@@ -16,7 +16,7 @@ const Home = () => {
 
 
             <div className='min-h-screen flex h-full w-full bg-black scrollbar-hide overflow-y-auto  scroll-smooth'>
-                <div className='md:w-[20%]  h-full md:flex flex-none  text-white '>
+                <div className='md:w-[20%]  h-full md:flex hidden text-white '>
                     <SideBar />
 
                 </div>
@@ -42,7 +42,7 @@ const Home = () => {
                 </div>
 
             </div>
-            <div className='visible md:invisible '>
+            <div className='flex md:hidden '>
                 <ButtomBar />
             </div>
 

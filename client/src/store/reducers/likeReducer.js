@@ -22,6 +22,7 @@ export const createLikes = createAsyncThunk(
     async (bagItemData, { rejectWithValue }) => {
         try {
             const response = await axios.post(`/post/addLike`, bagItemData);
+            console.log('response', response)
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);

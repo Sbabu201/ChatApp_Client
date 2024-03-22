@@ -34,13 +34,22 @@ function App() {
   useEffect(() => {
     if (socket.current) {
       socket.current.on("catch", (data) => {
-        dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
-        dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
         try {
+          dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
+          dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
+          // notification = new Audio(notificationsound);
+
           notification?.play()
         } catch (error) {
           console.log('error', error)
         }
+      })
+    }
+  }, [socket.current])
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("notify", (data) => {
+        toast.success(data.user + "  " + data.message)
       })
     }
   }, [socket.current])

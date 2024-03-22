@@ -28,7 +28,7 @@ const PostImageSlide = ({ slides }) => {
                         className={`w-full transition-opacity  duration-300 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0 hidden'
                             }`}
                     >
-                        <img src={slide} alt="image" className="w-full object-cover min-h-[90vh] max-h-[90vh] " />
+                        <img src={slide} alt="image" className="w-full object-cover md:min-h-[80vh] md:max-h-[80vh] min-h-[40vh] max-h-[40vh]" />
                     </div>
                 ))}
             </div>

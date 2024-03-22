@@ -23,7 +23,6 @@ const style = {
 
 export default function CreatePost({ open, handleOpen }) {
     const user = JSON.parse(localStorage.getItem('info'));
-    // console.log('user', user)
     const dispatch = useDispatch()
     const [images, setImages] = React.useState([]);
     const handleClose = () => handleOpen();

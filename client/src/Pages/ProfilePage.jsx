@@ -40,12 +40,12 @@ const ProfilePage = () => {
 
                 </div>
                 <div className='md:w-[80%] w-full bg-black  border-white min-h-screen'>
-                    <div className='w-full max-h-[44%] p-10 flex border-b-2 border-gray-900 '>
-                        <div className='w-1/3 h-full flex justify-center items-center '>
+                    <div className='w-full md:max-h-[44%]  md:p-10 flex flex-col md:flex-row border-b-2 border-gray-900 '>
+                        <div className='md:w-1/3 w-full h-full flex justify-center items-center '>
                             <img src={profile?.profilePic} className='w-60 h-60 rounded-full object-cover' alt="" />
                         </div>
-                        <div className='w-2/3 h-full text-white '>
-                            <div className='p-6 font-bold text-sm w-full items-center flex gap-4'>
+                        <div className='md:w-2/3 w-full h-full md:gap-0 gap-4 flex flex-col text-white '>
+                            <div className='p-6 font-bold text-sm w-full md:text-balance text-small items-center md:justify-start justify-between flex gap-4'>
                                 <span className=' text-xl'>{profile?.name}</span>
                                 <button className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md'>edit profile</button>
                                 <button className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md'>view archieve</button>
@@ -53,7 +53,7 @@ const ProfilePage = () => {
                                 <FcSettings className=' cursor-pointer' size={32} />
 
                             </div>
-                            <div className='flex px-6 pb-4 gap-10'>
+                            <div className='flex md:justify-start w-full justify-between md:px-6 pb-4 md:gap-10 gap-2'>
                                 <span className='flex gap-2 '>
                                     <p>{profile?.posts?.length}</p>
                                     <p>posts</p>
@@ -86,7 +86,7 @@ const ProfilePage = () => {
                         </div>
                         <div className='flex gap-4 w-[90%] flex-wrap'>
                             {profile?.posts?.map((item, i) => (
-                                <div className='w-[31%] flex flex-col max-h-[400px] min-h-[400px] relative group'>
+                                <div className='md:w-[31%] w-full flex flex-col max-h-[400px] min-h-[400px] relative group'>
                                     <DemoCard slides={item?.image} />
                                     {/* <img key={i} className='w-full max-h-[350px] min-h-[350px] object-cover' src={item?.image?.slice(0, 1)} alt="" /> */}
                                     <p className="absolute hidden group-hover:flex top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black px-2 py-1 rounded">

@@ -16,7 +16,11 @@ import HomePageLoader from '../utils/HomePageLoader';
 import HomeImageSlide from '../slides/HomeImageSlide';
 import PostImageSlide from '../slides/PostImageSlide';
 import { setUser } from '../store/reducers/profileReducer';
+import { useSocket } from '../Pages/SocketProvider';
 const PostCard = ({ item }) => {
+    // console.log('item', item)
+    const socket = useSocket();
+
     const [open, setOpen] = useState(false)
     const [comment, setComment] = useState("")
     const user = JSON.parse(localStorage.getItem("info"));
@@ -51,6 +55,12 @@ const PostCard = ({ item }) => {
         }
 
         dispatch(createComments(form))
+        socket.current.emit("send-notify", {
+            user: user?.name,
+            owner: item?.user?._id,
+            message: "commented on your photo"
+        })
+        setComment("")
     }
     const handleComment = () => {
         localStorage.setItem("postId", item?._id);
@@ -65,7 +75,11 @@ const PostCard = ({ item }) => {
         }
         // console.log('formData', formData)
         dispatch(createLikes(formData))
-
+        socket.current.emit("send-notify", {
+            user: user?.name,
+            owner: item?.user?._id,
+            message: "liked  your photo"
+        })
     }
     useEffect(() => {
         dispatch(getAllLikes())
@@ -115,16 +129,16 @@ const PostCard = ({ item }) => {
                         <span className='flex gap-2 h-[5%]  '>
                             {likesForPost?.length} likes
                         </span>
-                        <div className='h-[5%] border-t-2 border-gray-700 flex justify-between items-center w-full'>
+                        <form onSubmit={handleSubmitComment} className='h-[5%] border-t-2 border-gray-700 flex justify-between items-center w-full'>
                             <input type="text" name="comment" value={comment} onChange={handleChange} placeholder='Add a comment......' className='w-2/3 h-10  bg-transparent outline-none ' />
-                            <button className='w-1/3' onClick={handleSubmitComment}>post</button>
-                        </div>
+                            <button type='submit' className='w-1/3' >post</button>
+                        </form>
                     </div>
                 </div>
             </div>}
             {
                 (status === "loading") ? <HomePageLoader />
-                    : <div className='md:w-3/6  w-full p-4 flex-col  h-2/5 text-white flex border justify-start scrollbar-hide  scroll-smooth'>
+                    : <div className='md:w-4/6 lg:w-3/6  w-full p-4 flex-col  h-2/5 text-white flex border justify-start scrollbar-hide  scroll-smooth'>
                         <div onClick={() => {
                             localStorage.setItem("userId", item?.user?._id)
                             dispatch(setUser(item?.user?._id))

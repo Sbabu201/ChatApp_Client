@@ -22,11 +22,21 @@ import { useNavigate } from 'react-router-dom';
 const NotificationCard = ({ notify, handleChange }) => {
     const user = JSON.parse(localStorage.getItem("info"))
     const posts = useSelector(state => state.postReducer.posts);
+    let userPosts = posts?.filter((item) => {
+        return item?.user?._id === user?._id;
+    })
     const navigate = useNavigate()
 
     const handle = () => {
         handleChange()
     }
+
+    useEffect(() => {
+        userPosts = posts?.filter((item) => {
+            return item?.user?._id === user?._id;
+        })
+    }, [posts])
+
     return (
         <div>
             <Drawer open={notify} onClose={() => handle}>
@@ -39,7 +49,7 @@ const NotificationCard = ({ notify, handleChange }) => {
                     <span className='text-white font-bold text-center text-2xl pb-8'>Notifications </span>
                     <div className='hide-scrollbar flex flex-col gap-2 items-center'>
                         {
-                            posts?.map((item, i) => (
+                            userPosts?.map((item, i) => (
                                 <>
                                     {item?.likes?.length > 0 && <div className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
                                         localStorage.setItem("postId", item?._id);

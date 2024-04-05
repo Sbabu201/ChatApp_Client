@@ -88,19 +88,22 @@ const PostCard = ({ item }) => {
     // console.log('likes', likes)
     return (
         <>
-            {open && <div className='fixed flex items-center justify-center z-50 text-white inset-0 bg-opacity-30  bg-black backdrop-blur-sm'>
-                <div className='bg-transparent flex w-[85%] pt-10 h-screen shadow-2xl '>
-                    <div className='h-[95%] w-[60%]'>
+            {open && <div className='fixed flex  items-center justify-center z-50 text-white inset-0 bg-opacity-30  bg-black backdrop-blur-sm'>
+                <div className='bg-transparent flex-col md:flex-row flex w-[85%] pt-10  h-screen shadow-2xl '>
+                    <div className='w-full   h-[2%] mt-2 md:hidden flex items-end justify-end'>
+                        <button onClick={handleComment}><GrClose className=' font-bold' /></button>
+                    </div>
+                    <div className='md:h-[95%] h-[40%] md:w-[60%] w-full'>
                         <PostImageSlide slides={item?.image} />
                     </div>
-                    <div className='w-[40%] px-8  bg-black text-white h-[90vh]  '>
-                        <div className='w-full flex h-[2%] mt-2 items-end justify-end'>
+                    <div className='md:w-[40%] w-full px-8 pt-4 md:pt-0 bg-black text-white md:h-[83%] h-[60%] '>
+                        <div className='w-full  hidden md:flex h-[2%] mt-2 items-end justify-end'>
                             <button onClick={handleComment}><GrClose className=' font-bold' /></button>
                         </div>
                         <div className='border-b-2 border-gray-700 my-2 h-[5%]'>
                             profile
                         </div>
-                        <div className='flex flex-col h-[70%] scrollbar-hide  scroll-smooth  overflow-y-auto shadow-xl '>
+                        <div className='flex flex-col md:h-[70%] h-[50%] scrollbar-hide  scroll-smooth  overflow-y-auto shadow-xl '>
                             {commentsForPost?.length === 0 ?
                                 <p>
                                     no comments are there   ..........
@@ -109,7 +112,7 @@ const PostCard = ({ item }) => {
                                 <div className='flex flex-col gap-4 justify-center'>
                                     {commentsForPost?.map((com, i) => (
 
-                                        <div className='flex gap-4  items-center mx-8  '>
+                                        <div className='flex md:gap-4 gap-2 w-full flex-wrap items-center mx-8  '>
                                             <img src={com?.user?.profilePic} className='object-cover rounded-full h-[20px] min-w-[20px] ' />
                                             <span className='flex items-center gap-1 text-center'>{com?.user?.name} <FcApproval size={12} /></span>
                                             <p>{com?.comment}</p>
@@ -119,7 +122,7 @@ const PostCard = ({ item }) => {
                                 </div>
                             }
                         </div>
-                        <div className='flex gap-2 h-[5%]  '>
+                        <div className='flex gap-2 md:h-[5%] h-[10%]  '>
 
                             {likedByuser?.length > 0 ? <FcLike size={32} onClick={handleDislike} /> :
                                 <FcLikePlaceholder size={32} onClick={handlelike} />}
@@ -129,7 +132,7 @@ const PostCard = ({ item }) => {
                         <span className='flex gap-2 h-[5%]  '>
                             {likesForPost?.length} likes
                         </span>
-                        <form onSubmit={handleSubmitComment} className='h-[5%] border-t-2 border-gray-700 flex justify-between items-center w-full'>
+                        <form onSubmit={handleSubmitComment} className='md:h-[5%] h-[10%] border-t-2 pt-4 border-gray-700 flex justify-between items-center w-full'>
                             <input type="text" name="comment" value={comment} onChange={handleChange} placeholder='Add a comment......' className='w-2/3 h-10  bg-transparent outline-none ' />
                             <button type='submit' className='w-1/3' >post</button>
                         </form>

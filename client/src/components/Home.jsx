@@ -16,23 +16,15 @@ const Home = () => {
         <>
 
 
-            <div className='min-h-screen flex h-full w-full bg-black scrollbar-hide overflow-y-auto  scroll-smooth'>
+            <div className='min-h-screen flex h-full w-full bg-black '>
                 <div className='md:w-[20%]  h-full md:flex hidden text-white '>
                     <SideBar />
 
                 </div>
-                <div className='md:w-[80%] w-full bg-black duration-300  scroll-smooth border-white  min-h-screen'>
-                    <div className='m-2 w-full h-[100px] flex items-center overflow-x-auto scrollbar-hide  scroll-smooth border-b-2'>
-                        {
-                            posts?.posts?.map((item, i) => (
-                                <img src={login} className='object-cover rounded-full h-[70px] min-w-[70px] ' key={i}>
-                                    {/* <img src="" alt="" /> */}
-                                </img>
-                            ))
-                        }
-                    </div>
+                <div className='md:w-[80%] w-full bg-black duration-300   border-white  h-full '>
+
                     {/* {(posts?.status === "loading") ? <Loader /> */}
-                    <div className='m-2 w-full pb-40 h-full justify-start  scroll-smooth duration-300 items-center gap-4 flex flex-col  border-b-2'>
+                    <div className='m-2 w-full pb-40 h-full justify-start duration-300 items-center gap-4 flex flex-col border-b-2'>
                         {
                             posts?.posts?.map((item, i) => (
                                 <PostCard key={i} item={item} />
@@ -40,9 +32,9 @@ const Home = () => {
                             ))
                         }
                     </div>
-                </div>
+                </div >
 
-            </div>
+            </div >
             <div className='flex md:hidden '>
                 <ButtomBar />
             </div>

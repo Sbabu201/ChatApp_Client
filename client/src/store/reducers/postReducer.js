@@ -81,6 +81,7 @@ const postSlice = createSlice({
             .addCase(createPost.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
+                toast.error(action.payload.message)
             })
             .addCase(deletePost.pending, (state) => {
                 state.status = 'loading';

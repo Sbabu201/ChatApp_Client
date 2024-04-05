@@ -3,9 +3,10 @@ import axios from "axios"
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { URL } from "../utils/serverurl";
-const backendUrl = process.env.BACKEND;
-
+import { useDispatch } from 'react-redux';
+import { setAuthenticated } from "../store/reducers/profileReducer";
 const OtpCheckPage = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [otp, setOtp] = useState(new Array(4).fill(""));
     const phone = localStorage.getItem("mobile")
@@ -31,6 +32,7 @@ const OtpCheckPage = () => {
                 localStorage.setItem("info", JSON.stringify(data?.info))
                 localStorage.removeItem("mobile")
                 toast.success(data?.message)
+                dispatch(setAuthenticated(true))
                 navigate("/")
             }
             else {

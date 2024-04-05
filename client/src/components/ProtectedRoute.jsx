@@ -8,9 +8,7 @@ const ProtectedRoute = ({ children }) => {
     let checkObj = JSON.parse(localStorage.getItem("info"));
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    useEffect(() => {
 
-    }, [checkObj, dispatch])
 
     if (!isAuthenticated) {
         return <Navigate to={"/login"} />;

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios"
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+const backendUrl = process.env.BACKEND;
+
 const OtpCheckPage = () => {
     const navigate = useNavigate()
     const [otp, setOtp] = useState(new Array(4).fill(""));
@@ -22,7 +24,7 @@ const OtpCheckPage = () => {
         // console.log('otp.join("") ', otp.join(""))
         try {
             const newOtp = otp.join("");
-            const { data } = await axios.post("http://localhost:8080/user/login/verify", { otp: newOtp, phone: phone })
+            const { data } = await axios.post(`https://chatapp-uqzh.onrender.com/user/login/verify`, { otp: newOtp, phone: phone })
             if (data.success) {
                 localStorage.setItem("token", data?.accessToken)
                 localStorage.setItem("info", JSON.stringify(data?.info))

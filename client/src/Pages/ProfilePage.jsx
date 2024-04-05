@@ -10,6 +10,8 @@ import { FcComments } from "react-icons/fc";
 import toast from 'react-hot-toast';
 import DemoCard from '../cards/demoCard';
 import ProfilePageLoader from '../utils/ProfilePageLoader';
+const backendUrl = process.env.BACKEND;
+
 const ProfilePage = () => {
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(false)
@@ -18,7 +20,7 @@ const ProfilePage = () => {
         const user = JSON.parse(localStorage.getItem("info"))
         try {
 
-            const { data } = await axios.get(`user/details/${user?._id}`);
+            const { data } = await axios.get(`https://chatapp-uqzh.onrender.com/user/details/${user?._id}`);
             // console.log('data', data.existUser)
             setProfile(data?.existUser)
         } catch (error) {

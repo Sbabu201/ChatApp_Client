@@ -1,6 +1,7 @@
 // SocketContext.js
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
+const backendUrl = process.env.BACKEND;
 
 const SocketContext = createContext();
 
@@ -13,7 +14,7 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
 
-        socket.current = io('http://localhost:8080'); // Your server URL
+        socket.current = io(`https://chatapp-uqzh.onrender.com`); // Your server URL
         // console.log('socket', socket)
         socket.current.emit("add-user", user?._id);
     }, [user]);

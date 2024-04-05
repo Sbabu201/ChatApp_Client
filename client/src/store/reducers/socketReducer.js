@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import toast from "react-hot-toast";
+const backendUrl = process.env.BACKEND;
 
 
 export const getAllArrivalMessage = createAsyncThunk(
     'user/getAllArrivalMessage',
     async (to, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`/message/allArrival`, to);
+            const response = await axios.post(`https://chatapp-uqzh.onrender.com/message/allArrival`, to);
             // console.log('response', response)
             return response.data;
         } catch (error) {
@@ -21,7 +22,7 @@ export const addArrivalMessage = createAsyncThunk(
     'post/addArrivalMessage',
     async (arrivalMessage, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`/message/addArrival`, arrivalMessage);
+            const response = await axios.post(`https://chatapp-uqzh.onrender.com/message/addArrival`, arrivalMessage);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -39,7 +40,7 @@ export const deleveArrivalMessage = createAsyncThunk(
         }
         try {
             console.log('bagItemId', bagItemId)
-            const deleted = await axios.delete(`/message/deleteArrival/${bagItemId}`);
+            const deleted = await axios.delete(`https://chatapp-uqzh.onrender.com/message/deleteArrival/${bagItemId}`);
             console.log('deleted', deleted)
             return deleted.data;
         } catch (error) {

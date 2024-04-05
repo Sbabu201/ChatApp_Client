@@ -12,6 +12,8 @@ import chatImage from "../assets/451.png"
 import { FcAbout } from "react-icons/fc";
 import { useSocket } from '../Pages/SocketProvider';
 import { deleveArrivalMessage, getAllArrivalMessage } from '../store/reducers/socketReducer';
+const backendUrl = process.env.BACKEND;
+
 const Chatting = () => {
     const arrival = useSelector(state => state.socketReducer.arrivalMessage)
     const singleArrival = useSelector(state => state.socketReducer.singleMessage)
@@ -37,7 +39,7 @@ const Chatting = () => {
 
     const getAllMessagesData = async () => {
         setLoading(true)
-        const { data } = await axios.post("/message/allMessage", {
+        const { data } = await axios.post(`https://chatapp-uqzh.onrender.com/message/allMessage`, {
             from: loggedUser?._id,
             to: currentChatUser?._id
         });
@@ -46,7 +48,7 @@ const Chatting = () => {
     }
     const handleSendMEssage = async (e) => {
         e.preventDefault()
-        const { data } = await axios.post("/message/addMessage", {
+        const { data } = await axios.post(`https://chatapp-uqzh.onrender.com/message/addMessage`, {
             from: loggedUser?._id,
             to: currentChatUser?._id,
             message: message

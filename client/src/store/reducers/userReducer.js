@@ -2,13 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import toast from "react-hot-toast";
 
-
 export const getAllUsers = createAsyncThunk(
     'get/getAllUsers',
     async (_, { rejectWithValue }) => {
         try {
             // alert("hello")
-            const response = await axios.get(`/user/allUsers`);
+            const response = await axios.get(`https://chatapp-uqzh.onrender.com/user/allUsers`);
             // console.log('response', response)
             return response.data;
         } catch (error) {
@@ -22,7 +21,7 @@ export const createUser = createAsyncThunk(
     'post/createLikes',
     async (bagItemData, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`/post/addLike`, bagItemData);
+            const response = await axios.post(`https://chatapp-uqzh.onrender.com/post/addLike`, bagItemData);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -36,7 +35,7 @@ export const deleteUser = createAsyncThunk(
     async (bagItemId, { rejectWithValue }) => {
         try {
             console.log('bagItemId', bagItemId)
-            const deleted = await axios.delete(`/post/deleteLike`, { data: { bagItemId } });
+            const deleted = await axios.delete(`https://chatapp-uqzh.onrender.com/post/deleteLike`, { data: { bagItemId } });
             console.log('deleted', deleted)
             return deleted.data;
         } catch (error) {

@@ -16,6 +16,8 @@ import { getAllUsers } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfilePageLoader from '../utils/ProfilePageLoader';
 const UserProfile = () => {
+    const backendUrl = process.env.BACKEND;
+    console.log('backend', backendUrl)
     const dispatch = useDispatch()
     let userId = useSelector(state => state.profileReducer.userId) || localStorage.getItem("userId");
     const loggedUser = JSON.parse(localStorage.getItem("info"));
@@ -55,7 +57,7 @@ const UserProfile = () => {
             }
 
             // idExists ? alert("hey") : alert("hello");
-            const { data } = !idExists ? await axios.put("/user/addfollow", form) : await axios.put("/user/removefollow", form);
+            const { data } = !idExists ? await axios.put(`https://chatapp-uqzh.onrender.com/user/addfollow`, form) : await axios.put(`https://chatapp-uqzh.onrender.com/user/removefollow`, form);
             console.log('data', data)
             if (data.success) {
                 toast.success(data.message);

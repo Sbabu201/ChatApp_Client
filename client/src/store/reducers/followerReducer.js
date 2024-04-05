@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from "socket.io-client";
 import { setSocket } from './socketReducer';
+const backendUrl = process.env.BACKEND;
 
 const FollowerReducer = ({ sendSocket }) => {
     const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const FollowerReducer = ({ sendSocket }) => {
 
     useEffect(() => {
         if (loggedUser) {
-            const newSocket = io("http://localhost:8080/");
+            const newSocket = io(`${backendUrl}`);
             newSocket.emit("add-user", loggedUser?._id);
             sendSocket(newSocket);
             return () => {

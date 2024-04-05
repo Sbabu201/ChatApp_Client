@@ -7,6 +7,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { URL } from '../utils/serverurl'
 const backendUrl = process.env.BACKEND;
 
 const schema = z.object({
@@ -21,7 +22,7 @@ const LoginPage = () => {
 
     const onSubmit = async (value) => {
         try {
-            const { data } = await axios.post(`https://chatapp-uqzh.onrender.com/user/login`, value);
+            const { data } = await axios.post(`${URL}/user/login`, value);
             if (data?.success) {
                 localStorage.setItem("mobile", value.phone);
                 toast.success(data?.message)

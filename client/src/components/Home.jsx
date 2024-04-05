@@ -7,8 +7,9 @@ import { getAllPosts } from '../store/reducers/postReducer'
 import allPostsCard from '../cards/allPostsCard'
 import PostCard from '../cards/PostCard'
 import Loader from '../utils/Loader'
+import { URL } from '../utils/serverurl'
 const Home = () => {
-
+    console.log('URL', URL)
     const posts = useSelector(state => state.postReducer);
     if (posts?.status === "loading") return <Loader />
     return (

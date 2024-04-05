@@ -1,0 +1,1 @@
+export const URL = "https://chatapp-uqzh.onrender.com"

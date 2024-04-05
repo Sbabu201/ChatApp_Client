@@ -15,6 +15,7 @@ import DemoCard from '../cards/demoCard';
 import { getAllUsers } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import ProfilePageLoader from '../utils/ProfilePageLoader';
+import { URL } from '../utils/serverurl';
 const UserProfile = () => {
     const backendUrl = process.env.BACKEND;
     console.log('backend', backendUrl)
@@ -57,7 +58,7 @@ const UserProfile = () => {
             }
 
             // idExists ? alert("hey") : alert("hello");
-            const { data } = !idExists ? await axios.put(`https://chatapp-uqzh.onrender.com/user/addfollow`, form) : await axios.put(`https://chatapp-uqzh.onrender.com/user/removefollow`, form);
+            const { data } = !idExists ? await axios.put(`${URL}/user/addfollow`, form) : await axios.put(`${URL}/user/removefollow`, form);
             console.log('data', data)
             if (data.success) {
                 toast.success(data.message);

@@ -4,8 +4,8 @@ import { setAuthenticated } from '../store/reducers/profileReducer';
 import { Outlet, useNavigate, Navigate } from "react-router-dom"
 const ProtectedRoute = ({ children }) => {
     const isAuthenticated = useSelector(state => state.profileReducer.isAuthenticated);
+    console.log('is', isAuthenticated)
     let checkObj = JSON.parse(localStorage.getItem("info"));
-    console.log('isAuthenticated', isAuthenticated)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     useEffect(() => {
@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }) => {
         }
     }, [checkObj, dispatch])
 
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
         return <Navigate to={"/login"} />;
     }
 

@@ -31,6 +31,7 @@ function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
   const socket = useSocket();
+  console.log('socket', socket)
   useEffect(() => {
     if (socket.current) {
       socket.current.on("catch", (data) => {
@@ -38,7 +39,6 @@ function App() {
           dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
           dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
           // notification = new Audio(notificationsound);
-
           notification?.play()
         } catch (error) {
           console.log('error', error)

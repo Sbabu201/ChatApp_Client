@@ -2,8 +2,7 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import { URL } from '../utils/serverurl';
-const backendUrl = process.env.BACKEND;
-console.log('URL', URL)
+
 const SocketContext = createContext();
 
 export const useSocket = () => useContext(SocketContext);

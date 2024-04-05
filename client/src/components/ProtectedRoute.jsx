@@ -9,11 +9,7 @@ const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     useEffect(() => {
-        checkObj = JSON.parse(localStorage.getItem("info"));
-        if (checkObj === null || checkObj === undefined) { dispatch(setAuthenticated(false)); }
-        else {
-            dispatch(setAuthenticated(true))
-        }
+
     }, [checkObj, dispatch])
 
     if (!isAuthenticated) {

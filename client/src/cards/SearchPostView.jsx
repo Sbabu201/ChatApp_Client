@@ -10,7 +10,7 @@ import { FcComments } from "react-icons/fc";
 import { FcShare } from "react-icons/fc";
 import { GrClose } from "react-icons/gr";
 import { FcLikePlaceholder } from "react-icons/fc";
-
+import { URL } from '../utils/serverurl'
 import allPostsCard from '../cards/allPostsCard'
 import PostCard from '../cards/PostCard'
 import Loader from '../utils/Loader'
@@ -34,7 +34,7 @@ const SearchPostView = () => {
     const likedByuser = likes?.filter(like => like.user._id === user?._id && like.post._id === post?._id);
     const getPostDetails = async () => {
         try {
-            const { data } = await axios.get(`/post/post/${postId}`);
+            const { data } = await axios.get(`${URL}/post/post/${postId}`);
             setPost(data?.existUser)
             console.log('data', data)
         } catch (error) {

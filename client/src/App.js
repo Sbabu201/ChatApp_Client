@@ -36,6 +36,7 @@ function App() {
       console.log('socket', socket.current)
       socket.current.on("catch", (data) => {
         try {
+          alert("hello")
           dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
           dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
           console.log('data', data)

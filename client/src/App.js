@@ -31,7 +31,7 @@ function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
   const socket = useSocket();
-
+  console.log('socket.current', socket.current)
   useEffect(() => {
     if (socket.current) {
       console.log('socket', socket.current)

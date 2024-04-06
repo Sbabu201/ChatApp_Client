@@ -38,7 +38,7 @@ function App() {
         try {
           dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
           dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
-          // notification = new Audio(notificationsound);
+          console.log('data', data)
           notification?.play()
         } catch (error) {
           console.log('error', error)

@@ -33,19 +33,19 @@ function App() {
   const socket = useSocket();
   useEffect(() => {
     console.log('socket', socket.current)
-    if (socket.current) {
+    // if (socket.current) {
 
-      socket.current.on("catch", (data) => {
-        try {
-          dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
-          dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
-          console.log('data', data)
-          notification?.play()
-        } catch (error) {
-          console.log('error', error)
-        }
-      })
-    }
+    socket?.current?.on("catch", (data) => {
+      try {
+        dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
+        dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
+        console.log('data', data)
+        notification?.play()
+      } catch (error) {
+        console.log('error', error)
+      }
+    })
+    // }
   }, [socket.current])
   useEffect(() => {
     if (socket.current) {

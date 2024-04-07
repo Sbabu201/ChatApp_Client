@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { FcApproval } from "react-icons/fc";
-
+import upload from "../assets/upload.jpg"
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { createPost } from '../store/reducers/postReducer';
@@ -25,6 +25,10 @@ const style = {
 
     // boxShadow: 24,
     p: 4,
+    '@media (max-width: 768px)': {
+        width: '100%', // Change width to 100% on screens smaller than 768px
+        height: '80%', // Adjust height as needed
+    },
 };
 
 export default function CreatePost({ open, handleOpen }) {
@@ -34,6 +38,7 @@ export default function CreatePost({ open, handleOpen }) {
     const user = JSON.parse(localStorage.getItem('info'));
     const dispatch = useDispatch()
     const [images, setImages] = React.useState([]);
+    console.log('images', images)
     const handleClose = () => handleOpen();
     const [form, setForm] = React.useState({
         name: "",
@@ -102,51 +107,60 @@ export default function CreatePost({ open, handleOpen }) {
             >
                 <Box sx={style}>
                     {
-                        loading ? <div className='flex w-full h-full justify-center items-center'>
-                            <HomePageLoader />
+                        loading ? <div className='bg-transparent h-full w-full flex items-center justify-center text-white '>
+                            <div className='bg-white w-20 h-20 flex items-center justify-center animate-spin rounded-full border-t-8 border-red-500   '>
+                                <div className='bg-sky-400 w-5 h-5  animate-spin  duration-100  ease-linear'>
+
+                                </div>
+                            </div>
                         </div> :
                             <form className='w-full h-full flex flex-col gap-4 text-white items-center ' onSubmit={handleSubmit}>
                                 <span className='h-[5%] w-full flex justify-center text-white font-semibold items-center '>create post</span>
-                                <div className='h-[95%] w-full flex '>
-                                    <div className='md:w-2/3  w-full md:h-full h-1/2 '>
-                                        {!images && <input
-                                            type="file"
-                                            accept="image/*"
-                                            // name='click'
-                                            multiple
-                                            onChange={handleFileUpload}
-                                            className='h-[10%]  w-full'
-                                        />}
-
-                                        <div className='w-full h-[95%] flex flex-row md:flex-col overflow-x-auto scroll-smooth scrollbar-hide'>
-                                            {images.map((image, index) => (
-                                                <img
-                                                    key={index}
-                                                    src={image}
-                                                    alt={`Uploaded ${index}`}
-                                                    style={{ width: '90%', height: '90%', margin: '10px', objectFit: "cover" }}
-                                                    className='rounded-md object-cover'
+                                <div className='h-[95%] w-full flex flex-col md:flex-row '>
+                                    <div className='md:w-2/3 flex justify-center  items-center w-full md:h-full h-[70%] '>
+                                        {images.length === 0 &&
+                                            <div className='w-full flex justify-center items-center'>
+                                                <input
+                                                    type="file"
+                                                    accept="image/*"
+                                                    // name='click'
+                                                    multiple
+                                                    onChange={handleFileUpload}
+                                                    className='h-[10%] flex justify-center items-center   w-[50%]'
                                                 />
-                                            ))}
-                                        </div>
+                                            </div>
+                                        }
+
+                                        {
+                                            images.length > 0 &&
+                                            <div className='w-full h-[90%]  flex flex-row md:flex-col overflow-x-auto scroll-smooth scrollbar-hide'>
+                                                {images.map((image, index) => (
+                                                    <img
+                                                        key={index}
+                                                        src={image}
+                                                        alt={`Uploaded ${index}`}
+
+                                                        className=' w-full md:w-[90%] h-[90%] md:m-4 m-0 rounded-md object-cover'
+                                                    />
+                                                ))}
+                                            </div>
+                                        }
 
                                     </div>
-                                    <div className='flex  items-center flex-col justify-center md:h-full h-1/2 w-full md:w-1/3'>
-                                        <div className='flex gap-4 h-[10%] w-full cursor-pointer items-center pb-4 mx-0 md:mx-8'>
-                                            <img src={loggedUser?.profilePic} className='object-cover rounded-full md:h-[32px] md:min-w-[32px] h-[10px] min-w-[10px] ' />
+                                    {images.length > 0 && <div className='flex  items-center flex-col gap-4  md:h-full h-[30%] w-full md:w-1/3'>
+                                        <div className='flex gap-4 h-[20%] md:h-[10%] w-full pt-2  md:pt-12 cursor-pointer items-center pb-4 mx-0 md:mx-8'>
+                                            <img src={loggedUser?.profilePic} className='object-cover rounded-full md:h-[32px] md:min-w-[32px] h-[25px] min-w-[25px] ' />
                                             <span className='flex items-center font-semibold text-xs md:text-[16px] gap-1 text-center'>{loggedUser?.name} <FcApproval className='text-xs md:text-lg' /></span>
 
                                         </div>
-                                        <div className='flex flex-col md:gap-4 gap-1 mx-0 md:mx-4 items-center justify-evenly  bg-white h-full md:h-1/2 w-full'>
-                                            <div className='w-full  border-gray-400 border-2  h-10 px-4 md:mt-10 mt-0 '>
-                                                <input type="text" value={form.name} name="name" onChange={handleChange} className=' outline-none h-full rounded-md w-full' placeholder='name' />
+                                        <div className='flex flex-col md:gap-8 gap-3  items-center    h-full md:h-1/2 w-full'>
+
+                                            <div className='w-full    h-10'>
+                                                <input value={form.title} type="text" name="title" className=' outline-none bg-transparent border-b-2 border-gray-900 h-full rounded-md w-full' placeholder='Write a Caption' required onChange={handleChange} />
                                             </div>
-                                            <div className='w-full  border-gray-400 border-2  h-10 px-4'>
-                                                <input value={form.title} type="text" name="title" className=' outline-none h-full rounded-md w-full' placeholder='title' onChange={handleChange} />
-                                            </div>
-                                            <button className='w-1/2 bg-sky-500 py-2 md:py-3 rounded-md hover:bg-sky-900 text-white font-bold uppercase' type="submit">create</button>
+                                            <button className='w-1/2 bg-sky-500 py-2 md:py-3 rounded-md hover:bg-sky-900 text-white text-xs md:text-md font-bold uppercase' type="submit">create</button>
                                         </div>
-                                    </div>
+                                    </div>}
                                 </div>
 
                             </form>

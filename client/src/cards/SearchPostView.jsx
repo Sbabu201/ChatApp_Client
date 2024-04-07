@@ -3,8 +3,10 @@ import ButtomBar from '../components/ButtomBar'
 import SideBar from '../components/SideBar'
 import login from "../assets/msg.png"
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllPosts } from '../store/reducers/postReducer'
-import { FcLike } from "react-icons/fc";
+import { FaHeart } from "react-icons/fa";
+import { LuHeart } from "react-icons/lu";
+import { BsChat } from "react-icons/bs";
+import { TbSend } from "react-icons/tb";
 import { FcApproval } from "react-icons/fc";
 import { FcComments } from "react-icons/fc";
 import { FcShare } from "react-icons/fc";
@@ -31,7 +33,7 @@ const SearchPostView = () => {
     const status = useSelector(state => state.likeReducer.status);
     const likesForPost = likes?.filter(like => like.post._id === post?._id);
     const commentsForPost = comments?.filter(like => like.post._id === post?._id);
-    const likedByuser = likes?.filter(like => like.user._id === user?._id && like.post._id === post?._id);
+    const likedByuser = likes?.filter(like => like?.user?._id === user?._id && like?.post?._id === post?._id);
     const getPostDetails = async () => {
         try {
             const { data } = await axios.get(`${URL}/post/post/${postId}`);
@@ -91,7 +93,7 @@ const SearchPostView = () => {
 
     if (posts?.status === "loading") return <Loader />
     return (
-        <>
+        <div className='flex md:flex-row flex-col'>
 
 
 
@@ -100,11 +102,11 @@ const SearchPostView = () => {
 
             </div>
             {/* <div className='fixed flex  items-center justify-center w-full text-white  bg-opacity-30   backdrop-blur-sm'> */}
-            <div className='bg-black flex w-full flex-col md:flex-row pb-20 items-center pt-10 h-screen  '>
-                <div className='md:h-[80%] h-1/2 w-3/4 md:w-[60%]'>
-                    <PostImageSlide slides={post?.image} />
+            <div className='bg-black flex w-full md:w-[80%] flex-col md:flex-row pb-20 items-center pt-10 h-screen  '>
+                <div className='md:h-[80%] flex justify-center items-center  h-1/2 w-3/4 md:w-[50%]'>
+                    <PostImageSlide key={post?._id} slides={post?.image} />
                 </div>
-                <div className='md:w-[40%] w-full gap-3 px-8 flex flex-col  bg-black text-white h-1/2 md:h-[90vh]  '>
+                <div className='md:w-[40%] w-full  gap-3 px-8 flex flex-col  bg-black text-white h-1/2 md:h-[80vh]  '>
                     {/* <div className='w-full flex h-[2%] mt-2 items-end justify-end'>
                         <button onClick={handleComment}><GrClose className=' font-bold' /></button>
                     </div> */}
@@ -131,11 +133,10 @@ const SearchPostView = () => {
                         }
                     </div>
                     <div className='flex gap-2 h-[10%]   '>
-
-                        {likedByuser?.length > 0 ? <FcLike size={32} onClick={handleDislike} /> :
-                            <FcLikePlaceholder size={32} onClick={handlelike} />}
-                        <FcComments onClick={handleComment} size={32} />
-                        <FcShare size={32} />
+                        {likedByuser?.length > 0 ? <FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' onClick={handleDislike} /> :
+                            <LuHeart className=' cursor-pointer text-xl md:text-3xl' onClick={handlelike} />}
+                        <BsChat className=' cursor-pointer text-xl md:text-3xl' onClick={handleComment} />
+                        <TbSend className=' cursor-pointer text-xl md:text-3xl' />
                     </div>
                     <span className='flex gap-2 h-[5%] text-xs md:text-balance  '>
                         {likesForPost?.length} likes
@@ -154,7 +155,7 @@ const SearchPostView = () => {
             </div>
 
 
-        </>
+        </div>
     )
 }
 

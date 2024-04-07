@@ -28,6 +28,7 @@ import { useDispatch } from 'react-redux';
 import SearchPostView from './cards/SearchPostView';
 import { getAllPosts } from './store/reducers/postReducer';
 import SignUp from './Pages/SignUp';
+import EditProfile from './Pages/EditProfile';
 function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
@@ -73,6 +74,7 @@ function App() {
         <Route element={<ProtectedRoute />} >
           <Route exact path="/" element={<Home />} />
           <Route exact path="/userprofile" element={<UserProfile />} />
+          <Route exact path="/edit" element={<EditProfile />} />
           <Route exact path="/chat" element={<Chatting />} />
           <Route exact path="/postview" element={<PostView />} />
           <Route exact path="/newPost" element={<CreatePost />} />

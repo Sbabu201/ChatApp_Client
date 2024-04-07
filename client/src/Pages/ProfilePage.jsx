@@ -54,7 +54,7 @@ const ProfilePage = () => {
                             <div className='p-6 font-bold text-sm w-full md:text-balance flex-col md:flex-row   items-center md:justify-start justify-between flex gap-4'>
                                 <span className='text-md md:text-xl'>{profile?.name}</span>
                                 <div className='flex gap-4'>
-                                    <button className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>edit profile</button>
+                                    <button onClick={() => navigate("/edit")} className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>edit profile</button>
                                     <button className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>view archieve</button>
                                 </div>
                                 <button onClick={() => {

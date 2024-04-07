@@ -20,13 +20,14 @@ import HomePageLoader from './utils/HomePageLoader';
 import ProfilePageLoader from './utils/ProfilePageLoader';
 import FollowerReducer from './store/reducers/followerReducer';
 import PageNotFound from './components/PageNotFound';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute, { CheckLogin } from './components/ProtectedRoute';
 import { SocketProvider, useSocket } from './Pages/SocketProvider';
 import { useEffect } from 'react';
 import { addArrivalMessage, setSingleMessage } from './store/reducers/socketReducer';
 import { useDispatch } from 'react-redux';
 import SearchPostView from './cards/SearchPostView';
 import { getAllPosts } from './store/reducers/postReducer';
+import SignUp from './Pages/SignUp';
 function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
@@ -66,6 +67,8 @@ function App() {
         <Route exact path="/socket" element={<FollowerReducer />} /> */}
         <Route path='*' element={<PageNotFound />} />
         <Route exact path="/loader" element={<ProfilePageLoader />} />
+
+
         <Route exact path="/socket" element={<SocketProvider />} />
         <Route element={<ProtectedRoute />} >
           <Route exact path="/" element={<Home />} />
@@ -77,7 +80,11 @@ function App() {
           <Route exact path="/postSearch" element={<SearchPostView />} />
         </Route>
         <Route exact path="/not" element={<NotificationCard />} />
-        <Route exact path="/login" element={<LoginPage />} />
+        <Route element={<CheckLogin />}>
+          <Route exact path="/login" element={<LoginPage />} />
+          <Route exact path="/signup" element={<SignUp />} />
+        </Route>
+
         <Route exact path="/otp" element={<OtpCheckPage />} />
         {/* <Route exact path="/buttom" element={<ButtomBar />} /> */}
       </Routes>

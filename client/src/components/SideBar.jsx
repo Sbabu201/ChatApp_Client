@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IoIosNotifications } from "react-icons/io";
-
+import msg from "../assets/msg.webp"
 import { FcHome } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 import { FcSearch } from "react-icons/fc";
@@ -76,8 +76,9 @@ const SideBar = () => {
                             <p>Create</p>
                         </div>
                         <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <div className='flex'>
-                                <FcSms size={32} />{messages?.length > 0 && <p className='bg-red-500 w-4 h-4 text-xs rounded-full items-center justify-center flex'>{messages?.length}</p>}
+                            <div className='flex relative'>
+                                <img src={msg} className='w-8 h-8 object-cover rounded-full' alt="" />
+                                {messages?.length > 0 && <p className='bg-red-500 absolute  right-[-5px] w-5 h-5 font-normal text-[12px] rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
                             </div>
                             <p>Chat</p>
@@ -86,7 +87,7 @@ const SideBar = () => {
 
 
                         <div onClick={() => navigate("/profile")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <FcBusinessman size={32} />
+                            <img src={loggedUser?.profilePic} className='w-8 h-8 object-cover rounded-full' alt="" />
                             <p>Profile</p>
                         </div>
                     </div>

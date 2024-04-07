@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react'
 import { IoIosNotifications } from "react-icons/io";
-
+import msg from "../assets/msg.webp"
 import { FcHome } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 import { FcSearch } from "react-icons/fc";
@@ -51,7 +51,7 @@ const ButtomBar = () => {
 
             <div className='flex flex-row fixed bottom-0 cursor-pointer z-10 justify-evenly items-center text-white  border-gray-50  border-t bg-black shadow-md w-full h-16 '>
                 <div className='flex  justify-between    w-full  '>
-                    <div onClick={() => navigate("/")} className='flex gap-6 w-1/6 p-2 justify-center items-center  font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 '>
+                    <div onClick={() => navigate("/")} className='flex  w-1/6 p-2 justify-center items-center  font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 '>
                         <FcHome size={32} />
 
                     </div>
@@ -59,7 +59,7 @@ const ButtomBar = () => {
                     <div onClick={() => setNotify(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center '>
                         <FcLike size={32} />
 
-                        <NotificationCard notify={notify} handleChange={handleChange} />
+                        {notify && <NotificationCard notify={notify} handleChange={handleChange} />}
                     </div>
                     <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
                         <FcSearch size={32} />
@@ -71,17 +71,21 @@ const ButtomBar = () => {
 
                     </div>
                     <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
-                        <div className='flex'>
+                        {/* <div className='flex'>
                             <FcSms size={32} />{messages?.length > 0 && <p className='bg-red-500 w-4 h-4 text-xs rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
-                        </div>
+                        </div> */}
+                        <div className='flex relative'>
+                            <img src={msg} className='w-8 h-8 object-cover rounded-full' alt="" />
+                            {messages?.length > 0 && <p className='bg-red-500 absolute  right-[-5px] w-5 h-5 font-normal text-[12px] rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
+                        </div>
 
                     </div>
 
 
                     <div onClick={() => navigate("/profile")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
-                        <FcBusinessman size={32} />
+                        <img src={loggedUser?.profilePic} className='w-8 h-8 object-cover rounded-full' alt="" />
 
                     </div>
                 </div>

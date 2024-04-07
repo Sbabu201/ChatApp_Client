@@ -21,10 +21,10 @@ const Home = () => {
                     <SideBar />
 
                 </div>
-                <div className='md:w-[80%] w-full bg-black duration-300   border-white  h-full '>
+                <div className='md:w-[80%] w-full bg-black duration-300   h-full '>
 
                     {/* {(posts?.status === "loading") ? <Loader /> */}
-                    <div className='m-2 w-full pb-40 h-full justify-start duration-300 items-center gap-4 flex flex-col border-b-2'>
+                    <div className='md:m-2 m-0 w-full pb-20  h-full justify-start duration-300 overflow-y-auto items-center gap-4 flex flex-col border-b-2'>
                         {
                             posts?.posts?.map((item, i) => (
                                 <PostCard key={i} item={item} />

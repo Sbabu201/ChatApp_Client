@@ -20,3 +20,21 @@ const ProtectedRoute = ({ children }) => {
 }
 
 export default ProtectedRoute
+
+const CheckLogin = ({ children }) => {
+    const isAuthenticated = useSelector(state => state.profileReducer.isAuthenticated);
+    console.log('is', isAuthenticated)
+    let checkObj = JSON.parse(localStorage.getItem("info"));
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
+    if (isAuthenticated) {
+        return <Navigate to={"/"} />;
+    }
+
+    return (
+        <Outlet />
+    )
+}
+export { CheckLogin };

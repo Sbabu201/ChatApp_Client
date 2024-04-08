@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { URL } from '../utils/serverurl';
+import { useDispatch, useSelector } from "react-redux"
+import { setUserDetails } from '../store/reducers/userReducer';
 
 const style = {
     position: 'absolute',
@@ -23,9 +25,12 @@ const style = {
     },
 };
 
-export default function FollowersPage({ profile, setProfileDetails, openFollower, handleFollowers }) {
-    const [loading, setLoading] = React.useState(false);
+export default function FollowersPage({ profile, openFollower, handleFollowers }) {
     console.log('profile', profile)
+    const dispatch = useDispatch()
+    const [loading, setLoading] = React.useState(false);
+    const loggedProfile = useSelector(state => state.userReducer.profile);
+
     const handleClose = () => handleFollowers();
 
 
@@ -40,7 +45,8 @@ export default function FollowersPage({ profile, setProfileDetails, openFollower
     return (
         <div>
             <Modal
-                keepMounted
+                key={profile?._id}
+
                 open={openFollower}
                 onClose={handleClose}
                 aria-labelledby="keep-mounted-modal-title"
@@ -67,7 +73,7 @@ export default function FollowersPage({ profile, setProfileDetails, openFollower
                                                         <img className='md:w-10 w-7 h-7 md:h-10 rounded-full' src={item?.profilePic} alt="" />
                                                         <span className='text-xs md:text-base'>{item?.name}</span>
                                                     </div>
-                                                    <button onClick={async () => {
+                                                    {profile._id === loggedProfile._id && <button onClick={async () => {
                                                         {
                                                             try {
 
@@ -80,14 +86,15 @@ export default function FollowersPage({ profile, setProfileDetails, openFollower
                                                                 console.log('data', data)
                                                                 if (data.success) {
                                                                     toast.success("removed from the followers");
-                                                                    setProfileDetails(data?.updateFollower)
+                                                                    dispatch(setUserDetails(data?.updateFollower))
                                                                 }
                                                             } catch (error) {
                                                                 toast.error(error.message)
                                                             }
 
                                                         }
-                                                    }} className='md:w-[20%] w-[30%] h-full bg-gray-600 text-xs md:text-base font-bold mr-6 rounded-md hover:bg-gray-900'>remove</button>
+                                                    }} className='md:w-[20%] w-[30%] h-full bg-gray-600 text-xs md:text-base font-bold mr-6 rounded-md hover:bg-gray-900'>
+                                                        remove</button>}
                                                 </div>
                                             )) :
                                             <div className='flex w-full h-full justify-center items-center'>You dont have any followers</div>

@@ -18,11 +18,12 @@ export const getAllUsers = createAsyncThunk(
 );
 
 // Async thunk to add a bag item
-export const editUser = createAsyncThunk(
-    'post/createLikes',
-    async (bagItemData, { rejectWithValue }) => {
+export const getProfile = createAsyncThunk(
+    'user/userDetails',
+    async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.post(`${URL}/post/addLike`, bagItemData);
+            // alert("hii")
+            const response = await axios.get(`${URL}/user/details/${id}`);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -49,17 +50,18 @@ const userSlice = createSlice({
     name: "users",
     initialState: {
         users: [],
+        profile: [],
         filteredUser: null,
         status: "idle",
+        status2: "idle",
         error: null
     },
     reducers: {
-        filterUser(state, action) {
-            alert("hey");
-            const userId = localStorage.getItem("userId");
-            console.log('reducer userId', userId)
-            console.log('userId', userId)
-            state.filteredUser = state.users.find(user => user._id === userId); // Filter user by ID
+        setUserDetails(state, action) {
+            return {
+                ...state,
+                profile: action.payload
+            };
         },
     }
     ,
@@ -70,44 +72,32 @@ const userSlice = createSlice({
             })
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('action.payload', action.payload.usersWithoutPasswords)
+                // console.log('action.payload', action.payload.usersWithoutPasswords)
                 action.payload.usersWithoutPasswords ? state.users = action.payload.usersWithoutPasswords : state.users = [];
             })
             .addCase(getAllUsers.rejected, (state, action) => {
+                state.status2 = 'failed';
+                state.error = action.payload;
+            })
+            .addCase(getProfile.pending, (state) => {
+                state.status2 = 'loading';
+            })
+            .addCase(getProfile.fulfilled, (state, action) => {
+                state.status2 = 'succeeded';
+                // console.log('action.payload', action.payload)
+                if (action.payload.success) {
+                    state.profile = action.payload.existUser;
+                    // toast.success(action.payload.message)
+                }
+                else
+                    toast.error(action.payload.message)
+            })
+            .addCase(getProfile.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
             })
-        // .addCase(createUser.pending, (state) => {
-        //     state.status = 'loading';
-        // })
-        // .addCase(createUser.fulfilled, (state, action) => {
-        //     state.status = 'succeeded';
-        //     console.log('action.payload', action.payload)
-        //     if (action.payload.success) {
-        //         state.users.push(action.payload.newPost);
-        //         toast.success(action.payload.message)
-        //     }
-        //     else
-        //         toast.error(action.payload.message)
-        // })
-        // .addCase(createUser.rejected, (state, action) => {
-        //     state.status = 'failed';
-        //     state.error = action.payload;
-        // })
-        // .addCase(deleteUser.pending, (state) => {
-        //     state.status = 'loading';
-        // })
-        // .addCase(deleteUser.fulfilled, (state, action) => {
-        //     state.status = 'succeeded';
-        //     console.log('action.payload', action.payload)
-        //     state.users = state.users.filter(item => item._id !== action.payload.deleteUser._id);
-        //     toast.success(action.payload.message)
-        // })
-        // .addCase(deleteUser.rejected, (state, action) => {
-        //     state.status = 'failed';
-        //     state.error = action.payload;
-        // });
+
     }
 });
 export default userSlice.reducer;
-export const { filterUser } = userSlice.actions;
+export const { setUserDetails } = userSlice.actions;

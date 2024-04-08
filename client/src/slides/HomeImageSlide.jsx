@@ -30,7 +30,7 @@ const HomeImageSlide = ({ slides }) => {
                             }`}
                     >
                         <img src={slide} style={{ minWidth: '100%', minHeight: '100%', maxHeight: "100%", width: 'auto', height: 'auto' }}
-                            alt="image" className="  object-contain  md:object-fill  " />
+                            alt="image" className="  object-contain  " />
                     </div>
                 ))}
             </div>

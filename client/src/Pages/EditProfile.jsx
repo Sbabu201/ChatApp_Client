@@ -7,8 +7,10 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import ProfilePageLoader from '../utils/ProfilePageLoader';
 import { URL } from '../utils/serverurl';
-
+import { setUserDetails } from '../store/reducers/userReducer';
+import { useDispatch, useSelector } from "react-redux"
 const EditProfile = () => {
+    const dispatch = useDispatch()
     const [images, setImages] = useState(null);
     const inputFileRef = useRef(null);
     // console.log('images', images)
@@ -16,52 +18,26 @@ const EditProfile = () => {
         inputFileRef.current.click();
     };
 
-    const [profile, setProfile] = useState({});
+    const [profile2, setProfile] = useState({});
+    const profile = useSelector(state => state.userReducer.profile);
+    console.log('profile2', profile2)
     const [loading, setLoading] = useState(false)
     const [bio, setBio] = useState("");
     const handleChange = async (e) => {
-        // Trigger click event on the input element
         const files = e.target.files[0];
-        // console.log('files', files)
-
         const formData = new FormData();
-
         formData.append('file', files);
         formData.append("upload_preset", "soumya");
-
         try {
-            // Upload image to Cloudinary
             setLoading(true)
             const res = await axios.post("https://api.cloudinary.com/v1_1/dwztqzfeh/image/upload", formData)
-            // console.log('res', res.data)
-            // Add the uploaded image URL to the images array
             setImages(res.data.url);
             setLoading(false)
-
-
         } catch (error) {
             console.error('Error uploading image:', error);
             alert("hi")
         }
-
-
     };
-
-    const getUserData = async () => {
-        setLoading(true)
-        const user = JSON.parse(localStorage.getItem("info"))
-        try {
-
-            const { data } = await axios.get(`${URL}/user/details/${user?._id}`);
-            // console.log('data', data.existUser)
-            setProfile(data?.existUser)
-            setBio(data?.existUser?.bio)
-        } catch (error) {
-            console.log('error', error)
-            toast.error(error.message)
-        }
-        setLoading(false)
-    }
     const handleFormSubmit = async () => {
         setLoading(true)
         const user = JSON.parse(localStorage.getItem("info"))
@@ -74,8 +50,8 @@ const EditProfile = () => {
             // console.log('data', data)
             toast.success(data.message)
             localStorage.setItem("info", JSON.stringify(data?.updateUser))
-            setProfile(data?.updateUser)
-            setBio(data?.updateUser?.bio)
+            dispatch(setUserDetails(data?.updateUser))
+
             setImages(null)
         } catch (error) {
             console.log('error', error)
@@ -85,8 +61,9 @@ const EditProfile = () => {
     }
 
     useEffect(() => {
-        getUserData();
-    }, [])
+        // getUserData();
+        setBio(profile?.bio)
+    }, [profile])
 
     if (loading) { < ProfilePageLoader /> }
     return (
@@ -118,8 +95,8 @@ const EditProfile = () => {
                                     <img src={images !== null ? images : profile?.profilePic} className='md:w-16 w-10 h-10 md:h-16 rounded-full object-cover' alt="" />
                                 </div>
                                 <div className='md:w-[50%] w-[30%] h-full flex flex-col gap-1 md:pl-4 pl-2 justify-center  '>
-                                    <span className='font-bold text-sm md:text-lg'>{profile.name}</span>
-                                    <span className='md:textbase text-xs font-semibold'>{profile.name}</span>
+                                    <span className='font-bold text-sm md:text-lg'>{profile?.name}</span>
+                                    <span className='md:textbase text-xs font-semibold'>{profile?.name}</span>
                                 </div>
                                 <div className='flex w-[40%] h-full items-center justify-center'>
                                     <input

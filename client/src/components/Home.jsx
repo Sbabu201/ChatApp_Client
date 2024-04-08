@@ -13,7 +13,7 @@ const Home = () => {
     const history = useLocation();
     const posts = useSelector(state => state.postReducer);
     const [shuffledPost, setShuffledPost] = useState(null);
-    console.log('shuffledPost', shuffledPost)
+    // console.log('shuffledPost', shuffledPost)
     const shuffleArray = (array) => {
         const shuffledArray = [...array]; // Create a copy of the array
         for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -24,7 +24,7 @@ const Home = () => {
     };
     useEffect(() => {
         if (posts.status === "succeeded" && posts.posts) {
-            console.log('posts', posts)
+            // console.log('posts', posts)
             const data = shuffleArray(posts?.posts);
             setShuffledPost(data)
         }

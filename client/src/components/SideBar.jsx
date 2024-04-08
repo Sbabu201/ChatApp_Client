@@ -11,7 +11,7 @@ import NotificationCard from '../cards/NotificationCard';
 import SearchCard from '../cards/SearchCard';
 import { useNavigate } from 'react-router-dom';
 import CreatePost from '../Pages/CreatePost';
-import { getAllUsers } from '../store/reducers/userReducer';
+import { getAllUsers, getProfile } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from "socket.io-client";
 import { getAllArrivalMessage, setSocket } from '../store/reducers/socketReducer';
@@ -25,6 +25,7 @@ const SideBar = () => {
     const dispatch = useDispatch();
     const loggedUser = JSON.parse(localStorage.getItem("info"));
     const socket = useSocket();
+    const profile = useSelector(state => state.userReducer.profile);
 
     const navigate = useNavigate()
     const [notify, setNotify] = useState(false)
@@ -42,8 +43,11 @@ const SideBar = () => {
 
     useEffect(() => {
         dispatch(getAllArrivalMessage({ to: loggedUser?._id }))
+        dispatch(getProfile(loggedUser?._id))
+
     }, [])
     return (
+
         <>
             {open && <CreatePost open={open} handleOpen={handleOpen} />
             }
@@ -87,7 +91,7 @@ const SideBar = () => {
 
 
                         <div onClick={() => navigate("/profile")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <img src={loggedUser?.profilePic} className='w-8 h-8 object-cover rounded-full' alt="" />
+                            <img src={profile?.profilePic} className='w-8 h-8 object-cover rounded-full' alt="" />
                             <p>Profile</p>
                         </div>
                     </div>

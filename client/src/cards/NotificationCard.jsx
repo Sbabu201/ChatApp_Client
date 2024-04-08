@@ -53,7 +53,7 @@ const NotificationCard = ({ notify, handleChange }) => {
                         {
                             userPosts?.map((item, i) => (
                                 <>
-                                    {item?.likes?.length > 0 && <div className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
+                                    {item?.likes?.length > 0 && <div key={item?.likes[0]?._id} className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
                                         localStorage.setItem("postId", item?._id);
                                         dispatch(setPost(item?._id))
                                         navigate("/postSearch")
@@ -62,7 +62,7 @@ const NotificationCard = ({ notify, handleChange }) => {
 
                                         <img src={item?.image[0]} className='w-8 h-8 object-cover' alt="" />
                                     </div>}
-                                    {item?.comments?.length > 0 && <div className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
+                                    {item?.comments?.length > 0 && <div key={item?.comments[0]?._id} className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
                                         localStorage.setItem("postId", item?._id);
                                         dispatch(setPost(item?._id))
                                         navigate("/postSearch")

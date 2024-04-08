@@ -23,8 +23,8 @@ import { getAllPosts } from '../store/reducers/postReducer';
 
 const ButtomBar = () => {
     const messages = useSelector(state => state.socketReducer.arrivalMessage);
+    const loggedUser = useSelector(state => state.userReducer.profile);
     const dispatch = useDispatch();
-    const loggedUser = JSON.parse(localStorage.getItem("info"));
     const socket = useSocket();
 
     const navigate = useNavigate()

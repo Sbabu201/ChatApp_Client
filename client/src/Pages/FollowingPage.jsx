@@ -5,6 +5,8 @@ import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { URL } from '../utils/serverurl';
+import { setUserDetails } from '../store/reducers/userReducer';
+import { useDispatch, useSelector } from "react-redux"
 
 const style = {
     position: 'absolute',
@@ -23,10 +25,11 @@ const style = {
     },
 };
 
-export default function FollowingPage({ profile, setProfileDetails, openFollowing, handleFollowing }) {
+export default function FollowingPage({ profile, openFollowing, handleFollowing }) {
     const [loading, setLoading] = React.useState(false);
-
+    const dispatch = useDispatch()
     const handleClose = () => handleFollowing();
+    const loggedProfile = useSelector(state => state.userReducer.profile);
 
 
     // React.useEffect(() => {
@@ -59,7 +62,7 @@ export default function FollowingPage({ profile, setProfileDetails, openFollowin
                                 <span className='h-[5%] w-full flex justify-center text-white font-semibold items-center '>following</span>
                                 <div className='flex flex-col gap-4 w-full h-[95%] '>
                                     {
-                                        profile?.following?.kength > 0 ?
+                                        profile?.following?.length > 0 ?
                                             profile?.following?.map((item, index) => (
                                                 <div key={index} className='flex items-center justify-between w-full gap-4'>
 
@@ -67,7 +70,7 @@ export default function FollowingPage({ profile, setProfileDetails, openFollowin
                                                         <img className='md:w-10 w-7 h-7 md:h-10 rounded-full' src={item?.profilePic} alt="" />
                                                         <span className='text-xs md:text-base'>{item?.name}</span>
                                                     </div>
-                                                    <button onClick={async () => {
+                                                    {loggedProfile._id === profile._id && <button onClick={async () => {
                                                         {
                                                             try {
 
@@ -80,14 +83,15 @@ export default function FollowingPage({ profile, setProfileDetails, openFollowin
                                                                 console.log('data', data)
                                                                 if (data.success) {
                                                                     toast.success("removed from the following");
-                                                                    setProfileDetails(data?.updateFollowing)
+                                                                    dispatch(setUserDetails(data?.updateFollowing))
                                                                 }
                                                             } catch (error) {
                                                                 toast.error(error.message)
                                                             }
 
                                                         }
-                                                    }} className='md:w-[20%] w-[30%] h-full bg-gray-600 text-xs md:text-base font-bold mr-6 rounded-md hover:bg-gray-900'>remove</button>
+                                                    }} className='md:w-[20%] w-[30%] h-full bg-gray-600 text-xs md:text-base font-bold mr-6 rounded-md hover:bg-gray-900'>
+                                                        remove</button>}
                                                 </div>
                                             )) :
                                             <div className='flex w-full h-full justify-center items-center'>You have not followed anyone</div>

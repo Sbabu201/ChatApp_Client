@@ -12,53 +12,35 @@ import DemoCard from '../cards/demoCard';
 import ProfilePageLoader from '../utils/ProfilePageLoader';
 import { URL } from '../utils/serverurl';
 import { setAuthenticated, setPost } from '../store/reducers/profileReducer';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
 import FollowersPage from './FollowersPage';
 import FollowingPage from './FollowingPage';
+import { getProfile } from '../store/reducers/userReducer';
 const ProfilePage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [profile, setProfile] = useState({});
-    console.log('profile', profile)
-    const [loading, setLoading] = useState(false)
+    const profile = useSelector(state => state.userReducer.profile);
+    // const loading = useSelector(state => state.userReducer.status2);
     const [openFollower, setOpenFollower] = useState(false);
     const [openFollowing, setOpenFollowing] = useState(false);
-    const getUserData = async () => {
-        setLoading(true)
-        const user = JSON.parse(localStorage.getItem("info"))
-        try {
 
-            const { data } = await axios.get(`${URL}/user/details/${user?._id}`);
-            // console.log('data', data.existUser)
-            setProfile(data?.existUser)
-        } catch (error) {
-            console.log('error', error)
-            toast.error(error.message)
-        }
-        setLoading(false)
-    }
     const handleFollowers = () => {
         setOpenFollower(state => !state)
     }
 
-    const setProfileDetails = (data) => {
-        console.log('data', data)
-        setProfile(data)
-    }
+
 
     const handleFollowing = () => {
         setOpenFollowing(state => !state)
     }
-    useEffect(() => {
-        getUserData();
-    }, [])
 
-    if (loading) { return <ProfilePageLoader /> }
+
+    // if (loading === "loading") { return <ProfilePageLoader /> }
     return (
         <>
-            {openFollower && <FollowersPage openFollower={openFollower} setProfileDetails={setProfileDetails} profile={profile} handleFollowers={handleFollowers} />}
-            {openFollowing && <FollowingPage openFollowing={openFollowing} setProfileDetails={setProfileDetails} profile={profile} handleFollowing={handleFollowing} />}
+            {openFollower && <FollowersPage openFollower={openFollower} profile={profile} handleFollowers={handleFollowers} />}
+            {openFollowing && <FollowingPage openFollowing={openFollowing} profile={profile} handleFollowing={handleFollowing} />}
             <div className='min-h-screen text-white flex h-full w-full scrollbar-hide overflow-hidden  scroll-smooth'>
                 <div className='md:w-[20%]  w-0 h-full md:visible invisible   '>
                     <SideBar />
@@ -144,7 +126,7 @@ const ProfilePage = () => {
                         </div>
                         <div className='flex gap-1 md:gap-4 w-[100%]  flex-wrap'>
                             {profile?.posts?.map((item, i) => (
-                                <div onClick={() => {
+                                <div key={i} onClick={() => {
                                     localStorage.setItem("postId", item?._id);
                                     dispatch(setPost(item?._id))
                                     navigate("/postSearch")

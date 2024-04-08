@@ -34,7 +34,7 @@ function App() {
   const dispatch = useDispatch()
   const socket = useSocket();
   useEffect(() => {
-    console.log('socket', socket.current)
+    // console.log('socket', socket.current)
     // if (socket.current) {
 
     socket?.current?.on("catch", (data) => {

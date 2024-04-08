@@ -51,6 +51,7 @@ const postSlice = createSlice({
         status: "idle",
         error: null
     },
+
     extraReducers: (builder) => {
         builder
             .addCase(getAllPosts.pending, (state) => {

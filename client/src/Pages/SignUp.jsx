@@ -38,7 +38,7 @@ const SignUp = () => {
         } catch (error) {
             console.log('error', error)
             setError("phone", {
-                message: error.message
+                message: error?.response?.data?.message
             })
         }
     }

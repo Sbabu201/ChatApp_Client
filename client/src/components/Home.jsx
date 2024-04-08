@@ -4,13 +4,32 @@ import SideBar from './SideBar'
 import login from "../assets/msg.png"
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllPosts } from '../store/reducers/postReducer'
+import { useLocation } from 'react-router-dom';
 import allPostsCard from '../cards/allPostsCard'
 import PostCard from '../cards/PostCard'
 import Loader from '../utils/Loader'
 import { URL } from '../utils/serverurl'
 const Home = () => {
-    console.log('URL', URL)
+    const history = useLocation();
     const posts = useSelector(state => state.postReducer);
+    const [shuffledPost, setShuffledPost] = useState(null);
+    console.log('shuffledPost', shuffledPost)
+    const shuffleArray = (array) => {
+        const shuffledArray = [...array]; // Create a copy of the array
+        for (let i = shuffledArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+        }
+        return shuffledArray;
+    };
+    useEffect(() => {
+        if (posts.status === "succeeded" && posts.posts) {
+            console.log('posts', posts)
+            const data = shuffleArray(posts?.posts);
+            setShuffledPost(data)
+        }
+    }, [posts, history])
+
     if (posts?.status === "loading") return <Loader />
     return (
         <>
@@ -26,7 +45,7 @@ const Home = () => {
                     {/* {(posts?.status === "loading") ? <Loader /> */}
                     <div className='md:m-2 m-0 w-full pb-20  h-full justify-start duration-300 overflow-y-auto items-center gap-4 flex flex-col border-b-2'>
                         {
-                            posts?.posts?.map((item, i) => (
+                            shuffledPost?.map((item, i) => (
                                 <PostCard key={i} item={item} />
 
                             ))

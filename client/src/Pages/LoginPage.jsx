@@ -23,8 +23,10 @@ const LoginPage = () => {
     const onSubmit = async (value) => {
         try {
             const { data } = await axios.post(`${URL}/user/login`, value);
+            console.log('data', data)
             if (data?.success) {
-                localStorage.setItem("mobile", value.phone);
+                console.log('data', data)
+                localStorage.setItem("mobile", value.phone.toLowerCase());
                 toast.success(data?.message)
                 navigate("/otp")
             }
@@ -33,9 +35,9 @@ const LoginPage = () => {
             }
 
         } catch (error) {
-            console.log('error', error)
-            setError("phone", {
-                message: error.message
+            console.log('error', error.response.data.message)
+            setError("password", {
+                message: error?.response?.data?.message
             })
         }
     }

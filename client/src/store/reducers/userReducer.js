@@ -18,7 +18,7 @@ export const getAllUsers = createAsyncThunk(
 );
 
 // Async thunk to add a bag item
-export const createUser = createAsyncThunk(
+export const editUser = createAsyncThunk(
     'post/createLikes',
     async (bagItemData, { rejectWithValue }) => {
         try {

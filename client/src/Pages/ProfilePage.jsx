@@ -14,11 +14,16 @@ import { URL } from '../utils/serverurl';
 import { setAuthenticated, setPost } from '../store/reducers/profileReducer';
 import { useDispatch } from "react-redux"
 import { useNavigate } from 'react-router-dom';
+import FollowersPage from './FollowersPage';
+import FollowingPage from './FollowingPage';
 const ProfilePage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [profile, setProfile] = useState({});
+    console.log('profile', profile)
     const [loading, setLoading] = useState(false)
+    const [openFollower, setOpenFollower] = useState(false);
+    const [openFollowing, setOpenFollowing] = useState(false);
     const getUserData = async () => {
         setLoading(true)
         const user = JSON.parse(localStorage.getItem("info"))
@@ -33,6 +38,18 @@ const ProfilePage = () => {
         }
         setLoading(false)
     }
+    const handleFollowers = () => {
+        setOpenFollower(state => !state)
+    }
+
+    const setProfileDetails = (data) => {
+        console.log('data', data)
+        setProfile(data)
+    }
+
+    const handleFollowing = () => {
+        setOpenFollowing(state => !state)
+    }
     useEffect(() => {
         getUserData();
     }, [])
@@ -40,6 +57,8 @@ const ProfilePage = () => {
     if (loading) { return <ProfilePageLoader /> }
     return (
         <>
+            {openFollower && <FollowersPage openFollower={openFollower} setProfileDetails={setProfileDetails} profile={profile} handleFollowers={handleFollowers} />}
+            {openFollowing && <FollowingPage openFollowing={openFollowing} setProfileDetails={setProfileDetails} profile={profile} handleFollowing={handleFollowing} />}
             <div className='min-h-screen text-white flex h-full w-full scrollbar-hide overflow-hidden  scroll-smooth'>
                 <div className='md:w-[20%]  w-0 h-full md:visible invisible   '>
                     <SideBar />
@@ -70,11 +89,14 @@ const ProfilePage = () => {
                                         <p>{profile?.posts?.length}</p>
                                         <p>posts</p>
                                     </span>
-                                    <span className='flex md:flex-row flex-col items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
+                                    <span onClick={() => setOpenFollower(state => !state)} className='flex md:flex-row flex-col items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
                                         <p>{profile?.followers?.length}</p>
                                         <p>Followers</p>
                                     </span>
-                                    <span className='flex md:flex-row flex-col items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
+                                    <span onClick={() => {
+                                        console.log("hello")
+                                        setOpenFollowing(state => !state)
+                                    }} className='flex md:flex-row flex-col items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
                                         <p>{profile?.following?.length}</p>
                                         <p>Followings</p>
                                     </span>
@@ -95,11 +117,14 @@ const ProfilePage = () => {
                                 <p>{profile?.posts?.length}</p>
                                 <p>posts</p>
                             </span>
-                            <span className='flex md:flex-row flex-col w-1/3 items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
+                            <span onClick={() => setOpenFollower(state => !state)} className='flex md:flex-row flex-col w-1/3 items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
                                 <p>{profile?.followers?.length}</p>
                                 <p>Followers</p>
                             </span>
-                            <span className='flex md:flex-row flex-col w-1/3 items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
+                            <span onClick={() => {
+                                console.log("hello")
+                                setOpenFollowing(state => !state)
+                            }} className='flex md:flex-row flex-col w-1/3 items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
                                 <p>{profile?.following?.length}</p>
                                 <p>Followings</p>
                             </span>

@@ -37,7 +37,7 @@ const ProfilePage = () => {
         getUserData();
     }, [])
 
-    if (loading) { return <ProfilePageLoader /> }
+    if (!loading) { return <ProfilePageLoader /> }
     return (
         <>
             <div className='min-h-screen text-white flex h-full w-full scrollbar-hide overflow-hidden  scroll-smooth'>

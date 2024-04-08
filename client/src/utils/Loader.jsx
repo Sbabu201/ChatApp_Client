@@ -49,9 +49,37 @@ const Loader = () => {
                     </div>
 
                 </div>
-                <div className='m-2 w-full pb-40 h-[90%] justify-start items-center bg-gray-500  animate-pulse duration-75 ease-linear  gap-4 flex flex-col    border-b-2'>
-                    <div className='m-2 w-[50%] mt-20 pb-40 h-full bg-gray-800  animate-pulse duration-75 ease-linear  justify-start items-center gap-4 flex flex-col scrollbar-hide  scroll-smooth    border-b-2'>
+                <div className='md:m-2 w-full pb-40 md:h-[90%] h-[80%] justify-start items-center bg-gray-500  animate-pulse duration-75 ease-linear  gap-4 flex flex-col    border-b-2'>
+                    <div className='m-2 w-[90%] md:w-[50%] mt-20 pb-40 h-full bg-gray-800  animate-pulse duration-75 ease-linear  justify-start items-center gap-4 flex flex-col scrollbar-hide  scroll-smooth    border-b-2'>
 
+                    </div>
+                </div>
+                <div className='w-full h-[10%] flex md:hidden animate-pulse duration-75 ease-linear'>
+                    <div className='flex  justify-between    w-full  '>
+                        <div className='flex  w-1/6 p-2 justify-center items-center  font-bold shadow-md bg-gray-500 rounded-sm  duration-300 '>
+
+
+                        </div>
+
+                        <div className='flex gap-6 items-center font-bold shadow-md animation-pulse bg-gray-500 rounded-sm  duration-300  w-1/6 justify-center '>
+
+                        </div>
+                        <div className='flex gap-6 items-center font-bold shadow-md animation-pulse bg-gray-500 rounded-sm  duration-300  w-1/6 justify-center'>
+
+                        </div>
+                        <div className='flex gap-6 items-center font-bold shadow-md animation-pulse bg-gray-500 rounded-sm  duration-300  w-1/6 justify-center'>
+
+
+                        </div>
+                        <div className='flex gap-6 items-center font-bold shadow-md animation-pulse bg-gray-500 rounded-sm  duration-300  w-1/6 justify-center'>
+
+
+                        </div>
+
+
+                        <div className='flex gap-6 items-center font-bold shadow-md animation-pulse bg-gray-500 rounded-sm  duration-300  w-1/6 justify-center'>
+
+                        </div>
                     </div>
                 </div>
             </div>

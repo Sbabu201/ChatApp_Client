@@ -173,7 +173,7 @@ const Chatting = () => {
                                 </form>
 
                             </div>
-                            : <div className='w-[70%] md:h-screen h-[90%] md:flex hidden flex-col items-center justify-center '>
+                            : <div className='w-[70%] md:h-screen h-[90%] flex  flex-col items-center justify-center '>
                                 <p className='text-3xl w-60 flex text-end items-end justify-end glow text-sky-200 '>Hello</p>
                                 <img src={chatImage} className='w-[59%] h-[60%] animate-pulse ease-in-out duration-500 object-cover' alt="" />
 
@@ -193,7 +193,7 @@ const Chatting = () => {
                                 >
                                     <div className='w-[90%] flex md:flex-row flex-col h-[60px] items-center gap-2 '>
                                         <img src={following?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[24px] w-[24px]' />
-                                        <span className='flex items-center w-2/3 text-[8px] md:textbase gap-1 text-center'>
+                                        <span className='flex items-center w-2/3 text-[8px] md:text-base gap-1 text-center'>
                                             {following?.name}
                                             <p className=''> <FcApproval className='text-[8px] md:text-base' /></p>
 

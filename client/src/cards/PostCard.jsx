@@ -149,31 +149,30 @@ const PostCard = ({ item }) => {
                 </div>
             </div>}
             {
-                (status === "loading") ? <HomePageLoader />
-                    : <div className='md:w-4/6 lg:w-3/6  w-full p-4 flex-col  h-2/5 text-white flex border border-gray-800 justify-start scrollbar-hide  scroll-smooth'>
-                        <div onClick={() => {
-                            localStorage.setItem("userId", item?.user?._id)
-                            dispatch(setUser(item?.user?._id))
-                            navigate("/userprofile")
-                        }} className='flex gap-4 h-[10%] cursor-pointer items-center pb-4 mx-0 md:mx-8'>
-                            <img src={item?.user?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[25px] w-[25px] ' />
-                            <span className='flex items-center text-xs md:text-lg gap-1 text-center'>{item?.user?.name} <FcApproval className='text-xs md:text-lg' /></span>
-
-                        </div>
-
-                        <HomeImageSlide slides={item?.image} />
-                        <div className='flex gap-2 h-[5%] pt-3 md:mx-0 mx-2'>
-                            {likedByuser?.length > 0 ? <FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' onClick={handleDislike} /> :
-                                <LuHeart className=' cursor-pointer text-xl md:text-3xl' onClick={handlelike} />}
-                            <BsChat className=' cursor-pointer text-xl md:text-3xl' onClick={handleComment} />
-                            <TbSend className=' cursor-pointer text-xl md:text-3xl' />
-                        </div>
-                        <p className='h-[5%] flex gap-2 mx-2 text-xs  md:text-sm pt-2 md:mx-0'> {likesForPost?.length} likes</p>
-                        <span className='flex gap-2 h-[10%] text-[13px]  md:text-base mx-2 pt-2 md:mx-0'>
-                            {item?.title}
-                        </span>
+                <div className='md:w-4/6 lg:w-3/6  w-full p-4 flex-col  h-2/5 text-white flex border border-gray-800 justify-start scrollbar-hide  scroll-smooth'>
+                    <div onClick={() => {
+                        localStorage.setItem("userId", item?.user?._id)
+                        dispatch(setUser(item?.user?._id))
+                        navigate("/userprofile")
+                    }} className='flex gap-4 h-[10%] cursor-pointer items-center pb-4 mx-0 md:mx-8'>
+                        <img src={item?.user?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[25px] w-[25px] ' />
+                        <span className='flex items-center text-xs md:text-lg gap-1 text-center'>{item?.user?.name} <FcApproval className='text-xs md:text-lg' /></span>
 
                     </div>
+
+                    <HomeImageSlide slides={item?.image} />
+                    <div className='flex gap-2 h-[5%] pt-3 md:mx-0 mx-2'>
+                        {likedByuser?.length > 0 ? <FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' onClick={handleDislike} /> :
+                            <LuHeart className=' cursor-pointer text-xl md:text-3xl' onClick={handlelike} />}
+                        <BsChat className=' cursor-pointer text-xl md:text-3xl' onClick={handleComment} />
+                        <TbSend className=' cursor-pointer text-xl md:text-3xl' />
+                    </div>
+                    <p className='h-[5%] flex gap-2 mx-2 text-xs  md:text-sm pt-2 md:mx-0'> {likesForPost?.length} likes</p>
+                    <span className='flex gap-2 h-[10%] text-[13px]  md:text-base mx-2 pt-2 md:mx-0'>
+                        {item?.title}
+                    </span>
+
+                </div>
             }
         </>
     )

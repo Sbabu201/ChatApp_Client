@@ -73,10 +73,10 @@ const likeSlice = createSlice({
             })
             .addCase(createLikes.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('action.payload', action.payload)
+                // console.log('action.payload', action.payload)
                 if (action.payload.success) {
                     state.likes.push(action.payload.newPost);
-                    toast.success(action.payload.message)
+                    // toast.success(action.payload.message)
                 }
                 else
                     toast.error(action.payload.message)
@@ -90,9 +90,9 @@ const likeSlice = createSlice({
             })
             .addCase(deleteLike.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('action.payload', action.payload)
+                // console.log('action.payload', action.payload)
                 state.likes = state.likes.filter(item => item._id !== action.payload.deleteLike._id);
-                toast.success(action.payload.message)
+                // toast.success(action.payload.message)
             })
             .addCase(deleteLike.rejected, (state, action) => {
                 state.status = 'failed';

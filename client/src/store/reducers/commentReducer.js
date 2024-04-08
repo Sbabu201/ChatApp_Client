@@ -76,7 +76,7 @@ const commentSlice = createSlice({
                 // console.log('action.payload', action.payload)
                 if (action.payload.success) {
                     state.comments.push(action.payload.newComment);
-                    toast.success(action.payload.message)
+                    // toast.success(action.payload.message)
                 }
                 else
                     toast.error(action.payload.message)
@@ -92,7 +92,7 @@ const commentSlice = createSlice({
                 state.status = 'succeeded';
                 // console.log('action.payload', action.payload)
                 state.comments = state.comments.filter(item => item._id !== action.payload.deleteComment._id);
-                toast.success(action.payload.message)
+                // toast.success(action.payload.message)
             })
             .addCase(deleteComment.rejected, (state, action) => {
                 state.status = 'failed';

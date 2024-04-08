@@ -188,10 +188,10 @@ const Chatting = () => {
                                         setTogle(true);
                                         setSelectedItemIndex(index); // Update the selected item index
                                     }}
-                                    className={`flex w-full justify-between md:justify-start gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
+                                    className={`flex w-full  justify-start gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
                                         }`}
                                 >
-                                    <div className='w-[90%] flex md:flex-row flex-col h-[60px] items-center gap-2 '>
+                                    <div className='md:w-[90%] w-1/5  flex md:flex-row flex-col h-[60px] items-center gap-2 '>
                                         <img src={following?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[24px] w-[24px]' />
                                         <span className='flex items-center w-2/3 text-[8px] md:text-base gap-1 text-center'>
                                             {following?.name}

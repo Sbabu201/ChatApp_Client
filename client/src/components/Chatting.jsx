@@ -13,6 +13,7 @@ import { FcAbout } from "react-icons/fc";
 import { useSocket } from '../Pages/SocketProvider';
 import { deleveArrivalMessage, getAllArrivalMessage } from '../store/reducers/socketReducer';
 import { URL } from '../utils/serverurl';
+import { FcLeft } from "react-icons/fc";
 
 const Chatting = () => {
     const arrival = useSelector(state => state.socketReducer.arrivalMessage)
@@ -24,8 +25,7 @@ const Chatting = () => {
     const allUsers = useSelector(state => state.userReducer.users);
     const allUsersStatus = useSelector(state => state.userReducer.status);
     const [currentChatUser, setCurrentChatUser] = useState({});
-    const [arrivalMssage, setArrivalMssage] = useState(null);
-    const [AllArrivalMssage, setAllArrivalMssage] = useState([]);
+
     const [togle, setTogle] = useState(false);
     const [loading, setLoading] = useState(false);
     const [allMessages, setAllMessages] = useState([]);
@@ -78,13 +78,13 @@ const Chatting = () => {
 
     }, [currentChatUser])
 
-    useEffect(() => {
-        if (socket.current) {
-            socket.current.on("catch", (data) => {
-                setArrivalMssage({ from: data.from, message: { fromSelf: false, message: data.message } })
-            })
-        }
-    }, [socket.current])
+    // useEffect(() => {
+    //     if (socket.current) {
+    //         socket.current.on("catch", (data) => {
+    //             setArrivalMssage({ from: data.from, message: { fromSelf: false, message: data.message } })
+    //         })
+    //     }
+    // }, [socket.current])
     useEffect(() => {
         singleArrival && setAllMessages((prev) => [...prev, singleArrival]);
 
@@ -146,15 +146,18 @@ const Chatting = () => {
                         </div> */}
                         {togle ?
                             <div className='md:w-[70%] w-full h-[90%]  md:h-screen '>
-                                <div className='flex w-full gap-8 h-[9%] border-b-2 border-gray-800 overflow-hidden items-center cursor-pointer ' >
-                                    <img src={currentChatUser?.profilePic} className='object-cover rounded-full h-[40px] w-[40px] ml-8 ' />
-                                    <span className='flex items-center gap-1 text-center'>{currentChatUser?.name} <FcApproval size={22} /></span>
+                                <div className='flex w-full gap-4 h-[10%] border-b-2 border-gray-800 overflow-hidden items-center cursor-pointer mt-2' >
+
+                                    <div className='flex gap-2  justify-center w-[95%] h-full items-center'>
+                                        <img src={currentChatUser?.profilePic} className='object-cover rounded-full h-[40px] w-[40px]  ' />
+                                        <span className='flex items-center gap-1 justify-center text-sm md:text-lg text-center'>{currentChatUser?.name} <FcApproval className='text-sm md:text-lg' /></span>
+                                    </div>
                                 </div>
-                                <div className='overflow-y-auto scrollbar-thumb-rounded-full   scrollbar-thumb-y-0 flex flex-col gap-2 md:h-[84%] h-[74%] scrollbar-hide overflow-hidden  scroll-smooth p-4 '>
+                                <div className='overflow-y-auto scrollbar-thumb-rounded-full   scrollbar-thumb-y-0 flex flex-col gap-2 h-[68%] md:h-[81%] scrollbar-hide overflow-hidden  scroll-smooth p-4 '>
                                     {allMessages?.map((msg, index) => (
                                         <div key={index} className=''>
                                             <span className={`flex  items-start ${msg?.fromSelf ? "justify-end " : "justify-start"} `}>
-                                                <p className={` ${msg?.fromSelf ? "bg-blue-700 " : "bg-gray-700"} px-4 py-2 rounded-full`}>{msg?.message}</p>
+                                                <p className={` ${msg?.fromSelf ? "bg-blue-700 " : "bg-gray-700"} px-4 py-2 text-[10px] md:text-base rounded-full`}>{msg?.message}</p>
 
                                             </span>
 
@@ -164,19 +167,19 @@ const Chatting = () => {
                                 </div>
 
 
-                                <form onSubmit={handleSendMEssage} className='w-[100%] h-[7%] flex   shadow-lg border-2 rounded-full border-gray-700 '>
+                                <form onSubmit={handleSendMEssage} className='w-[100%] h-[8%]  flex   shadow-lg border-2 rounded-full border-gray-700 '>
                                     <input type="text" name="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder='message' className='bg-transparent outline-none w-[90%] h-full px-8 ' />
                                     <button type="submit" className='w-[10%] p-2 flex justify-center items-center'><IoSendOutline size={32} /></button>
                                 </form>
 
                             </div>
-                            : <div className='w-[70%] md:h-screen h-[90%] flex flex-col items-center justify-center '>
+                            : <div className='w-[70%] md:h-screen h-[90%] md:flex hidden flex-col items-center justify-center '>
                                 <p className='text-3xl w-60 flex text-end items-end justify-end glow text-sky-200 '>Hello</p>
                                 <img src={chatImage} className='w-[59%] h-[60%] animate-pulse ease-in-out duration-500 object-cover' alt="" />
 
                             </div>}
 
-                        <div className='md:overflow-y-auto overflow-x-auto w-full  md:w-[30%] border-l-2 p-10 border-gray-700 md:min-h-screen h-[10%] flex flex-row   md:flex-col scrollbar-hide overflow-hidden md:gap-2 gap-4 scroll-smooth'>
+                        <div className='md:overflow-y-auto overflow-x-auto w-full  md:w-[30%] border-l-2 p-10 border-gray-700 md:min-h-screen h-[10%] flex flex-row md:flex-col scrollbar-hide overflow-hidden md:gap-2 gap-4 scroll-smooth'>
                             {loggeduserDetails[0]?.following?.map((following, index) => (
                                 <div
                                     key={index}
@@ -185,21 +188,21 @@ const Chatting = () => {
                                         setTogle(true);
                                         setSelectedItemIndex(index); // Update the selected item index
                                     }}
-                                    className={`flex md:w-full w-1/6 gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
+                                    className={`flex w-full justify-between md:justify-start gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
                                         }`}
                                 >
-                                    <div className='w-full flex md:flex-row flex-col h-[60px] items-center gap-2 '>
-                                        <img src={following?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[30px] w-[30px]' />
-                                        <span className='flex items-center   gap-1 text-center'>
+                                    <div className='w-[90%] flex md:flex-row flex-col h-[60px] items-center gap-2 '>
+                                        <img src={following?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[24px] w-[24px]' />
+                                        <span className='flex items-center w-2/3 text-[8px] md:textbase gap-1 text-center'>
                                             {following?.name}
-                                            <p className='md:block hidden'> <FcApproval size={22} /></p>
+                                            <p className=''> <FcApproval className='text-[8px] md:text-base' /></p>
 
                                         </span>
                                     </div>
                                     {arrival?.filter((item) => {
                                         return item?.sender === following._id;
                                     }).length > 0 ?
-                                        <span className='flex w-full justify-end  '><span className='text-red-800'><IoIosNotifications size={22} /></span><sub className='font-bold text-yellow-500 '>{
+                                        <span className='flex w-[10%] justify-end  '><span className='text-red-800'><IoIosNotifications size={22} /></span><sub className='font-bold text-yellow-500 '>{
                                             arrival?.filter((item) => {
                                                 return item?.sender === following._id;
                                             }).length}</sub></span>

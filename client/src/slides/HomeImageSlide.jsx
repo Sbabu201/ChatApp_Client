@@ -26,10 +26,11 @@ const HomeImageSlide = ({ slides }) => {
                 {slides?.map((slide, index) => (
                     <div
                         key={index}
-                        className={`w-full transition-opacity  duration-300 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0 hidden'
+                        className={`w-[600px] transition-opacity md:h-[500px] h-[350px] duration-300 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0 hidden'
                             }`}
                     >
-                        <img src={slide} alt="image" className="w-full object-cover md:h-[400px] h-[200px]" />
+                        <img src={slide} style={{ minWidth: '100%', minHeight: '100%', maxHeight: "100%", width: 'auto', height: 'auto' }}
+                            alt="image" className="  object-contain  md:object-fill  " />
                     </div>
                 ))}
             </div>

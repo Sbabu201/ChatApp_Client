@@ -156,7 +156,7 @@ const PostCard = ({ item }) => {
                             dispatch(setUser(item?.user?._id))
                             navigate("/userprofile")
                         }} className='flex gap-4 h-[10%] cursor-pointer items-center pb-4 mx-0 md:mx-8'>
-                            <img src={item?.user?.profilePic} className='object-cover rounded-full md:h-[40px] md:min-w-[40px] h-[25px] min-w-[25px] ' />
+                            <img src={item?.user?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[25px] w-[25px] ' />
                             <span className='flex items-center text-xs md:text-lg gap-1 text-center'>{item?.user?.name} <FcApproval className='text-xs md:text-lg' /></span>
 
                         </div>

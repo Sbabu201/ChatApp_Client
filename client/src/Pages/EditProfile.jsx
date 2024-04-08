@@ -1,35 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SideBar from '../components/SideBar'
 import ButtomBar from '../components/ButtomBar'
-import Facebook from '../assets/facebook.png'
-import { FcSettings } from "react-icons/fc";
-import { FcDataSheet } from "react-icons/fc";
+
 import axios from 'axios';
-import { FcLike } from "react-icons/fc";
-import { FcComments } from "react-icons/fc";
+
 import toast from 'react-hot-toast';
-import DemoCard from '../cards/demoCard';
 import ProfilePageLoader from '../utils/ProfilePageLoader';
 import { URL } from '../utils/serverurl';
-import { setAuthenticated, setPost } from '../store/reducers/profileReducer';
-import { useDispatch } from "react-redux"
-import { useNavigate } from 'react-router-dom';
+
 const EditProfile = () => {
     const [images, setImages] = useState(null);
     const inputFileRef = useRef(null);
-    console.log('images', images)
+    // console.log('images', images)
     const handleButtonClick = () => {
         inputFileRef.current.click();
     };
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+
     const [profile, setProfile] = useState({});
     const [loading, setLoading] = useState(false)
     const [bio, setBio] = useState("");
     const handleChange = async (e) => {
         // Trigger click event on the input element
         const files = e.target.files[0];
-        console.log('files', files)
+        // console.log('files', files)
 
         const formData = new FormData();
 
@@ -40,9 +33,9 @@ const EditProfile = () => {
             // Upload image to Cloudinary
             setLoading(true)
             const res = await axios.post("https://api.cloudinary.com/v1_1/dwztqzfeh/image/upload", formData)
-            console.log('res', res)
+            // console.log('res', res.data)
             // Add the uploaded image URL to the images array
-            setImages([res.data.url]);
+            setImages(res.data.url);
             setLoading(false)
 
 
@@ -75,10 +68,10 @@ const EditProfile = () => {
         try {
 
             const { data } = await axios.put(`${URL}/user/editProfile/${user?._id}`, {
-                profilePic: images[0],
+                profilePic: images,
                 bio: bio
             });
-            console.log('data', data)
+            // console.log('data', data)
             toast.success(data.message)
             localStorage.setItem("info", JSON.stringify(data?.updateUser))
             setProfile(data?.updateUser)

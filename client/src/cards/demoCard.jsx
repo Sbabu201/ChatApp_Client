@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
-import { FcRight } from "react-icons/fc";
-import { FcLeft } from "react-icons/fc";
+import React from 'react';
+
 const DemoCard = ({ slides }) => {
     // console.log('slides', slides)
-    const [currentSlide, setCurrentSlide] = useState(0);
 
-    const nextSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide === slides.length - 1 ? 0 : prevSlide + 1));
-    };
 
-    const prevSlide = () => {
-        setCurrentSlide((prevSlide) => (prevSlide === 0 ? slides.length - 1 : prevSlide - 1));
-    };
+
 
     return (
         <div className="relative w-full  ">
@@ -20,7 +13,7 @@ const DemoCard = ({ slides }) => {
                 {slides?.map((slide, index) => (
                     <div
                         key={index}
-                        className={`w-full transition-opacity  duration-300 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0 hidden'
+                        className={`w-full transition-opacity  duration-300 ease-in-out  'opacity-100'
                             }`}
                     >
                         <img src={slide} alt="image" className="w-full  object-cover md:min-h-[400px] h-[100px] " />

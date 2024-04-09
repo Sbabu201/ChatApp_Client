@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import notificationsound from "../assets/usetune.mp3"
 
 const AudioPlayer = () => {
     const audioRef = useRef(null);

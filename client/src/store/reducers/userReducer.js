@@ -53,7 +53,7 @@ const userSlice = createSlice({
         profile: [],
         filteredUser: null,
         status: "idle",
-        status2: "idle",
+        status2: false,
         error: null
     },
     reducers: {
@@ -76,14 +76,14 @@ const userSlice = createSlice({
                 action.payload.usersWithoutPasswords ? state.users = action.payload.usersWithoutPasswords : state.users = [];
             })
             .addCase(getAllUsers.rejected, (state, action) => {
-                state.status2 = 'failed';
+                state.status = 'failed';
                 state.error = action.payload;
             })
             .addCase(getProfile.pending, (state) => {
-                state.status2 = 'loading';
+                state.status2 = true;
             })
             .addCase(getProfile.fulfilled, (state, action) => {
-                state.status2 = 'succeeded';
+                state.status2 = false;
                 // console.log('action.payload', action.payload)
                 if (action.payload.success) {
                     state.profile = action.payload.existUser;
@@ -93,7 +93,7 @@ const userSlice = createSlice({
                     toast.error(action.payload.message)
             })
             .addCase(getProfile.rejected, (state, action) => {
-                state.status = 'failed';
+                state.status2 = false;
                 state.error = action.payload;
             })
 

@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
 import FollowersPage from './../Pages/FollowersPage';
 import FollowingPage from './../Pages/FollowingPage';
-import { getAllUsers, getProfile } from '../store/reducers/userReducer';
+import { getAllUsers } from '../store/reducers/userReducer';
 const UserProfile = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -41,7 +41,7 @@ const UserProfile = () => {
     })
     // console.log('loggeduserDetails', loggeduserDetails)
     useEffect(() => {
-        dispatch(getAllUsers())
+
         existUser = users.filter((item) => {
             return item._id === userId;
         })

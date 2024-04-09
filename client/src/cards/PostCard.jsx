@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { FcLike } from "react-icons/fc";
 import { FcApproval } from "react-icons/fc";
-import { FcComments } from "react-icons/fc";
-import { FcShare } from "react-icons/fc";
 import { useDispatch, useSelector } from 'react-redux';
 import { createLikes, deleteLike, getAllLikes } from '../store/reducers/likeReducer';
-import { FcLikePlaceholder } from "react-icons/fc";
-import Loader from '../utils/Loader';
-import DemoCard from './demoCard';
 import { FaHeart } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +9,6 @@ import { BsChat } from "react-icons/bs";
 import { TbSend } from "react-icons/tb";
 import { GrClose } from "react-icons/gr";
 import { createComments, getAllComments } from '../store/reducers/commentReducer';
-import HomePageLoader from '../utils/HomePageLoader';
 import HomeImageSlide from '../slides/HomeImageSlide';
 import PostImageSlide from '../slides/PostImageSlide';
 import { setUser } from '../store/reducers/profileReducer';
@@ -31,8 +24,8 @@ const PostCard = ({ item }) => {
     const dispatch = useDispatch()
     const likes = useSelector(state => state.likeReducer.likes);
     const comments = useSelector(state => state.commentReducer.comments);
-    const likesForPost = likes?.filter(like => like.post._id === item?._id);
-    const commentsForPost = comments?.filter(like => like.post._id === item?._id);
+    const likesForPost = likes?.filter(like => like?.post?._id === item?._id);
+    const commentsForPost = comments?.filter(like => like?.post?._id === item?._id);
     const likedByuser = likes?.filter(like => like?.user?._id === user?._id && like?.post?._id === item?._id);
 
 

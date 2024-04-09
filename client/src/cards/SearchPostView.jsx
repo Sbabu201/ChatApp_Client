@@ -21,9 +21,11 @@ import axios from 'axios'
 import { createLikes, deleteLike, getAllLikes } from '../store/reducers/likeReducer'
 import { createComments, getAllComments } from '../store/reducers/commentReducer'
 import PostImageSlide from '../slides/PostImageSlide'
+import { deletePost } from '../store/reducers/postReducer';
+import { useNavigate } from "react-router-dom"
 const SearchPostView = () => {
     const [open, setOpen] = useState(false)
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const [comment, setComment] = useState("")
     const user = JSON.parse(localStorage.getItem("info"));
@@ -32,8 +34,8 @@ const SearchPostView = () => {
     const likes = useSelector(state => state.likeReducer.likes);
     const comments = useSelector(state => state.commentReducer.comments);
     const status = useSelector(state => state.likeReducer.status);
-    const likesForPost = likes?.filter(like => like.post._id === post?._id);
-    const commentsForPost = comments?.filter(like => like.post._id === post?._id);
+    const likesForPost = likes?.filter(like => like?.post?._id === post?._id);
+    const commentsForPost = comments?.filter(like => like?.post?._id === post?._id);
     const likedByuser = likes?.filter(like => like?.user?._id === user?._id && like?.post?._id === post?._id);
     const getPostDetails = async () => {
         try {
@@ -80,6 +82,11 @@ const SearchPostView = () => {
     const handleChange = (e) => {
         setComment(e.target.value)
     }
+    const handleDeletePost = () => {
+        dispatch(deletePost(postId))
+        navigate("/profile")
+
+    }
     const handleComment = () => {
         localStorage.setItem("postId", post?._id);
         setOpen(state => !state)
@@ -106,7 +113,7 @@ const SearchPostView = () => {
             <div className='bg-black flex w-full md:w-[80%] flex-col md:flex-row pb-20 items-center pt-10 h-screen  '>
                 <div className='md:h-[80%] flex flex-col justify-center items-center  h-1/2 w-3/4 md:w-[50%]'>
                     <div className='w-full text-red-500 md:hidden flex h-[4%] pb-4 mt-2 items-center justify-end'>
-                        <button onClick={handleComment} className="relative">
+                        <button onClick={handleDeletePost} className="relative">
                             <RiDeleteBin5Line className='font-bold' />
                             <span className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 Delete
@@ -119,8 +126,8 @@ const SearchPostView = () => {
 
                 <div className='md:w-[40%] w-full  gap-3 px-8 flex flex-col  bg-black text-white h-1/2 md:h-[80vh]  '>
                     <div className='w-full hidden md:flex h-[2%] mt-2 items-end justify-end'>
-                        <button onClick={handleComment} className="relative">
-                            <RiDeleteBin5Line className='font-bold text-lg' />
+                        <button onClick={handleDeletePost} className="relative">
+                            <RiDeleteBin5Line className='font-bold text-red-500 text-lg' />
                             <span className="absolute top-[-10px] left-0 w-full h-full bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                                 Delete
                             </span>

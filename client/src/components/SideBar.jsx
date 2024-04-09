@@ -12,14 +12,13 @@ import SearchCard from '../cards/SearchCard';
 import { useNavigate } from 'react-router-dom';
 import CreatePost from '../Pages/CreatePost';
 import { TbMessageCircle2 } from "react-icons/tb";
-import { getAllUsers, getProfile } from '../store/reducers/userReducer';
+import { getProfile } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from "socket.io-client";
 import { getAllArrivalMessage, setSocket } from '../store/reducers/socketReducer';
 import notificationsound from "../assets/itune.mp3"
 import toast from 'react-hot-toast';
 import { useSocket } from '../Pages/SocketProvider';
-import { getAllPosts } from '../store/reducers/postReducer';
 
 const SideBar = () => {
     const messages = useSelector(state => state.socketReducer.arrivalMessage);

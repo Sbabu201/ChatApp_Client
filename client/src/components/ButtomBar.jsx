@@ -15,7 +15,6 @@ import NotificationCard from '../cards/NotificationCard';
 import SearchCard from '../cards/SearchCard';
 import { useNavigate } from 'react-router-dom';
 import CreatePost from '../Pages/CreatePost';
-import { getAllUsers } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from "socket.io-client";
 import { getAllArrivalMessage, setSocket } from '../store/reducers/socketReducer';

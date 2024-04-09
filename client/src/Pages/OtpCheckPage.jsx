@@ -46,18 +46,18 @@ const OtpCheckPage = () => {
 
 
     return (
-        <div className=" m-auto flex min-h-screen min-w-screen bg-black text-white justify-center items-center">
-            <div className="border-2 w-full m-4 md:w-[40%] md:m-auto shadow-md rounded-xl py-5">
-                <h1 className="text-2xl text-center font-bold   ">
-                    {phone}
+        <div className="  flex h-screen  bg-black text-white justify-center items-center">
+            <div className="border-2 border-gray-800 w-full h-[40%] m-4 md:w-[40%] flex flex-col justify-center gap-3 md:justify-between shadow-md rounded-xl py-5">
+                <h1 className="md:text-lg text-sm text-center font-bold   ">
+                    {"otp sent to " + phone}
                 </h1>
-                <div className="w-[80%] m-auto flex flex-row gap-2 my-5">
+                <div className="w-[80%] m-auto  flex flex-row gap-2 my-5">
                     {otp.map((data, i) => {
                         return (
                             <input
                                 type="text"
                                 name="otp"
-                                className="border-2 text-black border-blue-600 w-12 h-8 md:w-12 md:h-12 text-2xl rounded-xl m-auto text-center"
+                                className="border-b-2 outline-none bg-gray-900 text-sm md:text-base text-white border-blue-600 w-12 h-8 md:w-12 md:h-12  rounded-xl m-auto text-center"
                                 maxLength={1}
                                 key={i}
                                 value={data}
@@ -69,7 +69,7 @@ const OtpCheckPage = () => {
 
                 </div>
                 <div className="w-[80%] m-auto flex flex-row gap-2 justify-center  my-5">
-                    <button onClick={submintOtp} className="bg-blue-600 px-4 py-3 md:px-10  text-white text-xl font-bold rounded-xl">
+                    <button onClick={submintOtp} className="bg-blue-600 px-4 py-2 md:px-10  text-white text-xs md:text-base font-bold rounded-xl">
                         Verify
                     </button>
                 </div>
@@ -79,3 +79,6 @@ const OtpCheckPage = () => {
 };
 
 export default OtpCheckPage;
+
+
+

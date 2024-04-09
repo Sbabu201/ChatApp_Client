@@ -29,25 +29,27 @@ import SearchPostView from './cards/SearchPostView';
 import { getAllPosts } from './store/reducers/postReducer';
 import SignUp from './Pages/SignUp';
 import EditProfile from './Pages/EditProfile';
+import { getAllUsers } from './store/reducers/userReducer';
 function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
   const socket = useSocket();
   useEffect(() => {
-    // console.log('socket', socket.current)
-    // if (socket.current) {
+    console.log('socket', socket.current)
+    if (socket.current) {
+      console.log('socket', socket.current)
 
-    socket?.current?.on("catch", (data) => {
-      try {
-        dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
-        dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
-        console.log('data', data)
-        notification?.play()
-      } catch (error) {
-        console.log('error', error)
-      }
-    })
-    // }
+      socket.current.on("catch", (data) => {
+        try {
+          dispatch(addArrivalMessage({ from: data.from, to: data.to, message: data.message }));
+          dispatch(setSingleMessage({ fromSelf: false, message: data.message }))
+          console.log('data', data)
+          notification?.play()
+        } catch (error) {
+          console.log('error', error)
+        }
+      })
+    }
   }, [socket.current])
   useEffect(() => {
     if (socket.current) {
@@ -58,7 +60,9 @@ function App() {
   }, [socket.current])
   useEffect(() => {
     dispatch(getAllPosts())
-  }, [dispatch])
+    dispatch(getAllUsers())
+
+  }, [])
   return (
     <>
 
@@ -67,7 +71,7 @@ function App() {
         {/* <Route exact path="/demo" element={<ProtectedRoute />} />
         <Route exact path="/socket" element={<FollowerReducer />} /> */}
         <Route path='*' element={<PageNotFound />} />
-        <Route exact path="/loader" element={<ProfilePageLoader />} />
+        <Route exact path="/loader" element={<OtpCheckPage />} />
 
 
         <Route exact path="/socket" element={<SocketProvider />} />

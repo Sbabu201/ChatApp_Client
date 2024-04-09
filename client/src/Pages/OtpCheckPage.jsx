@@ -49,7 +49,7 @@ const OtpCheckPage = () => {
         <div className=" m-auto flex min-h-screen min-w-screen bg-black text-white justify-center items-center">
             <div className="border-2 w-full m-4 md:w-[40%] md:m-auto shadow-md rounded-xl py-5">
                 <h1 className="text-2xl text-center font-bold   ">
-                    OTP sent to demo@gmail.com
+                    {phone}
                 </h1>
                 <div className="w-[80%] m-auto flex flex-row gap-2 my-5">
                     {otp.map((data, i) => {

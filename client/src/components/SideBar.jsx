@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import { IoIosNotifications } from "react-icons/io";
 import msg from "../assets/msg.webp"
-import { FcHome } from "react-icons/fc";
+import { IoHomeSharp } from "react-icons/io5";
 import { FcLike } from "react-icons/fc";
 import { FcSearch } from "react-icons/fc";
 import { FcPlus } from "react-icons/fc";
-import { FcBusinessman } from "react-icons/fc";
-import { FcSms } from "react-icons/fc";
+import { IoAddCircleSharp } from "react-icons/io5";
+import { BsFillSearchHeartFill } from "react-icons/bs";
 import NotificationCard from '../cards/NotificationCard';
 import SearchCard from '../cards/SearchCard';
 import { useNavigate } from 'react-router-dom';
 import CreatePost from '../Pages/CreatePost';
+import { TbMessageCircle2 } from "react-icons/tb";
 import { getAllUsers, getProfile } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { io } from "socket.io-client";
@@ -61,7 +62,7 @@ const SideBar = () => {
                 <div className='flex w-full items-center  h-full'>
                     <div className='flex gap-10  flex-col   w-full min-h-screen'>
                         <div onClick={() => navigate("/")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <FcHome size={32} />
+                            <IoHomeSharp size={30} />
                             <p>Home</p>
                         </div>
 
@@ -71,17 +72,17 @@ const SideBar = () => {
                             <NotificationCard notify={notify} handleChange={handleChange} />
                         </div>
                         <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <FcSearch size={32} />
+                            <BsFillSearchHeartFill size={30} />
                             <p>Search</p>
                             <SearchCard searchOpen={searchOpen} handleSearchOpen={handleSearchOpen} />
                         </div>
                         <div onClick={() => setOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <FcPlus size={32} />
+                            <IoAddCircleSharp size={30} />
                             <p>Create</p>
                         </div>
                         <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
                             <div className='flex relative'>
-                                <img src={msg} className='w-8 h-8 object-cover rounded-full' alt="" />
+                                <TbMessageCircle2 size={30} />
                                 {messages?.length > 0 && <p className='bg-red-500 absolute  right-[-5px] w-5 h-5 font-normal text-[12px] rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
                             </div>

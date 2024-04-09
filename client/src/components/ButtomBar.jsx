@@ -2,11 +2,14 @@
 import { useEffect, useState } from 'react'
 import { IoIosNotifications } from "react-icons/io";
 import msg from "../assets/msg.webp"
-import { FcHome } from "react-icons/fc";
+import { IoHomeSharp } from "react-icons/io5";
 import { FcLike } from "react-icons/fc";
+import { IoAddCircleSharp } from "react-icons/io5";
 import { FcSearch } from "react-icons/fc";
 import { FcPlus } from "react-icons/fc";
 import { FcBusinessman } from "react-icons/fc";
+import { BsFillSearchHeartFill } from "react-icons/bs";
+
 import { FcSms } from "react-icons/fc";
 import NotificationCard from '../cards/NotificationCard';
 import SearchCard from '../cards/SearchCard';
@@ -52,36 +55,35 @@ const ButtomBar = () => {
             <div className='flex flex-row fixed bottom-0 cursor-pointer z-10 justify-evenly items-center text-white  border-gray-50  border-t bg-black shadow-md w-full h-16 '>
                 <div className='flex  justify-between    w-full  '>
                     <div onClick={() => navigate("/")} className='flex  w-1/6 p-2 justify-center items-center  font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 '>
-                        <FcHome size={32} />
+                        <IoHomeSharp size={30} />
 
                     </div>
 
-                    <div onClick={() => setNotify(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center '>
-                        <FcLike size={32} />
 
-                        {notify && <NotificationCard notify={notify} handleChange={handleChange} />}
-                    </div>
+
+                    {notify && <NotificationCard notify={notify} handleChange={handleChange} />}
+
                     <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
-                        <FcSearch size={32} />
+                        <BsFillSearchHeartFill size={30} />
 
                         <SearchCard searchOpen={searchOpen} handleSearchOpen={handleSearchOpen} />
                     </div>
                     <div onClick={() => setOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
-                        <FcPlus size={32} />
+                        <IoAddCircleSharp size={30} />
 
                     </div>
-                    <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
+                    {/* <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
                         {/* <div className='flex'>
                             <FcSms size={32} />{messages?.length > 0 && <p className='bg-red-500 w-4 h-4 text-xs rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
                         </div> */}
-                        <div className='flex relative'>
-                            <img src={msg} className='w-8 h-8 object-cover rounded-full' alt="" />
-                            {messages?.length > 0 && <p className='bg-red-500 absolute  right-[-5px] w-5 h-5 font-normal text-[12px] rounded-full items-center justify-center flex'>{messages?.length}</p>}
-
-                        </div>
+                    {/* <div className='flex relative'>
+                        <img src={msg} className='w-8 h-8 object-cover rounded-full' alt="" />
+                        {messages?.length > 0 && <p className='bg-red-500 absolute  right-[-5px] w-5 h-5 font-normal text-[12px] rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
                     </div>
+
+                </div> */}
 
 
                     <div onClick={() => navigate("/profile")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
@@ -90,7 +92,7 @@ const ButtomBar = () => {
                     </div>
                 </div>
 
-            </div>
+            </div >
         </>
     )
 }

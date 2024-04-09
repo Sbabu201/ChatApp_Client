@@ -23,7 +23,7 @@ import { useSocket } from '../Pages/SocketProvider';
 const PostCard = ({ item }) => {
     // console.log('item', item)
     const socket = useSocket();
-
+    const [disbleLike, setDisableLike] = useState(false)
     const [open, setOpen] = useState(false)
     const [comment, setComment] = useState("")
     const user = JSON.parse(localStorage.getItem("info"));
@@ -31,13 +31,13 @@ const PostCard = ({ item }) => {
     const dispatch = useDispatch()
     const likes = useSelector(state => state.likeReducer.likes);
     const comments = useSelector(state => state.commentReducer.comments);
-    const status = useSelector(state => state.likeReducer.status);
     const likesForPost = likes?.filter(like => like.post._id === item?._id);
     const commentsForPost = comments?.filter(like => like.post._id === item?._id);
     const likedByuser = likes?.filter(like => like?.user?._id === user?._id && like?.post?._id === item?._id);
 
 
     const handleDislike = () => {
+
         const formData = {
             post: item?._id,
             user: user?._id
@@ -72,6 +72,7 @@ const PostCard = ({ item }) => {
 
     }
     const handlelike = () => {
+
         const formData = {
             post: item?._id,
             user: user?._id
@@ -83,11 +84,16 @@ const PostCard = ({ item }) => {
             owner: item?.user?._id,
             message: "liked  your photo"
         })
+
     }
+    const debouncedHandleLike = debounce(handlelike, 400);
+    const debouncedHandleDIsLike = debounce(handleDislike, 400);
+
     useEffect(() => {
         dispatch(getAllLikes())
         dispatch(getAllComments())
     }, [dispatch])
+
     // console.log('likes', likes)
     return (
         <>
@@ -133,8 +139,10 @@ const PostCard = ({ item }) => {
                         </div>
                         <div className='flex gap-2 h-[5%]   '>
 
-                            {likedByuser?.length > 0 ? <FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' onClick={handleDislike} /> :
-                                <LuHeart className=' cursor-pointer text-xl md:text-3xl' onClick={handlelike} />}
+                            {likedByuser?.length > 0 ? <button disabled={disbleLike} onClick={debouncedHandleDIsLike}><FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' /></button> :
+                                <button disabled={disbleLike} onClick={debouncedHandleLike}>                                <LuHeart className=' cursor-pointer text-xl md:text-3xl' />
+                                </button>
+                            }
                             <BsChat className=' cursor-pointer text-xl md:text-3xl' onClick={handleComment} />
                             <TbSend className=' cursor-pointer text-xl md:text-3xl' />
                         </div>
@@ -162,8 +170,10 @@ const PostCard = ({ item }) => {
 
                     <HomeImageSlide slides={item?.image} />
                     <div className='flex gap-2 h-[5%] pt-3 md:mx-0 mx-2'>
-                        {likedByuser?.length > 0 ? <FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' onClick={handleDislike} /> :
-                            <LuHeart className=' cursor-pointer text-xl md:text-3xl' onClick={handlelike} />}
+                        {likedByuser?.length > 0 ? <button disabled={disbleLike} onClick={debouncedHandleDIsLike}><FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' /></button> :
+                            <button disabled={disbleLike} onClick={debouncedHandleLike}>                                <LuHeart className=' cursor-pointer text-xl md:text-3xl' />
+                            </button>
+                        }
                         <BsChat className=' cursor-pointer text-xl md:text-3xl' onClick={handleComment} />
                         <TbSend className=' cursor-pointer text-xl md:text-3xl' />
                     </div>
@@ -179,3 +189,13 @@ const PostCard = ({ item }) => {
 }
 
 export default PostCard
+
+function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}

@@ -9,6 +9,7 @@ import allPostsCard from '../cards/allPostsCard'
 import PostCard from '../cards/PostCard'
 import Loader from '../utils/Loader'
 import { URL } from '../utils/serverurl'
+import NavBar from './NavBar'
 const Home = () => {
     const history = useLocation();
     const posts = useSelector(state => state.postReducer);
@@ -41,9 +42,12 @@ const Home = () => {
 
                 </div>
                 <div className='md:w-[80%] w-full bg-black duration-300   h-full '>
+                    <div className='md:w-[20%]  h-full flex md:hidden text-white '>
+                        <NavBar />
 
+                    </div>
                     {/* {(posts?.status === "loading") ? <Loader /> */}
-                    <div className='md:m-2 m-0 w-full pb-20  h-full justify-start duration-300 overflow-y-auto items-center gap-4 flex flex-col border-b-2'>
+                    <div className='md:m-2 m-0 w-full pb-20   h-full justify-start duration-300 overflow-y-auto items-center gap-4 flex flex-col border-b-2'>
                         {
                             shuffledPost?.map((item, i) => (
                                 <PostCard key={i} item={item} />

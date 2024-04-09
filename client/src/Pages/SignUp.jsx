@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import fb from "../assets/facebook.png"
-import ButtomBar from '../components/ButtomBar'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from "axios"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -17,6 +17,11 @@ const schema = z.object({
     email: z.string().min(10),
 });
 const SignUp = () => {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
     const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm({
         resolver: zodResolver(schema)
@@ -44,34 +49,40 @@ const SignUp = () => {
     }
     return (
         <>
-            <div className='flex items-center justify-center h-screen bg-black w-full'>
+            <div className='flex items-center justify-center h-screen bg-white font-times md:bg-black w-full'>
                 <div className='w-full md:w-1/2 h-2/3 border flex flex-col items-center justify-center rounded-md border-gray-200 shadow-md  bg-white m-4 md:m-20'>
-                    <span className='py-10 h-1/6'>SOUMYAGRAM</span>
-                    <form onSubmit={handleSubmit(onSubmit)} className='flex text-center items-center justify-evenly h-3/6 gap-2 w-full flex-col'>
-                        <input {...register("phone")} type="text" placeholder='phone' className='md:w-2/5 w-full px-2 h-10 outline-none border border-black' />
+                    <span className='py-10 text-xl font-extrabold font-italic h-[10%]'>SOUMYAGRAM</span>
+                    <form onSubmit={handleSubmit(onSubmit)} className='flex text-center items-center justify-evenly h-[70%] gap-2 w-full flex-col'>
+                        <input {...register("phone")} type="text" placeholder='phone' className='md:w-2/5 w-[90%] px-2 h-10 outline-none border border-black' />
                         {errors.phone && <p className='text-red-500'>{errors.phone.message}</p>}
-                        <input {...register("password")} type="password" placeholder='password' className='md:w-2/5 px-2 w-full  h-10 outline-none border border-black' />
+                        <div className='md:w-2/5 w-[90%] px-2 flex  h-10 outline-none border border-black'>
+                            <input {...register("password")} type={showPassword ? 'text' : 'password'} placeholder='Password' className=' w-[90%]  h-full outline-none ' />
+                            <button
+                                type="button"
+                                onClick={togglePasswordVisibility}
+                                className="w-10% h-10"
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                        </div>
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
-                        <input {...register("name")} type="text" placeholder='name' className='md:w-2/5 w-full px-2 h-10 outline-none border border-black' />
+                        <input {...register("name")} type="text" placeholder='name' className='md:w-2/5 w-[90%] px-2 h-10 outline-none border border-black' />
                         {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
-                        <input {...register("email")} type="text" placeholder='email' className='md:w-2/5 w-full px-2  h-10 outline-none border border-black' />
+                        <input {...register("email")} type="text" placeholder='email' className='md:w-2/5 w-[90%] px-2  h-10 outline-none border border-black' />
                         {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
-                        <button type='submit' disabled={isSubmitting} className='md:w-2/5 w-full  h-10 outline-none  rounded-md hover:bg-blue-500 bg-blue-300 text-white font-bold '>{isSubmitting ? "loading...." : "Sign Up"}</button>
+                        <button type='submit' disabled={isSubmitting} className='md:w-2/5 w-[90%]  h-10 outline-none  text-sm md:text-base rounded-md hover:bg-blue-900 bg-blue-600 text-white font-bold '>{isSubmitting ? "loading...." : "Sign Up"}</button>
                     </form>
-                    <div className='h-2/6 flex flex-col gap-4 w-full md:w-2/5'>
-                        <span className='w-full h-1/6 flex gap-2 justify-between items-center'>
+                    <div className='h-[20%] flex flex-col gap-4 w-full md:w-2/5'>
+                        <span className='w-full h-[50%] flex gap-2 justify-between items-center'>
                             <p className='w-2/5 border-b-2 border-black '></p>
                             <p className='w-1/5 flex items-center justify-center'>OR</p>
                             <p className='w-2/5 border-b-2 border-black '></p>
                         </span>
-                        <div className='h-5/6   w-full flex flex-col justify-between  items-center'>
-                            <div className='w-full h-1/6 flex justify-center gap-4'>
-                                <span>Login With</span>
-                                <img src={fb} alt="" className='w-50 h-50 rounded-sm' />
-                            </div>
-                            <div className='w-full flex  justify-evenly items-center gap-4 h-5/6'>
-                                <button className='md:w-3/5   h-10 outline-none border border-black' >forgot Password ?</button>
-                                <button onClick={() => navigate("/login")} className='md:w-2/5   h-10 outline-none border border-black'> login here </button>
+                        <div className='h-[50%]   w-full flex flex-col justify-between  items-center'>
+
+                            <div className='w-full flex  justify-center items-center gap-4 h-5/6'>
+                                <span className='md:w-3/5   h-10 outline-none flex justify-center items-center ' >Alredy have an account ?</span>
+                                <button onClick={() => navigate("/login")} className='md:w-2/5  text-blue-600 font-bold  h-10 outline-none '> login here </button>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'maison': ['Maison Neue', 'sans-serif'],
+        'times': ['Times New Roman', 'serif'],
       },
     },
   },

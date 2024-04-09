@@ -47,7 +47,7 @@ const Home = () => {
 
                     </div>
                     {/* {(posts?.status === "loading") ? <Loader /> */}
-                    <div className='md:m-2 m-0 w-full pb-20   h-full justify-start duration-300 overflow-y-auto items-center gap-4 flex flex-col border-b-2'>
+                    <div className='md:m-2 m-0 w-full pb-20 mt-16  h-full justify-start duration-300 overflow-y-auto items-center gap-4 flex flex-col border-b-2'>
                         {
                             shuffledPost?.map((item, i) => (
                                 <PostCard key={i} item={item} />

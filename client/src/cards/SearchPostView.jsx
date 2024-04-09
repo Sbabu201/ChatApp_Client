@@ -105,8 +105,13 @@ const SearchPostView = () => {
             {/* <div className='fixed flex  items-center justify-center w-full text-white  bg-opacity-30   backdrop-blur-sm'> */}
             <div className='bg-black flex w-full md:w-[80%] flex-col md:flex-row pb-20 items-center pt-10 h-screen  '>
                 <div className='md:h-[80%] flex flex-col justify-center items-center  h-1/2 w-3/4 md:w-[50%]'>
-                    <div className='w-full text-red-500 md:hidden flex h-[4%] pb-4 mt-2  items-center justify-end'>
-                        <button onClick={handleComment}><RiDeleteBin5Line className=' font-bold' /></button>
+                    <div className='w-full text-red-500 md:hidden flex h-[4%] pb-4 mt-2 items-center justify-end'>
+                        <button onClick={handleComment} className="relative">
+                            <RiDeleteBin5Line className='font-bold' />
+                            <span className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                Delete
+                            </span>
+                        </button>
                     </div>
                     <PostImageSlide key={post?._id} slides={post?.image} />
 
@@ -114,7 +119,12 @@ const SearchPostView = () => {
 
                 <div className='md:w-[40%] w-full  gap-3 px-8 flex flex-col  bg-black text-white h-1/2 md:h-[80vh]  '>
                     <div className='w-full hidden md:flex h-[2%] mt-2 items-end justify-end'>
-                        <button onClick={handleComment}><RiDeleteBin5Line className=' font-bold' /></button>
+                        <button onClick={handleComment} className="relative">
+                            <RiDeleteBin5Line className='font-bold text-lg' />
+                            <span className="absolute top-[-10px] left-0 w-full h-full bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                Delete
+                            </span>
+                        </button>
                     </div>
                     <div className='border-b-2 md:text-balance text-xs border-gray-700 my-2 h-[5%]'>
                         profile

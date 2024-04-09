@@ -7,7 +7,8 @@ import toast from 'react-hot-toast';
 import { URL } from '../utils/serverurl';
 import { useDispatch, useSelector } from "react-redux"
 import { setUserDetails } from '../store/reducers/userReducer';
-
+import { setUser } from '../store/reducers/profileReducer';
+import { useNavigate } from "react-router-dom"
 const style = {
     position: 'absolute',
     top: '50%',
@@ -28,16 +29,12 @@ const style = {
 export default function FollowersPage({ profile, openFollower, handleFollowers }) {
     console.log('profile', profile)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [loading, setLoading] = React.useState(false);
     const loggedProfile = useSelector(state => state.userReducer.profile);
 
     const handleClose = () => handleFollowers();
 
-
-    // React.useEffect(() => {
-    //     handleFollowingChange();
-
-    // }, [following])
 
 
 
@@ -69,7 +66,12 @@ export default function FollowersPage({ profile, openFollower, handleFollowers }
                                             profile?.followers?.map((item, index) => (
                                                 <div key={index} className='flex items-center justify-between w-full gap-4'>
 
-                                                    <div className='w-[70%] h-full flex gap-6 items-center'>
+                                                    <div onClick={() => {
+                                                        localStorage.setItem("userId", item?._id)
+                                                        dispatch(setUser(item?._id))
+                                                        handleClose()
+                                                        navigate("/userprofile")
+                                                    }} className='w-[70%] h-full cursor-pointer flex gap-6 items-center'>
                                                         <img className='md:w-10 w-7 h-7 md:h-10 rounded-full' src={item?.profilePic} alt="" />
                                                         <span className='text-xs md:text-base'>{item?.name}</span>
                                                     </div>

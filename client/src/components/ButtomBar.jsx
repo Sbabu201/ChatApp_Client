@@ -55,7 +55,7 @@ const ButtomBar = () => {
             <div className='flex flex-row fixed bottom-0 cursor-pointer z-10 justify-evenly items-center text-white  border-gray-50  border-t bg-black shadow-md w-full h-16 '>
                 <div className='flex  justify-between    w-full  '>
                     <div onClick={() => navigate("/")} className='flex  w-1/6 p-2 justify-center items-center  font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 '>
-                        <IoHomeSharp size={30} />
+                        <IoHomeSharp size={26} />
 
                     </div>
 
@@ -64,7 +64,7 @@ const ButtomBar = () => {
                     {notify && <NotificationCard notify={notify} handleChange={handleChange} />}
 
                     <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
-                        <BsFillSearchHeartFill size={30} />
+                        <BsFillSearchHeartFill size={26} />
 
                         <SearchCard searchOpen={searchOpen} handleSearchOpen={handleSearchOpen} />
                     </div>

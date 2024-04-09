@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ButtomBar from '../components/ButtomBar'
 import SideBar from '../components/SideBar'
 import login from "../assets/msg.png"
+import { RiDeleteBin5Line } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux'
 import { FaHeart } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
@@ -103,13 +104,18 @@ const SearchPostView = () => {
             </div>
             {/* <div className='fixed flex  items-center justify-center w-full text-white  bg-opacity-30   backdrop-blur-sm'> */}
             <div className='bg-black flex w-full md:w-[80%] flex-col md:flex-row pb-20 items-center pt-10 h-screen  '>
-                <div className='md:h-[80%] flex justify-center items-center  h-1/2 w-3/4 md:w-[50%]'>
+                <div className='md:h-[80%] flex flex-col justify-center items-center  h-1/2 w-3/4 md:w-[50%]'>
+                    <div className='w-full text-red-500 md:hidden flex h-[4%] pb-4 mt-2  items-center justify-end'>
+                        <button onClick={handleComment}><RiDeleteBin5Line className=' font-bold' /></button>
+                    </div>
                     <PostImageSlide key={post?._id} slides={post?.image} />
+
                 </div>
+
                 <div className='md:w-[40%] w-full  gap-3 px-8 flex flex-col  bg-black text-white h-1/2 md:h-[80vh]  '>
-                    {/* <div className='w-full flex h-[2%] mt-2 items-end justify-end'>
-                        <button onClick={handleComment}><GrClose className=' font-bold' /></button>
-                    </div> */}
+                    <div className='w-full hidden md:flex h-[2%] mt-2 items-end justify-end'>
+                        <button onClick={handleComment}><RiDeleteBin5Line className=' font-bold' /></button>
+                    </div>
                     <div className='border-b-2 md:text-balance text-xs border-gray-700 my-2 h-[5%]'>
                         profile
                     </div>

@@ -7,7 +7,8 @@ import toast from 'react-hot-toast';
 import { URL } from '../utils/serverurl';
 import { setUserDetails } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from "react-redux"
-
+import { setUser } from '../store/reducers/profileReducer';
+import { useNavigate } from "react-router-dom"
 const style = {
     position: 'absolute',
     top: '50%',
@@ -27,6 +28,7 @@ const style = {
 
 export default function FollowingPage({ profile, openFollowing, handleFollowing }) {
     const [loading, setLoading] = React.useState(false);
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const handleClose = () => handleFollowing();
     const loggedProfile = useSelector(state => state.userReducer.profile);
@@ -66,7 +68,12 @@ export default function FollowingPage({ profile, openFollowing, handleFollowing 
                                             profile?.following?.map((item, index) => (
                                                 <div key={index} className='flex items-center justify-between w-full gap-4'>
 
-                                                    <div className='w-[70%] h-full flex gap-6 items-center'>
+                                                    <div onClick={() => {
+                                                        localStorage.setItem("userId", item?._id)
+                                                        dispatch(setUser(item?._id))
+                                                        handleClose()
+                                                        navigate("/userprofile")
+                                                    }} className='w-[70%] cursor-pointer h-full flex gap-6 items-center'>
                                                         <img className='md:w-10 w-7 h-7 md:h-10 rounded-full' src={item?.profilePic} alt="" />
                                                         <span className='text-xs md:text-base'>{item?.name}</span>
                                                     </div>

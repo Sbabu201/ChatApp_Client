@@ -1,19 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import SideBar from '../components/SideBar'
 import ButtomBar from '../components/ButtomBar'
-
 import axios from 'axios';
-
 import toast from 'react-hot-toast';
 import ProfilePageLoader from '../utils/ProfilePageLoader';
 import { URL } from '../utils/serverurl';
 import { setUserDetails } from '../store/reducers/userReducer';
 import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 const EditProfile = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const [images, setImages] = useState(null);
     const inputFileRef = useRef(null);
-    // console.log('images', images)
     const handleButtonClick = () => {
         inputFileRef.current.click();
     };
@@ -37,6 +36,9 @@ const EditProfile = () => {
             console.error('Error uploading image:', error);
             alert("hi")
         }
+        finally {
+            setLoading(false)
+        }
     };
     const handleFormSubmit = async () => {
         setLoading(true)
@@ -53,6 +55,7 @@ const EditProfile = () => {
             dispatch(setUserDetails(data?.updateUser))
 
             setImages(null)
+            navigate("/profile");
         } catch (error) {
             console.log('error', error)
             toast.error(error.message)
@@ -110,7 +113,7 @@ const EditProfile = () => {
                                         className='h-[10%] hidden justify-center items-center   w-[50%]'
 
                                     />
-                                    <button disabled={loading} onClick={handleButtonClick} className='md:w-[65%] w-[90%] h-1/2  rounded-md text-xs md:text-base font-semibold hover:bg-blue-700 bg-blue-500'>change Photo</button>
+                                    <button disabled={loading} onClick={handleButtonClick} className='md:w-[65%] w-[90%] h-1/2  rounded-md text-xs md:text-base font-semibold hover:bg-blue-700 bg-blue-500'>{loading ? "changing..." : "change Photo"}</button>
 
                                 </div>
                             </div>
@@ -126,7 +129,7 @@ const EditProfile = () => {
                         </div>
                         <div className='w-full md:h-20 h-12 pt-4 flex items-center justify-center '>
                             <div className='md:w-[80%] w-full flex justify-end items-center   md:h-20 h-12 '>
-                                <button disabled={loading} onClick={handleFormSubmit} className='w-[30%] md:w-[20%] h-[70%] bg-sky-500 rounded-md text-xs md:text-base font-semibold md:font-bold ' >Submit</button>
+                                <button disabled={loading} onClick={handleFormSubmit} className='w-[30%] md:w-[20%] h-[70%] bg-sky-500 rounded-md text-xs md:text-base font-semibold md:font-bold ' >{loading ? "loading..." : "submit"}</button>
 
                             </div>
                         </div>

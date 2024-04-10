@@ -14,9 +14,9 @@ export const SocketProvider = ({ children }) => {
 
     useEffect(() => {
 
-        socket.current = io(`${URL}`); // Your server URL
-        // console.log('socket', socket)
+        socket.current = io(`${URL}`);
         socket.current.emit("add-user", user?._id);
+        console.log('connected',)
     }, [user]);
 
     return (

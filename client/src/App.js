@@ -2,23 +2,17 @@ import './App.css';
 import { Route, Routes } from "react-router-dom"
 import LoginPage from './Pages/LoginPage';
 import OtpCheckPage from './Pages/OtpCheckPage';
-import ButtomBar from './components/ButtomBar';
 import Home from './components/Home';
-import NotificationPage from './Pages/NotificationPage';
 import notificationsound from "./assets/usetune.mp3"
 
 import NotificationCard from './cards/NotificationCard';
 import ProfilePage from './Pages/ProfilePage';
 import toast, { Toaster } from "react-hot-toast"
-import DemoCard from './cards/demoCard';
 import CreatePost from './Pages/CreatePost';
 import PostView from './components/PostView';
 import Chatting from './components/Chatting';
 import UserProfile from './components/userProfile';
-import Loader from './utils/Loader';
-import HomePageLoader from './utils/HomePageLoader';
-import ProfilePageLoader from './utils/ProfilePageLoader';
-import FollowerReducer from './store/reducers/followerReducer';
+
 import PageNotFound from './components/PageNotFound';
 import ProtectedRoute, { CheckLogin } from './components/ProtectedRoute';
 import { SocketProvider, useSocket } from './Pages/SocketProvider';

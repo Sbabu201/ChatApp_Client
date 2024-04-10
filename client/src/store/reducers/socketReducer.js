@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import toast from "react-hot-toast";
 import { URL } from "../../utils/serverurl";
-const backendUrl = process.env.BACKEND;
 
 
 export const getAllArrivalMessage = createAsyncThunk(
@@ -35,14 +34,14 @@ export const addArrivalMessage = createAsyncThunk(
 export const deleveArrivalMessage = createAsyncThunk(
     'delete/deleveArrivalMessage',
     async (bagItemId, { rejectWithValue }) => {
-        console.log('bagItemId', bagItemId)
+        // console.log('bagItemId', bagItemId)
         if (!bagItemId) {
             return
         }
         try {
-            console.log('bagItemId', bagItemId)
+            // console.log('bagItemId', bagItemId)
             const deleted = await axios.delete(`${URL}/message/deleteArrival/${bagItemId}`);
-            console.log('deleted', deleted)
+            // console.log('deleted', deleted)
             return deleted.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -82,7 +81,7 @@ const arrivalMessageSlice = createSlice({
             })
             .addCase(addArrivalMessage.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('action.payload', action.payload)
+                // console.log('action.payload', action.payload)
                 if (action.payload.success) {
                     state.arrivalMessage.push(action.payload.arrivalMessage);
                     toast.success(action.payload.message)
@@ -99,7 +98,7 @@ const arrivalMessageSlice = createSlice({
             })
             .addCase(deleveArrivalMessage.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                console.log('action.payload', action.payload)
+                // console.log('action.payload', action.payload)
                 state.arrivalMessage = state.arrivalMessage.filter(item => item._id !== action.payload?.deleteMessages?._id);
                 // toast.success(action.payload?.message)
             })

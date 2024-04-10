@@ -6,7 +6,6 @@ import { setSocket } from './socketReducer';
 const backendUrl = process.env.BACKEND;
 
 const FollowerReducer = ({ sendSocket }) => {
-    const dispatch = useDispatch();
     const loggedUser = JSON.parse(localStorage.getItem("info"));
     const socket = useSelector(state => state.socketReducer.socket);
 

@@ -9,7 +9,7 @@ import { FcSearch } from "react-icons/fc";
 import { FcPlus } from "react-icons/fc";
 import { FcBusinessman } from "react-icons/fc";
 import { BsFillSearchHeartFill } from "react-icons/bs";
-
+import { FaSearch } from "react-icons/fa";
 import { FcSms } from "react-icons/fc";
 import NotificationCard from '../cards/NotificationCard';
 import SearchCard from '../cards/SearchCard';
@@ -63,7 +63,7 @@ const ButtomBar = () => {
                     {notify && <NotificationCard notify={notify} handleChange={handleChange} />}
 
                     <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
-                        <BsFillSearchHeartFill size={26} />
+                        <FaSearch size={26} />
 
                         <SearchCard searchOpen={searchOpen} handleSearchOpen={handleSearchOpen} />
                     </div>

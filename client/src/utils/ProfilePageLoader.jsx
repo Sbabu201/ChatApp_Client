@@ -140,7 +140,7 @@ const ProfilePageLoader = () => {
                     </div>
                 </div>
 
-            // </div>
+            </div>
 
 
             <div className='w-full h-[10%] flex md:hidden animate-pulse duration-75 ease-linear'>

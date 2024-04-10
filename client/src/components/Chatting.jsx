@@ -7,13 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Loader from "../utils/Loader"
 import { v4 as uuidv4 } from "uuid"
-import { IoIosNotifications } from "react-icons/io";
 import chatImage from "../assets/451.png"
-import { FcAbout } from "react-icons/fc";
 import { useSocket } from '../Pages/SocketProvider';
-import { deleveArrivalMessage, getAllArrivalMessage } from '../store/reducers/socketReducer';
+import { deleveArrivalMessage } from '../store/reducers/socketReducer';
 import { URL } from '../utils/serverurl';
-import { FcLeft } from "react-icons/fc";
 
 const Chatting = () => {
     const arrival = useSelector(state => state.socketReducer.arrivalMessage)
@@ -23,13 +20,11 @@ const Chatting = () => {
     const socket = useSocket();
     const scrollRef = useRef()
     const allUsers = useSelector(state => state.userReducer.users);
-    const allUsersStatus = useSelector(state => state.userReducer.status);
     const [currentChatUser, setCurrentChatUser] = useState({});
 
     const [togle, setTogle] = useState(false);
     const [loading, setLoading] = useState(false);
     const [allMessages, setAllMessages] = useState([]);
-    console.log('allMessages', allMessages)
     const [message, setMessage] = useState("");
 
     const loggedUser = JSON.parse(localStorage.getItem("info"));
@@ -69,22 +64,11 @@ const Chatting = () => {
     }
     useEffect(() => {
         getAllMessagesData()
-        // setAllArrivalMssage((prev) => {
-        //     return prev?.filter((item) => {
-        //         return item?.from !== currentChatUser?._id;
-        //     })
-        // })
+
         dispatch(deleveArrivalMessage(currentChatUser?._id))
 
     }, [currentChatUser])
 
-    // useEffect(() => {
-    //     if (socket.current) {
-    //         socket.current.on("catch", (data) => {
-    //             setArrivalMssage({ from: data.from, message: { fromSelf: false, message: data.message } })
-    //         })
-    //     }
-    // }, [socket.current])
     useEffect(() => {
         singleArrival && setAllMessages((prev) => [...prev, singleArrival]);
 
@@ -188,10 +172,10 @@ const Chatting = () => {
                                         setTogle(true);
                                         setSelectedItemIndex(index); // Update the selected item index
                                     }}
-                                    className={`flex w-full  justify-start gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
+                                    className={`flex md:w-full relative w-1/4 justify-start gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
                                         }`}
                                 >
-                                    <div className='md:w-[90%] w-1/5  flex md:flex-row flex-col h-[60px] items-center gap-2 '>
+                                    <div className='md:w-[90%] w-[70%]  flex md:flex-row flex-col h-[60px] items-center gap-2 '>
                                         <img src={following?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[24px] w-[24px]' />
                                         <span className='flex items-center w-2/3 text-[8px] md:text-base gap-1 text-center'>
                                             {following?.name}
@@ -202,10 +186,10 @@ const Chatting = () => {
                                     {arrival?.filter((item) => {
                                         return item?.sender === following._id;
                                     }).length > 0 ?
-                                        <span className='flex w-[10%] justify-end  '><span className='text-red-800'><IoIosNotifications size={22} /></span><sub className='font-bold text-yellow-500 '>{
+                                        <span className='flex absolute bg-red-500 rounded-full justify-center top-[-15px]  md:top-0 right-0 md:w-[10%]  w-[30%] text-sm md:text-lg' ><span className='md:font-bold text-xs md:text-base text-white '>{
                                             arrival?.filter((item) => {
                                                 return item?.sender === following._id;
-                                            }).length}</sub></span>
+                                            }).length}</span></span>
                                         : ""
                                     }
                                 </div>

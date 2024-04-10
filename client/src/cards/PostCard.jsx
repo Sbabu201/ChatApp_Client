@@ -79,8 +79,8 @@ const PostCard = ({ item }) => {
         })
 
     }
-    const debouncedHandleLike = debounce(handlelike, 400);
-    const debouncedHandleDIsLike = debounce(handleDislike, 400);
+    const debouncedHandleLike = debounce(handlelike, 200);
+    const debouncedHandleDIsLike = debounce(handleDislike, 200);
 
     useEffect(() => {
         dispatch(getAllLikes())
@@ -161,7 +161,9 @@ const PostCard = ({ item }) => {
 
                     </div>
 
-                    <HomeImageSlide slides={item?.image} />
+                    <div onDoubleClick={likedByuser?.length > 0 ? debouncedHandleDIsLike : debouncedHandleLike} className='h-[70%] w-full'>
+                        <HomeImageSlide slides={item?.image} />
+                    </div>
                     <div className='flex gap-2 h-[5%] pt-3 md:mx-0 mx-2'>
                         {likedByuser?.length > 0 ? <button disabled={disbleLike} onClick={debouncedHandleDIsLike}><FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' /></button> :
                             <button disabled={disbleLike} onClick={debouncedHandleLike}>                                <LuHeart className=' cursor-pointer text-xl md:text-3xl' />

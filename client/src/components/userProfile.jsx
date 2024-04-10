@@ -21,15 +21,12 @@ import { getAllUsers } from '../store/reducers/userReducer';
 const UserProfile = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const profile = useSelector(state => state.userReducer.profile);
-    // const loading = useSelector(state => state.userReducer.status2);
     const [openFollower, setOpenFollower] = useState(false);
     const [openFollowing, setOpenFollowing] = useState(false);
 
     const handleFollowers = () => {
         setOpenFollower(state => !state)
     }
-
     let userId = useSelector(state => state.profileReducer.userId) || localStorage.getItem("userId");
     const loggedUser = JSON.parse(localStorage.getItem("info"));
     const users = useSelector(state => state.userReducer.users);
@@ -105,7 +102,11 @@ const UserProfile = () => {
                                 <span className='text-md md:text-xl'>{existUser[0]?.name}</span>
                                 <div className='flex gap-4'>
                                     <button onClick={debouncedHandleFollow} className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>{!idExists ? "follow" : "following"}</button>
-                                    <button className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>message</button>
+                                    {idExists && <button onClick={() => {
+                                        localStorage.setItem("chatProfile", JSON.stringify(existUser[0]))
+                                        navigate("/chat")
+                                    }} className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>message</button>
+                                    }
                                 </div>
                                 <button className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base w-full md:w-fit'>Archieve</button>
 

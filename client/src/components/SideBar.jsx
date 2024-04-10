@@ -5,6 +5,7 @@ import { IoHomeSharp } from "react-icons/io5";
 import { FcLike } from "react-icons/fc";
 import { FcSearch } from "react-icons/fc";
 import { FcPlus } from "react-icons/fc";
+import { FaSearch } from "react-icons/fa";
 import { IoAddCircleSharp } from "react-icons/io5";
 import { BsFillSearchHeartFill } from "react-icons/bs";
 import NotificationCard from '../cards/NotificationCard';
@@ -71,7 +72,7 @@ const SideBar = () => {
                             <NotificationCard notify={notify} handleChange={handleChange} />
                         </div>
                         <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
-                            <BsFillSearchHeartFill size={30} />
+                            <FaSearch size={30} />
                             <p>Search</p>
                             <SearchCard searchOpen={searchOpen} handleSearchOpen={handleSearchOpen} />
                         </div>

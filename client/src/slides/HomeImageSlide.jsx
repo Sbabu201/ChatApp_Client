@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FcRight } from "react-icons/fc";
 import { FcLeft } from "react-icons/fc";
-import { ChevronLeft, ChevronRight } from "react-feather"
 
 const HomeImageSlide = ({ slides }) => {
+    // console.log('slides.length', slides.length)
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const nextSlide = () => {
@@ -16,12 +16,12 @@ const HomeImageSlide = ({ slides }) => {
 
     return (
         <div className="relative w-full  ">
-            <button onClick={prevSlide} className="absolute p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white top-1/2 left-0 transform -translate-y-1/2   focus:outline-none">
+            {slides?.length > 1 && <> <button onClick={prevSlide} className="absolute p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white top-1/2 left-0 transform -translate-y-1/2   focus:outline-none">
                 <FcLeft className='text-xs md:text-lg' />
             </button>
-            <button onClick={nextSlide} className="absolute top-1/2 right-0 transform -translate-y-1/2 p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white   focus:outline-none">
-                <FcRight className='text-xs md:text-lg' />
-            </button>
+                <button onClick={nextSlide} className="absolute top-1/2 right-0 transform -translate-y-1/2 p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white   focus:outline-none">
+                    <FcRight className='text-xs md:text-lg' />
+                </button></>}
             <div className="flex w-full ">
                 {slides?.map((slide, index) => (
                     <div
@@ -30,7 +30,7 @@ const HomeImageSlide = ({ slides }) => {
                             }`}
                     >
                         <img src={slide} style={{ minWidth: '100%', minHeight: '100%', maxHeight: "100%", width: 'auto', height: 'auto' }}
-                            alt="image" className="  object-contain  " />
+                            alt="image" className=" cursor-pointer  object-contain  " />
                     </div>
                 ))}
             </div>

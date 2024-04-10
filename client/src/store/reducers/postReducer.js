@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 import toast from "react-hot-toast";
 import { URL } from "../../utils/serverurl";
-const backendUrl = process.env.BACKEND;
 
 
 export const getAllPosts = createAsyncThunk(

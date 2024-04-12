@@ -57,7 +57,7 @@ const NotificationCard = ({ notify, handleChange }) => {
 
                                         navigate(`/postSearch/${item?._id}`)
                                     }}>
-                                        <p className='flex pl-2 text-xs md:text-base gap-2'> {item?.likes[0]?.user?.name}  {item?.likes?.length - 1 >= 1 ? ` and ${item?.likes?.length - 1} others Liked your photo. ` : `Liked your photo .`}  </p>
+                                        <p className='flex pl-2 text-xs md:text-base gap-2'> {item?.likes[item?.likes?.length - 1]?.user?.name}  {item?.likes?.length - 1 >= 1 ? ` and ${item?.likes?.length - 1} others Liked your photo. ` : `Liked your photo .`}  </p>
 
                                         <img src={item?.image[0]} className='w-8 h-8 object-cover' alt="" />
                                     </div>}
@@ -65,7 +65,7 @@ const NotificationCard = ({ notify, handleChange }) => {
                                         navigate(`/postSearch/${item?._id}`)
 
                                     }}>
-                                        <p className='flex pl-2 text-xs md:text-base gap-2'> {item?.comments[0]?.user?.name}  {item?.comments?.length - 1 >= 1 ? ` and ${item?.comments?.length - 1} others commented on your photo.` : `commented on your photo .`}  </p>
+                                        <p className='flex pl-2 text-xs md:text-base gap-2'> {item?.comments[item?.comments?.length - 1]?.user?.name}  {item?.comments?.length - 1 >= 1 ? ` and ${item?.comments?.length - 1} others commented on your photo.` : `commented on your photo .`}  </p>
 
                                         <img src={item?.image[0]} className='w-8 h-8 object-cover' alt="" />
                                     </div>}

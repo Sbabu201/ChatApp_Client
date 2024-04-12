@@ -110,7 +110,7 @@ const UserProfile = () => {
                                     <button onClick={debouncedHandleFollow} className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>{!idExists ? "follow" : "following"}</button>
                                     {idExists && <button onClick={() => {
                                         localStorage.setItem("chatProfile", JSON.stringify(existUser[0]))
-                                        navigate("/chat")
+                                        navigate(`/chat/${existUser[0]._id}`)
                                     }} className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>message</button>
                                     }
                                 </div>

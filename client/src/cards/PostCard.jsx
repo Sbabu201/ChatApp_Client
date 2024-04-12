@@ -22,7 +22,8 @@ const PostCard = ({ item }) => {
         setTimeout(() => {
             setOpenLike(false);
         }, 1000); // 3000 milliseconds = 3 seconds
-    }; const socket = useSocket();
+    };
+    const socket = useSocket();
     const [disbleLike, setDisableLike] = useState(false)
     const [open, setOpen] = useState(false)
     const [comment, setComment] = useState("")
@@ -34,10 +35,10 @@ const PostCard = ({ item }) => {
     const likesForPost = likes?.filter(like => like?.post?._id === item?._id);
     const commentsForPost = comments?.filter(like => like?.post?._id === item?._id);
     const likedByuser = likes?.filter(like => like?.user?._id === user?._id && like?.post?._id === item?._id);
-    console.log('commentsForPost', commentsForPost)
+    // console.log('commentsForPost', commentsForPost)
 
     const handleDislike = () => {
-
+        showAndHide();
         const formData = {
             post: item?._id,
             user: user?._id
@@ -73,7 +74,7 @@ const PostCard = ({ item }) => {
 
     }
     const handlelike = () => {
-        showAndHide()
+        showAndHide();
         const formData = {
             post: item?._id,
             user: user?._id
@@ -90,13 +91,11 @@ const PostCard = ({ item }) => {
     }
     const debouncedHandleLike = debounce(handlelike, 200);
     const debouncedHandleDIsLike = debounce(handleDislike, 200);
+    // useEffect(() => {
+    //     dispatch(getAllLikes());
+    //     dispatch(getAllComments());
+    // }, []);
 
-    useEffect(() => {
-        dispatch(getAllLikes())
-        dispatch(getAllComments())
-    }, [dispatch])
-
-    // console.log('likes', likes)
     return (
         <>
             {open && <div className='fixed flex  items-center justify-center z-50 text-white inset-0 bg-opacity-30  bg-black backdrop-blur-sm'>
@@ -171,15 +170,31 @@ const PostCard = ({ item }) => {
                     <div onDoubleClick={likedByuser?.length > 0 ? debouncedHandleDIsLike : debouncedHandleLike} className='h-[70%] relative w-full'>
                         <HomeImageSlide slides={item?.image} />
                         <div>
-                            <div className={`absolute top-[50%] left-[50%] text-4xl transition-all  animate-bounce duration-500 ${openLike ? 'opacity-100' : 'opacity-0'} `}  >
-                                <FcLike className='text-4xl transition-all  animate-pulse duration-500 ' />
+                            <div style={{
+                                animation: 'custom-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite', // Change duration to 2s
+                            }} className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl transition-all  animate-pulse duration-500 ${openLike ? 'opacity-100' : 'opacity-0'} `}  >
+                                {/* <FcLike className='text-4xl transition-all  animate-pulse duration-500 ' /> */}
+                                <img style={{
+                                    animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                                    '@keyframes pulse': {
+                                        '0%': {
+                                            transform: 'scale(1)',
+                                        },
+                                        '50%': {
+                                            transform: 'scale(1.2)',
+                                        },
+                                        '100%': {
+                                            transform: 'scale(1)',
+                                        },
+                                    },
+                                }} className='text-4xl transition-all w-20 h-20 animate-pulse duration-500 ' src="https://imgs.search.brave.com/uzQ9ERbBTQvBIEqrtsZLtpqaOv3OJXoobnxaiWLF0as/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9wbHVz/cG5nLmNvbS9pbWct/cG5nL2hlYXJ0LXBu/Zy1oZWFydC1wbmct/aW1hZ2UtZnJlZS1k/b3dubG9hZC0yNTU1/LnBuZw" alt="" />
                             </div>
                         </div>
                     </div>
                     <div className='flex gap-2 h-[5%] pt-3 md:mx-0 mx-2'>
-                        {likedByuser?.length > 0 ? <button disabled={disbleLike} onClick={debouncedHandleDIsLike}><FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' /></button> :
-                            <button disabled={disbleLike} onClick={debouncedHandleLike}>                                <LuHeart className=' cursor-pointer text-xl md:text-3xl' />
-                            </button>
+                        {likedByuser?.length > 0 ? <FaHeart onClick={debouncedHandleDIsLike} className=' cursor-pointer text-xl md:text-3xl text-red-600' /> :
+                            <LuHeart onClick={debouncedHandleLike} className=' cursor-pointer text-xl md:text-3xl' />
+
                         }
                         <BsChat className=' cursor-pointer text-xl md:text-3xl' onClick={handleComment} />
                         <TbSend className=' cursor-pointer text-xl md:text-3xl' />

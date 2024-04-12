@@ -11,8 +11,12 @@ import chatImage from "../assets/451.png"
 import { useSocket } from '../Pages/SocketProvider';
 import { deleveArrivalMessage } from '../store/reducers/socketReducer';
 import { URL } from '../utils/serverurl';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Chatting = () => {
+    const navigate = useNavigate()
+    const { id } = useParams();
+    console.log('id', id)
     const arrival = useSelector(state => state.socketReducer.arrivalMessage)
     const singleArrival = useSelector(state => state.socketReducer.singleMessage)
     const dispatch = useDispatch()
@@ -20,8 +24,10 @@ const Chatting = () => {
     const socket = useSocket();
     const scrollRef = useRef()
     const allUsers = useSelector(state => state.userReducer.users);
-    const [currentChatUser, setCurrentChatUser] = useState({});
-
+    const currentChatUser = allUsers?.filter((item) => (
+        item._id === id
+    ))
+    console.log('currentChatUser', currentChatUser)
     const [togle, setTogle] = useState(false);
     const [loading, setLoading] = useState(false);
     const [allMessages, setAllMessages] = useState([]);
@@ -36,7 +42,7 @@ const Chatting = () => {
         setLoading(true)
         const { data } = await axios.post(`${URL}/message/allMessage`, {
             from: loggedUser?._id,
-            to: currentChatUser?._id
+            to: id
         });
         setAllMessages(data?.projectMessages);
         setLoading(false)
@@ -45,13 +51,13 @@ const Chatting = () => {
         e.preventDefault()
         const { data } = await axios.post(`${URL}/message/addMessage`, {
             from: loggedUser?._id,
-            to: currentChatUser?._id,
+            to: id,
             message: message
         });
         setMessage("");
         socket.current.emit("send-msg", {
             from: loggedUser?._id,
-            to: currentChatUser?._id,
+            to: id,
             message: message
         })
         const msgs = [...allMessages];
@@ -65,9 +71,9 @@ const Chatting = () => {
     useEffect(() => {
         getAllMessagesData()
 
-        dispatch(deleveArrivalMessage(currentChatUser?._id))
+        dispatch(deleveArrivalMessage(id))
 
-    }, [currentChatUser])
+    }, [id])
 
     useEffect(() => {
         singleArrival && setAllMessages((prev) => [...prev, singleArrival]);
@@ -128,13 +134,13 @@ const Chatting = () => {
                                 </div>
                             ))}
                         </div> */}
-                        {togle ?
+                        {id ?
                             <div className='md:w-[70%] w-full h-[90%]  md:h-screen '>
                                 <div className='flex w-full gap-4 h-[10%] border-b-2 border-gray-800 overflow-hidden items-center cursor-pointer mt-2' >
 
                                     <div className='flex gap-2  justify-center w-[95%] h-full items-center'>
-                                        <img src={currentChatUser?.profilePic} className='object-cover rounded-full h-[40px] w-[40px]  ' />
-                                        <span className='flex items-center gap-1 justify-center text-sm md:text-lg text-center'>{currentChatUser?.name} <FcApproval className='text-sm md:text-lg' /></span>
+                                        <img src={currentChatUser[0]?.profilePic} className='object-cover rounded-full h-[40px] w-[40px]  ' />
+                                        <span className='flex items-center gap-1 justify-center text-sm md:text-lg text-center'>{currentChatUser[0]?.name} <FcApproval className='text-sm md:text-lg' /></span>
                                     </div>
                                 </div>
                                 <div className='overflow-y-auto scrollbar-thumb-rounded-full   scrollbar-thumb-y-0 flex flex-col gap-2 h-[68%] md:h-[81%] scrollbar-hide overflow-hidden  scroll-smooth p-4 '>
@@ -168,11 +174,11 @@ const Chatting = () => {
                                 <div
                                     key={index}
                                     onClick={() => {
-                                        setCurrentChatUser(following);
-                                        setTogle(true);
+                                        navigate(`/chat/${following._id}`)
+
                                         setSelectedItemIndex(index); // Update the selected item index
                                     }}
-                                    className={`flex md:w-full relative w-1/4 justify-start gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${selectedItemIndex === index ? 'bg-gray-800' : ''
+                                    className={`flex md:w-full relative w-1/4 justify-start gap-8 h-1/12 duration-300 items-center rounded-md hover:bg-gray-600 cursor-pointer ${id === following._id ? 'bg-gray-800' : ''
                                         }`}
                                 >
                                     <div className='md:w-[90%] w-[70%]  flex md:flex-row flex-col h-[60px] items-center gap-2 '>

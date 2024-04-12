@@ -26,6 +26,8 @@ import EditProfile from './Pages/EditProfile';
 import { getAllUsers } from './store/reducers/userReducer';
 import DemoCard from './cards/demoCard';
 import AudioPlayer from './cards/AudioPlayer';
+import { getAllLikes } from './store/reducers/likeReducer';
+import { getAllComments } from './store/reducers/commentReducer';
 function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
@@ -57,7 +59,8 @@ function App() {
   useEffect(() => {
     dispatch(getAllPosts())
     dispatch(getAllUsers())
-
+    dispatch(getAllLikes())
+    dispatch(getAllComments())
   }, [])
   return (
     <>
@@ -75,7 +78,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/userprofile/:id?" element={<UserProfile />} />
           <Route exact path="/edit" element={<EditProfile />} />
-          <Route exact path="/chat" element={<Chatting />} />
+          <Route exact path="/chat/:id?" element={<Chatting />} />
           <Route exact path="/postview" element={<PostView />} />
           <Route exact path="/newPost" element={<CreatePost />} />
           <Route exact path="/profile" element={<ProfilePage />} />

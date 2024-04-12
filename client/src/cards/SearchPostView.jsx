@@ -86,7 +86,7 @@ const SearchPostView = () => {
     }
     const handleDeletePost = () => {
         dispatch(deletePost(postId))
-        navigate("/profile")
+        navigate(`/profile/${user?._id}`)
 
     }
     const handleComment = () => {
@@ -96,10 +96,8 @@ const SearchPostView = () => {
 
     }
     useEffect(() => {
-        dispatch(getAllLikes())
-        dispatch(getAllComments())
         getPostDetails()
-    }, [dispatch, postId])
+    }, [postId])
 
     if (posts?.status === "loading") return <Loader />
     return (

@@ -122,13 +122,14 @@ const EditProfile = () => {
                             <span className='font-bold text-lg '>Bio</span>
                         </div>
                         <div className='w-full md:h-20 h-12 flex items-center justify-center '>
-                            <div className='md:w-[80%] w-full flex border-2 border-gray-600  md:h-20 h-12 '>
-                                <input type="text" name='bio' className='bg-transparent px-4 w-full h-full outline-none' placeholder='bio' value={bio} onChange={(e) => setBio(e.target.value)} />
+                            <div className='md:w-[80%] w-full flex border-2 border-gray-800 rounded-md mx-2 md:h-20 h-20 '>
+                                <textarea rows={4} // Number of visible text lines
+                                    cols={50} name='bio' className='bg-transparent md:text-base text-xs px-4 w-full h-full outline-none' placeholder='bio' value={bio} onChange={(e) => setBio(e.target.value)} />
 
                             </div>
                         </div>
                         <div className='w-full md:h-20 h-12 pt-4 flex items-center justify-center '>
-                            <div className='md:w-[80%] w-full flex justify-end items-center   md:h-20 h-12 '>
+                            <div className='md:w-[80%] w-full flex justify-center md:justify-end items-center   md:h-20 h-12 '>
                                 <button disabled={loading} onClick={handleFormSubmit} className='w-[30%] md:w-[20%] h-[70%] bg-sky-500 rounded-md text-xs md:text-base font-semibold md:font-bold ' >{loading ? "loading..." : "submit"}</button>
 
                             </div>

@@ -24,7 +24,7 @@ code {
     monospace;
 }
 
-.scrollbar-hide::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
   /* Hide scrollbar for Webkit browsers (Chrome, Safari, Brave) */
 }

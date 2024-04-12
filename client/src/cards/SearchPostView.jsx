@@ -30,7 +30,8 @@ const SearchPostView = () => {
     const [comment, setComment] = useState("")
     const user = JSON.parse(localStorage.getItem("info"));
     // const postId = useSelector(state => state.profileReducer.postId) || localStorage.getItem("postId");
-    const postId = useParams().id
+    const postId = useParams().id;
+    console.log('postId', postId)
     const [post, setPost] = useState({})
     const likes = useSelector(state => state.likeReducer.likes);
     const comments = useSelector(state => state.commentReducer.comments);

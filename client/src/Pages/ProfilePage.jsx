@@ -8,18 +8,23 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom';
 import FollowersPage from './FollowersPage';
 import FollowingPage from './FollowingPage';
+import UserDp from '../cards/UserDp';
 const ProfilePage = () => {
+    const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { profile } = useSelector(state => state.userReducer);
     const [openFollower, setOpenFollower] = useState(false);
     const [openFollowing, setOpenFollowing] = useState(false);
-
+    const handleOpen = () => {
+        setOpen(state => !state)
+    }
     return (
         <>
             {
 
                 <div>
+                    {open && <UserDp open={open} profilePic={profile.profilePic} handleOpen={handleOpen} />}
 
                     {openFollower && <FollowersPage openFollower={openFollower} profile={profile} handleFollowers={() => { setOpenFollower(state => !state) }} />}
                     {openFollowing && <FollowingPage openFollowing={openFollowing} profile={profile} handleFollowing={() => { setOpenFollowing(state => !state) }} />}
@@ -31,7 +36,7 @@ const ProfilePage = () => {
                         <div className='md:w-[80%] w-full bg-black  border-white min-h-screen'>
                             <div className='w-full md:max-h-[44%]  md:p-10 flex flex-row border-b-2 border-gray-900 '>
                                 <div className='w-[35%] md:w-1/3 h-40 md:h-60  flex justify-center  items-center '>
-                                    <img src={profile?.profilePic} className='md:w-60 w-28 h-28 md:h-60 rounded-full object-cover' alt="" />
+                                    <img onClick={handleOpen} src={profile?.profilePic} className='md:w-60 w-28 h-28 md:h-60 rounded-full object-cover' alt="" />
                                 </div>
                                 <div className='md:w-2/3 w-[65%] h-full md:gap-0 gap-4 flex flex-col  text-white '>
                                     <div className='md:p-6 py-6 font-bold text-sm w-full md:text-balance flex-col md:flex-row   items-center md:justify-start justify-center  flex gap-4'>

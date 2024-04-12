@@ -24,6 +24,8 @@ import { getAllPosts } from './store/reducers/postReducer';
 import SignUp from './Pages/SignUp';
 import EditProfile from './Pages/EditProfile';
 import { getAllUsers } from './store/reducers/userReducer';
+import DemoCard from './cards/demoCard';
+import AudioPlayer from './cards/AudioPlayer';
 function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
@@ -86,7 +88,7 @@ function App() {
         </Route>
 
         <Route exact path="/otp" element={<OtpCheckPage />} />
-        {/* <Route exact path="/buttom" element={<ButtomBar />} /> */}
+        <Route exact path="/demo" element={<AudioPlayer />} />
       </Routes>
     </>
   );

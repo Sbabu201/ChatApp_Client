@@ -3,6 +3,8 @@ import { FcApproval } from "react-icons/fc";
 import { useDispatch, useSelector } from 'react-redux';
 import { createLikes, deleteLike, getAllLikes } from '../store/reducers/likeReducer';
 import { FaHeart } from "react-icons/fa";
+import { FcLike } from "react-icons/fc";
+
 import { LuHeart } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
 import { BsChat } from "react-icons/bs";
@@ -14,8 +16,13 @@ import PostImageSlide from '../slides/PostImageSlide';
 import { setUser } from '../store/reducers/profileReducer';
 import { useSocket } from '../Pages/SocketProvider';
 const PostCard = ({ item }) => {
-    // console.log('item', item)
-    const socket = useSocket();
+    const [openLike, setOpenLike] = useState(false)
+    const showAndHide = () => {
+        setOpenLike(true);
+        setTimeout(() => {
+            setOpenLike(false);
+        }, 1000); // 3000 milliseconds = 3 seconds
+    }; const socket = useSocket();
     const [disbleLike, setDisableLike] = useState(false)
     const [open, setOpen] = useState(false)
     const [comment, setComment] = useState("")
@@ -66,13 +73,14 @@ const PostCard = ({ item }) => {
 
     }
     const handlelike = () => {
-
+        showAndHide()
         const formData = {
             post: item?._id,
             user: user?._id
         }
         // console.log('formData', formData)
         dispatch(createLikes(formData))
+
         socket.current.emit("send-notify", {
             user: user?.name,
             owner: item?.user?._id,
@@ -160,8 +168,13 @@ const PostCard = ({ item }) => {
 
                     </div>
 
-                    <div onDoubleClick={likedByuser?.length > 0 ? debouncedHandleDIsLike : debouncedHandleLike} className='h-[70%] w-full'>
+                    <div onDoubleClick={likedByuser?.length > 0 ? debouncedHandleDIsLike : debouncedHandleLike} className='h-[70%] relative w-full'>
                         <HomeImageSlide slides={item?.image} />
+                        <div>
+                            <div className={`absolute top-[50%] left-[50%] text-4xl transition-all  animate-bounce duration-500 ${openLike ? 'opacity-100' : 'opacity-0'} `}  >
+                                <FcLike className='text-4xl transition-all  animate-pulse duration-500 ' />
+                            </div>
+                        </div>
                     </div>
                     <div className='flex gap-2 h-[5%] pt-3 md:mx-0 mx-2'>
                         {likedByuser?.length > 0 ? <button disabled={disbleLike} onClick={debouncedHandleDIsLike}><FaHeart className=' cursor-pointer text-xl md:text-3xl text-red-600' /></button> :

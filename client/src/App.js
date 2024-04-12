@@ -71,13 +71,13 @@ function App() {
         <Route exact path="/socket" element={<SocketProvider />} />
         <Route element={<ProtectedRoute />} >
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/userprofile" element={<UserProfile />} />
+          <Route exact path="/userprofile/:id?" element={<UserProfile />} />
           <Route exact path="/edit" element={<EditProfile />} />
           <Route exact path="/chat" element={<Chatting />} />
           <Route exact path="/postview" element={<PostView />} />
           <Route exact path="/newPost" element={<CreatePost />} />
           <Route exact path="/profile" element={<ProfilePage />} />
-          <Route exact path="/postSearch" element={<SearchPostView />} />
+          <Route exact path="/postSearch/:id?" element={<SearchPostView />} />
         </Route>
         <Route exact path="/not" element={<NotificationCard />} />
         <Route element={<CheckLogin />}>

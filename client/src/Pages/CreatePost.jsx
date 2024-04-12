@@ -38,7 +38,6 @@ export default function CreatePost({ open, handleOpen }) {
     const user = JSON.parse(localStorage.getItem('info'));
     const dispatch = useDispatch()
     const [images, setImages] = React.useState([]);
-    console.log('images', images)
     const handleClose = () => handleOpen();
     const [form, setForm] = React.useState({
         name: "",
@@ -120,13 +119,16 @@ export default function CreatePost({ open, handleOpen }) {
                                     <div className='md:w-2/3 flex justify-center  items-center w-full md:h-full h-[70%] '>
                                         {images.length === 0 &&
                                             <div className='w-full flex justify-center items-center'>
+                                                <label htmlFor='fileInput' className='cursor-pointer p-2 bg-blue-500 rounded-md'>
+                                                    Choose File
+                                                </label>
                                                 <input
                                                     type="file"
+                                                    id="fileInput"
                                                     accept="image/*"
-                                                    // name='click'
                                                     multiple
                                                     onChange={handleFileUpload}
-                                                    className='h-[10%] flex justify-center items-center   w-[50%]'
+                                                    className='hidden'
                                                 />
                                             </div>
                                         }

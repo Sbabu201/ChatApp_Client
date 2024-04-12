@@ -109,9 +109,7 @@ const ProfilePage = () => {
                                 <div className='flex gap-1 md:gap-4 w-[100%]  flex-wrap'>
                                     {profile?.posts?.map((item, i) => (
                                         <div key={i} onClick={() => {
-                                            localStorage.setItem("postId", item?._id);
-                                            dispatch(setPost(item?._id))
-                                            navigate("/postSearch")
+                                            navigate(`/postSearch/${item?._id}`)
                                         }} className='w-[32%]  flex flex-col md:max-h-[400px] md:min-h-[400px] max-h-[100px] min-h-[100px] relative group'>
                                             <DemoCard slides={item?.image} />
                                             {/* <img key={i} className='w-full max-h-[350px] min-h-[350px] object-cover' src={item?.image?.slice(0, 1)} alt="" /> */}

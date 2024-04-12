@@ -34,11 +34,6 @@ export default function FollowingPage({ profile, openFollowing, handleFollowing 
     const loggedProfile = useSelector(state => state.userReducer.profile);
 
 
-    // React.useEffect(() => {
-    //     handleFollowingChange();
-
-    // }, [following])
-
 
 
 
@@ -69,10 +64,8 @@ export default function FollowingPage({ profile, openFollowing, handleFollowing 
                                                 <div key={index} className='flex items-center justify-between w-full gap-4'>
 
                                                     <div onClick={() => {
-                                                        localStorage.setItem("userId", item?._id)
-                                                        dispatch(setUser(item?._id))
                                                         handleClose()
-                                                        navigate("/userprofile")
+                                                        navigate(`/userprofile/${item?._id}`)
                                                     }} className='w-[70%] cursor-pointer h-full flex gap-6 items-center'>
                                                         <img className='md:w-10 w-7 h-7 md:h-10 rounded-full' src={item?.profilePic} alt="" />
                                                         <span className='text-xs md:text-base'>{item?.name}</span>

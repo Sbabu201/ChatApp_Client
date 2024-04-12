@@ -27,7 +27,7 @@ const PostCard = ({ item }) => {
     const likesForPost = likes?.filter(like => like?.post?._id === item?._id);
     const commentsForPost = comments?.filter(like => like?.post?._id === item?._id);
     const likedByuser = likes?.filter(like => like?.user?._id === user?._id && like?.post?._id === item?._id);
-
+    console.log('commentsForPost', commentsForPost)
 
     const handleDislike = () => {
 
@@ -59,6 +59,7 @@ const PostCard = ({ item }) => {
         setComment("")
     }
     const handleComment = () => {
+        navigate(`/postSearch/${item?._id}`)
         localStorage.setItem("postId", item?._id);
         setOpen(state => !state)
         // navigate("/postview");
@@ -114,11 +115,9 @@ const PostCard = ({ item }) => {
                                 <div className='flex text-xs md:text-lg py-2  flex-col gap-4 justify-center'>
                                     {commentsForPost?.map((com, i) => (
 
-                                        <div className='flex md:gap-4 gap-1 w-full  items-center md:mx-8 mx-1 '>
+                                        <div key={i} className='flex md:gap-4 gap-1 w-full  items-center md:mx-8 mx-1 '>
                                             <div onClick={() => {
-                                                localStorage.setItem("userId", item?.user?._id)
-                                                dispatch(setUser(item?.user?._id))
-                                                navigate("/userprofile")
+                                                navigate(`/userprofile/${com?.user?._id}`)
                                             }} className='flex items-center md:gap-4 gap-1  cursor-pointer'>
                                                 <img src={com?.user?.profilePic} className='object-cover rounded-full h-[20px] min-w-[20px] md:h-[30px] md:min-w-[30px]' />
                                                 <span className='flex items-center gap-1 text-center'>{com?.user?.name} <FcApproval size={12} /></span>
@@ -154,7 +153,7 @@ const PostCard = ({ item }) => {
                     <div onClick={() => {
                         localStorage.setItem("userId", item?.user?._id)
                         dispatch(setUser(item?.user?._id))
-                        navigate("/userprofile")
+                        navigate(`/userprofile/${item?.user?._id}`)
                     }} className='flex gap-4 h-[10%] cursor-pointer items-center pb-4 mx-0 md:mx-8'>
                         <img src={item?.user?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[25px] w-[25px] ' />
                         <span className='flex items-center text-xs md:text-lg gap-1 text-center'>{item?.user?.name} <FcApproval className='text-xs md:text-lg' /></span>

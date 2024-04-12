@@ -67,10 +67,8 @@ export default function FollowersPage({ profile, openFollower, handleFollowers }
                                                 <div key={index} className='flex items-center justify-between w-full gap-4'>
 
                                                     <div onClick={() => {
-                                                        localStorage.setItem("userId", item?._id)
-                                                        dispatch(setUser(item?._id))
                                                         handleClose()
-                                                        navigate("/userprofile")
+                                                        navigate(`/userprofile/${item?._id}`)
                                                     }} className='w-[70%] h-full cursor-pointer flex gap-6 items-center'>
                                                         <img className='md:w-10 w-7 h-7 md:h-10 rounded-full' src={item?.profilePic} alt="" />
                                                         <span className='text-xs md:text-base'>{item?.name}</span>
@@ -85,7 +83,7 @@ export default function FollowersPage({ profile, openFollower, handleFollowers }
                                                                 }
 
                                                                 const { data } = await axios.put(`${URL}/user/removefollow`, form);
-                                                                console.log('data', data)
+                                                                // console.log('data', data)
                                                                 if (data.success) {
                                                                     toast.success("removed from the followers");
                                                                     dispatch(setUserDetails(data?.updateFollower))

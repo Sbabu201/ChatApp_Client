@@ -14,11 +14,12 @@ import ProfilePageLoader from '../utils/ProfilePageLoader';
 import { URL } from '../utils/serverurl';
 import { setAuthenticated, setPost } from '../store/reducers/profileReducer';
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import FollowersPage from './../Pages/FollowersPage';
 import FollowingPage from './../Pages/FollowingPage';
 import { getAllUsers } from '../store/reducers/userReducer';
 const UserProfile = () => {
+    const userId = useParams().id
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [openFollower, setOpenFollower] = useState(false);
@@ -27,7 +28,7 @@ const UserProfile = () => {
     const handleFollowers = () => {
         setOpenFollower(state => !state)
     }
-    let userId = useSelector(state => state.profileReducer.userId) || localStorage.getItem("userId");
+    // let userId = useSelector(state => state.profileReducer.userId) || localStorage.getItem("userId");
     const loggedUser = JSON.parse(localStorage.getItem("info"));
     const users = useSelector(state => state.userReducer.users);
     let existUser = users.filter((item) => {
@@ -100,7 +101,7 @@ const UserProfile = () => {
                         <div className='md:w-2/3 w-1/2 h-full md:gap-0 gap-4 flex flex-col  text-white '>
                             <div className='p-6 font-bold text-sm w-full md:text-balance flex-col md:flex-row   items-center md:justify-start justify-between flex gap-4'>
                                 <span className='text-md md:text-xl'>{existUser[0]?.name}</span>
-                                <div className='flex gap-4'>
+                                <div className='flex  gap-1 md:gap-2'>
                                     <button onClick={debouncedHandleFollow} className='bg-gray-700 hover:bg-gray-900 py-1 px-2 rounded-md text-xs md:text-base'>{!idExists ? "follow" : "following"}</button>
                                     {idExists && <button onClick={() => {
                                         localStorage.setItem("chatProfile", JSON.stringify(existUser[0]))
@@ -140,8 +141,8 @@ const UserProfile = () => {
                         </div>
 
                     </div>
-                    <div className='md:hidden flex flex-col pt-2 pb-2 border-b-2 border-gray-900'>
-                        <div className='flex md:justify-start   md:w-full justify-center items-center md:px-6 pb-4 md:gap-6 gap-2'>
+                    <div className='md:hidden flex flex-col-reverse pt-2 pb-2 border-b-2 border-gray-900'>
+                        <div className='flex md:justify-start   md:w-full justify-center items-center md:px-6 p-4 md:gap-6 gap-2'>
                             <span className='flex md:flex-row flex-col w-1/3 items-center cursor-pointer md:gap-2 gap-1 text-xs md:text-base '>
                                 <p>{existUser[0]?.posts?.length}</p>
                                 <p>posts</p>
@@ -158,7 +159,7 @@ const UserProfile = () => {
                                 <p>Followings</p>
                             </span>
                         </div>
-                        <div className='px-6'>
+                        <div className='px-10'>
                             <p className='font-bold text-md'>{existUser[0]?.name}</p>
                             <p className='font-semibold text-[10px]'>{existUser[0]?.bio}</p>
                             {/* <p> Jay Shree Krishna❤️</p> */}
@@ -174,9 +175,7 @@ const UserProfile = () => {
                         <div className='flex gap-1 md:gap-4 w-[100%]  flex-wrap'>
                             {existUser[0]?.posts?.map((item, i) => (
                                 <div key={i} onClick={() => {
-                                    localStorage.setItem("postId", item?._id);
-                                    dispatch(setPost(item?._id))
-                                    navigate("/postSearch")
+                                    navigate(`/postSearch/${item?._id}`)
                                 }} className='w-[32%]  flex flex-col md:max-h-[400px] md:min-h-[400px] max-h-[100px] min-h-[100px] relative group'>
                                     <DemoCard slides={item?.image} />
                                     {/* <img key={i} className='w-full max-h-[350px] min-h-[350px] object-cover' src={item?.image?.slice(0, 1)} alt="" /> */}

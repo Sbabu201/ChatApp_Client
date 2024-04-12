@@ -54,18 +54,16 @@ const NotificationCard = ({ notify, handleChange }) => {
                             userPosts?.map((item, i) => (
                                 <>
                                     {item?.likes?.length > 0 && <div key={item?.likes[0]?._id} className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
-                                        localStorage.setItem("postId", item?._id);
-                                        dispatch(setPost(item?._id))
-                                        navigate("/postSearch")
+
+                                        navigate(`/postSearch/${item?._id}`)
                                     }}>
                                         <p className='flex pl-2 text-xs md:text-base gap-2'> {item?.likes[0]?.user?.name}  {item?.likes?.length - 1 >= 1 ? ` and ${item?.likes?.length - 1} others Liked your photo. ` : `Liked your photo .`}  </p>
 
                                         <img src={item?.image[0]} className='w-8 h-8 object-cover' alt="" />
                                     </div>}
                                     {item?.comments?.length > 0 && <div key={item?.comments[0]?._id} className='flex text-white w-full h-12 gap-2 px-2 hover:bg-gray-900 duration-300  justify-between items-center' onClick={() => {
-                                        localStorage.setItem("postId", item?._id);
-                                        dispatch(setPost(item?._id))
-                                        navigate("/postSearch")
+                                        navigate(`/postSearch/${item?._id}`)
+
                                     }}>
                                         <p className='flex pl-2 text-xs md:text-base gap-2'> {item?.comments[0]?.user?.name}  {item?.comments?.length - 1 >= 1 ? ` and ${item?.comments?.length - 1} others commented on your photo.` : `commented on your photo .`}  </p>
 

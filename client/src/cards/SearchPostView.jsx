@@ -22,14 +22,15 @@ import { createLikes, deleteLike, getAllLikes } from '../store/reducers/likeRedu
 import { createComments, getAllComments } from '../store/reducers/commentReducer'
 import PostImageSlide from '../slides/PostImageSlide'
 import { deletePost } from '../store/reducers/postReducer';
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 const SearchPostView = () => {
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [comment, setComment] = useState("")
     const user = JSON.parse(localStorage.getItem("info"));
-    const postId = useSelector(state => state.profileReducer.postId) || localStorage.getItem("postId");
+    // const postId = useSelector(state => state.profileReducer.postId) || localStorage.getItem("postId");
+    const postId = useParams().id
     const [post, setPost] = useState({})
     const likes = useSelector(state => state.likeReducer.likes);
     const comments = useSelector(state => state.commentReducer.comments);
@@ -145,8 +146,11 @@ const SearchPostView = () => {
                             <div className='flex flex-col gap-4 md:text-balance text-xs justify-center'>
                                 {commentsForPost?.map((com, i) => (
 
-                                    <div className='flex gap-4  items-center mx-8  '>
-                                        <img src={com?.user?.profilePic} className='object-cover rounded-full h-[20px] min-w-[20px] ' />
+                                    <div onClick={() => {
+
+                                        navigate(`/userprofile/${com?.user?._id}`)
+                                    }} className='flex gap-4  cursor-pointer items-center mx-8  '>
+                                        <img src={com?.user?.profilePic} className='object-cover rounded-full h-[24px] w-[24px] ' />
                                         <span className='flex items-center gap-1 text-center'>{com?.user?.name} <FcApproval size={12} /></span>
                                         <p>{com?.comment}</p>
 
@@ -164,10 +168,10 @@ const SearchPostView = () => {
                     <span className='flex gap-2 h-[5%] text-xs md:text-balance  '>
                         {likesForPost?.length} likes
                     </span>
-                    <div className='h-[10%] border-t-2 border-gray-700 flex justify-between items-center w-full'>
+                    <form onSubmit={handleSubmitComment} className='h-[10%] border-t-2 border-gray-700 flex justify-between items-center w-full'>
                         <input type="text" name="comment" value={comment} onChange={handleChange} placeholder='Add a comment......' className='w-2/3 h-10  bg-transparent outline-none ' />
-                        <button className='w-1/3' onClick={handleSubmitComment}>post</button>
-                    </div>
+                        <button type='submit' className='w-1/3'>post</button>
+                    </form>
                 </div>
             </div>
             {/* </div> */}

@@ -47,7 +47,7 @@ const NavBar = () => {
     }, [])
     return (
         <>
-
+            {open && <CreatePost open={open} handleOpen={handleOpen} />}
 
             <div className='flex flex-row fixed top-0 cursor-pointer z-10 justify-evenly items-center text-white   bg-black shadow-md w-full h-16 '>
                 <div className='flex  justify-end    w-full  '>
@@ -60,18 +60,18 @@ const NavBar = () => {
                     </div>
 
 
-                    <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
-                        {/* <div className='flex'>
+                    {/*   <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300  w-1/6 justify-center'>
+                      {/* <div className='flex'>
                             <FcSms size={32} />{messages?.length > 0 && <p className='bg-red-500 w-4 h-4 text-xs rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
-                        </div> */}
+                        </div> 
                         <div className='flex relative'>
                             <TbMessageCircle2 size={32} />
                             {messages?.length > 0 && <p className='bg-red-500 absolute  right-[-5px] w-5 h-5 font-normal text-[12px] rounded-full items-center justify-center flex'>{messages?.length}</p>}
 
                         </div>
 
-                    </div>
+                    </div> */}
 
 
 

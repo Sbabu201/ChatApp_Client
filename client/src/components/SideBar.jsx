@@ -91,7 +91,7 @@ const SideBar = () => {
                         </div>
 
 
-                        <div onClick={() => navigate("/profile")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
+                        <div onClick={() => navigate(`/profile`)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-sm  duration-300 p-1'>
                             <img src={profile?.profilePic} className='w-8 h-8 object-cover rounded-full' alt="" />
                             <p>Profile</p>
                         </div>

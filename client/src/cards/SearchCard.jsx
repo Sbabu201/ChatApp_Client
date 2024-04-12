@@ -60,9 +60,7 @@ export default function SearchCard({ searchOpen, handleSearchOpen }) {
                         {
                             filteredUsers?.map((item) => (
                                 <div className='flex gap-4 h-[8%] items-center cursor-pointer md:mx-12 rounded-md hover:bg-gray-600 ' onClick={() => {
-                                    localStorage.setItem("userId", item?._id)
-                                    dispatch(setUser(item?._id))
-                                    navigate("/userprofile")
+                                    navigate(`/userprofile/${item?._id}`)
                                 }}>
                                     <img src={item?.profilePic} className='object-cover rounded-full md:h-[40px] md:w-[40px] h-[20px] w-[20px] ' />
                                     <span className='flex items-center gap-1 text-xs md:text-base text-center'>{item?.name} <FcApproval size={22} /></span>

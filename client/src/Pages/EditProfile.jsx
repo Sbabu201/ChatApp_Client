@@ -55,7 +55,7 @@ const EditProfile = () => {
             dispatch(setUserDetails(data?.updateUser))
 
             setImages(null)
-            navigate("/profile");
+            navigate(`/profile`);
         } catch (error) {
             console.log('error', error)
             toast.error(error.message)

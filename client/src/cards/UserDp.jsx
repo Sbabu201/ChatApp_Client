@@ -15,8 +15,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: "40%",
     height: "50%",
-    borderRadius: '100%',
-
+    outline: "none",
     p: 4,
     '@media (max-width: 768px)': {
         width: '100%', // Change width to 100% on screens smaller than 768px

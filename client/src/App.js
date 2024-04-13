@@ -28,6 +28,7 @@ import DemoCard from './cards/demoCard';
 import AudioPlayer from './cards/AudioPlayer';
 import { getAllLikes } from './store/reducers/likeReducer';
 import { getAllComments } from './store/reducers/commentReducer';
+import StoryCard from './cards/StoryCard';
 function App() {
   const notification = new Audio(notificationsound);
   const dispatch = useDispatch()
@@ -91,7 +92,7 @@ function App() {
         </Route>
 
         <Route exact path="/otp" element={<OtpCheckPage />} />
-        <Route exact path="/demo" element={<AudioPlayer />} />
+        <Route exact path="/demo" element={<StoryCard />} />
       </Routes>
     </>
   );

@@ -20,6 +20,7 @@ import { getAllArrivalMessage, setSocket } from '../store/reducers/socketReducer
 import notificationsound from "../assets/itune.mp3"
 import toast from 'react-hot-toast';
 import { useSocket } from '../Pages/SocketProvider';
+import logo from "../assets/3.png"
 
 const SideBar = () => {
     const messages = useSelector(state => state.socketReducer.arrivalMessage);
@@ -55,9 +56,8 @@ const SideBar = () => {
 
             <div className='w-[20%] fixed z-10  text-lg cursor-pointer  font-maison  bg-black border-r-2 border-gray-600 flex flex-col justify-start items-start md:p-10 gap-10 text-white  min-h-screen'>
 
-                <span className=' font-extrabold  px-4  '>
-                    SOUMYAGRAM
-                </span>
+                <span className='py-10 text-xl flex items-center gap-4 justify-between w-[50%] font-extrabold font-italic h-1/6'><img src={logo} className='w-12 h-12 rounded-md' alt="" /> FunZone</span>
+
 
                 <div className='flex w-full items-center  h-full'>
                     <div className='flex gap-10  flex-col   w-full min-h-screen'>

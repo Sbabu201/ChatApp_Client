@@ -91,7 +91,7 @@ function App() {
           <Route exact path="/signup" element={<SignUp />} />
         </Route>
 
-        <Route exact path="/otp" element={<OtpCheckPage />} />
+        <Route exact path="/otp/:email?" element={<OtpCheckPage />} />
         <Route exact path="/demo" element={<StoryCard />} />
       </Routes>
     </>

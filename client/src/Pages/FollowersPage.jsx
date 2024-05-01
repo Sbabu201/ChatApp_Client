@@ -60,7 +60,7 @@ export default function FollowersPage({ profile, openFollower, handleFollowers }
                         </div> :
                             <div className='w-full h-full flex flex-col gap-4 text-white items-center ' >
                                 <span className='h-[5%] w-full flex justify-center text-white font-semibold items-center '>followers</span>
-                                <div className='flex flex-col gap-4 w-full h-[95%] '>
+                                <div className='flex flex-col gap-4 w-full h-[95%] overflow-y-scroll '>
                                     {
                                         profile?.followers?.length > 0 ?
                                             profile?.followers?.map((item, index) => (

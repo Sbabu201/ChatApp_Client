@@ -57,7 +57,7 @@ export default function FollowingPage({ profile, openFollowing, handleFollowing 
                         </div> :
                             <div className='w-full h-full flex flex-col gap-4 text-white items-center ' >
                                 <span className='h-[5%] w-full flex justify-center text-white font-semibold items-center '>following</span>
-                                <div className='flex flex-col gap-4 w-full h-[95%] '>
+                                <div className='flex flex-col gap-4 w-full h-[95%] overflow-y-scroll '>
                                     {
                                         profile?.following?.length > 0 ?
                                             profile?.following?.map((item, index) => (

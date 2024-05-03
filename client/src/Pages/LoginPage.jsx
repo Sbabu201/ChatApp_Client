@@ -10,13 +10,15 @@ import toast from 'react-hot-toast'
 import { URL } from '../utils/serverurl'
 import login from "../assets/login.jpg"
 import logo from "../assets/3.png"
+import { setAuthenticated } from '../store/reducers/profileReducer';
+import { useDispatch } from 'react-redux';
 const schema = z.object({
     phone: z.string().min(10),
     password: z.string().min(5)
 });
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
-
+    const dispatch = useDispatch()
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
@@ -29,14 +31,16 @@ const LoginPage = () => {
         try {
             const { data } = await axios.post(`${URL}/user/login`, value);
             console.log('data', data)
-            if (data?.success) {
-                console.log('data', data)
-                localStorage.setItem("mobile", value.phone.toLowerCase());
+            if (data.success) {
+                localStorage.setItem("token", data?.accessToken)
+                localStorage.setItem("info", JSON.stringify(data?.info))
                 toast.success(data?.message)
-                navigate("/otp")
+                dispatch(setAuthenticated(true))
+                navigate("/")
             }
             else {
                 toast.error(data?.message)
+
             }
 
         } catch (error) {

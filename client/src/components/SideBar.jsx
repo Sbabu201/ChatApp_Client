@@ -61,26 +61,26 @@ const SideBar = () => {
 
                 <div className='flex w-full items-center  h-full'>
                     <div className='flex gap-6  flex-col   w-full min-h-screen'>
-                        <div onClick={() => navigate("/")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
+                        <div onClick={() => navigate("/")} className='flex gap-6 items-center hover:translate-x-2 transition-all font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
                             <IoHomeSharp size={30} />
                             <p>Home</p>
                         </div>
 
-                        <div onClick={() => setNotify(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300  '>
+                        <div onClick={() => setNotify(state => !state)} className='flex gap-6 hover:translate-x-2 transition-all items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300  '>
                             <FcLike size={32} />
                             <p>Notifications</p>
                             <NotificationCard notify={notify} handleChange={handleChange} />
                         </div>
-                        <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
+                        <div onClick={() => setSearchOpen(state => !state)} className='flex gap-6 hover:translate-x-2 transition-all items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
                             <FaSearch size={30} />
                             <p>Search</p>
                             <SearchCard searchOpen={searchOpen} handleSearchOpen={handleSearchOpen} />
                         </div>
-                        <div onClick={() => setOpen(state => !state)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
+                        <div onClick={() => setOpen(state => !state)} className='flex gap-6 hover:translate-x-2 transition-all items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
                             <IoAddCircleSharp size={30} />
                             <p>Create</p>
                         </div>
-                        <div onClick={() => navigate("/chat")} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
+                        <div onClick={() => navigate("/chat")} className='flex gap-6 hover:translate-x-2 transition-all items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
                             <div className='flex relative'>
                                 <TbMessageCircle2 size={30} />
                                 {messages?.length > 0 && <p className='bg-red-500 absolute  right-[-5px] w-5 h-5 font-normal text-[12px] rounded-full items-center justify-center flex'>{messages?.length}</p>}
@@ -91,7 +91,7 @@ const SideBar = () => {
                         </div>
 
 
-                        <div onClick={() => navigate(`/profile`)} className='flex gap-6 items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
+                        <div onClick={() => navigate(`/profile`)} className='flex gap-6 hover:translate-x-2 transition-all items-center font-bold shadow-md hover:bg-slate-600 rounded-md p-2  duration-300 '>
                             <img src={profile?.profilePic} className='w-8 h-8 object-cover rounded-full' alt="" />
                             <p>Profile</p>
                         </div>

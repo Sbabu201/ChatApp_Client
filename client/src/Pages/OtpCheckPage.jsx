@@ -7,10 +7,11 @@ import { useDispatch } from 'react-redux';
 import { setAuthenticated } from "../store/reducers/profileReducer";
 const OtpCheckPage = () => {
     const dispatch = useDispatch()
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [otp, setOtp] = useState(new Array(4).fill(""));
-    const phone = localStorage.getItem("mobile")
-    // console.log('phone', phone)
+    const value = JSON.parse(localStorage.getItem("signup"));
+    console.log('value', value)
     const handleChange = (el, index) => {
         if (isNaN(el.value)) return false
 
@@ -25,22 +26,25 @@ const OtpCheckPage = () => {
     const submintOtp = async () => {
         // console.log('otp.join("") ', otp.join(""))
         try {
+            setLoading(true)
             const newOtp = otp.join("");
-            const { data } = await axios.post(`${URL}/user/login/verify`, { otp: newOtp, phone: phone })
+            const { data } = await axios.post(`${URL}/user/login/verify`, { otp: newOtp, name: value?.name, email: value?.email, password: value?.password, phone: value?.phone, })
             if (data.success) {
-                localStorage.setItem("token", data?.accessToken)
-                localStorage.setItem("info", JSON.stringify(data?.info))
-                localStorage.removeItem("mobile")
+
                 toast.success(data?.message)
-                dispatch(setAuthenticated(true))
-                navigate("/")
+                navigate("/login")
             }
             else {
                 toast.error(data?.message)
 
             }
+
         } catch (error) {
             console.log('error', error)
+            toast.error(error?.response?.data?.message)
+        }
+        finally {
+            setLoading(false)
         }
     }
 
@@ -49,7 +53,7 @@ const OtpCheckPage = () => {
         <div className="  flex h-screen  bg-black text-white justify-center items-center">
             <div className="border-2 border-gray-800 w-full h-[40%] m-4 md:w-[40%] flex flex-col justify-center gap-3 md:justify-between shadow-md rounded-xl py-5">
                 <h1 className="md:text-lg text-sm text-center font-bold   ">
-                    {"otp sent to " + phone}
+                    {"otp sent to " + value?.email}
                 </h1>
                 <div className="w-[80%] m-auto  flex flex-row gap-2 my-5">
                     {otp.map((data, i) => {
@@ -69,8 +73,8 @@ const OtpCheckPage = () => {
 
                 </div>
                 <div className="w-[80%] m-auto flex flex-row gap-2 justify-center  my-5">
-                    <button onClick={submintOtp} className="bg-blue-600 px-4 py-2 md:px-10  text-white text-xs md:text-base font-bold rounded-xl">
-                        Verify
+                    <button disabled={loading} onClick={submintOtp} className="bg-blue-600 px-4 py-2 md:px-10  text-white text-xs md:text-base font-bold rounded-xl">
+                        {loading ? "verifying..." : "verify"}
                     </button>
                 </div>
             </div>

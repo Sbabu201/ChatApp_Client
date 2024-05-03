@@ -35,7 +35,8 @@ const SignUp = () => {
             if (data?.success) {
 
                 toast.success(data?.message)
-                navigate("/login")
+                localStorage.setItem("signup", JSON.stringify(value))
+                navigate("/otp")
             }
             else {
                 toast.error(data?.message)
